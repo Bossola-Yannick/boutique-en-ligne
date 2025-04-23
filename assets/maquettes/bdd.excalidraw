@@ -1,0 +1,51 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://marketplace.visualstudio.com/items?itemName=pomdtr.excalidraw-editor",
+  "elements": [
+    {
+      "id": "X8b2afej1L3WwY29ixUHv",
+      "type": "text",
+      "x": 359,
+      "y": 218.4,
+      "width": 784.4989624023438,
+      "height": 270,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "a0",
+      "roundness": null,
+      "seed": 1006994577,
+      "version": 516,
+      "versionNonce": 1332037215,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1745332589387,
+      "link": null,
+      "locked": false,
+      "text": "USER                   => id,nom, prenom, mail, password,adresse, code_postal,ville, role\nPRODUIT            => id, nom, description, stock, prix_ht, prix_ttc, prix_promo, link_image\nCATEGORIE        => id, nom\nCOMMANDE      => id, num_commande, id_user, statut\nCOMMENTAIRE => id, note, commentaire, reponse_admin, id_produit\n\ntable de liaison: \nPRODUIT/CATEGORIE   => id, id_produit, id_categorie\nPRODUIT/COMMANDE => id, id_produit, id_commande\n",
+      "fontSize": 20,
+      "fontFamily": 6,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "containerId": null,
+      "originalText": "USER                   => id,nom, prenom, mail, password,adresse, code_postal,ville, role\nPRODUIT            => id, nom, description, stock, prix_ht, prix_ttc, prix_promo, link_image\nCATEGORIE        => id, nom\nCOMMANDE      => id, num_commande, id_user, statut\nCOMMENTAIRE => id, note, commentaire, reponse_admin, id_produit\n\ntable de liaison: \nPRODUIT/CATEGORIE   => id, id_produit, id_categorie\nPRODUIT/COMMANDE => id, id_produit, id_commande\n",
+      "autoResize": true,
+      "lineHeight": 1.35
+    }
+  ],
+  "appState": {
+    "gridSize": 20,
+    "gridStep": 5,
+    "gridModeEnabled": false,
+    "viewBackgroundColor": "#ffffff"
+  },
+  "files": {}
+}
