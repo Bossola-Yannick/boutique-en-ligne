@@ -2,7 +2,7 @@
 
 ## 🧙 Fantastique & Légendaire
 
-- **Zelda** : Princesse du royaume de Cocorule, elle détient la Triforce du Grattage de Terre.
+- **Link** : Vêtue d’une tunique verte, capuche sur la crête et bouclier miniature attaché à l’aile, cette poule héroïque traverse le royaume de Poulruda pour sauver la princesse Œufda.
 - **Licorne** : Une poule magique qui pond des arcs-en-ciel.
 - **Sorcière** : Elle prépare des potions à base de graines ensorcelées.
 - **Nain de jardin** : Immobile la journée, gardienne du potager la nuit.
@@ -17,7 +17,7 @@
 - **Samouraï** : Son sabre est plus rapide que son propre caquètement.
 - **Viking** : Navigue sur un bateau-coquille à la conquête des graines.
 
-## 🚓 Professions & Uniformes
+## 🚓 Uniformes
 
 - **Pompier** : Éteint les feux… de cuisson trop longue des œufs !
 - **Policier** : Fait respecter l’ordre dans le poulailler à coups de klaxon.
@@ -30,20 +30,22 @@
 - **Banane** : Attention, elle risque de glisser sur elle-même. 🍌
 - **Poulet rôti** : Le cauchemar existentiel… assumé avec humour.
 - **Clown** : Fait rire petits et grands avec ses pirouettes plumées.
+- **Chanteur Jul** : Pas de casque pour pas écraser sa crête : la poule du quartier est là, prête au rodéo.
 
-## 🎬 Pop Culture & Fiction
+## 🎬 Pop Culture
 
 - **Alien** : Venue de la planète Coop-007 pour étudier les humains.
 - **Cowboy** : Galope dans le Far West à dos de cochon miniature.
 - **Ninja** : Se déplace dans l’ombre… sauf quand elle caquette.
 - **Mercredi Addams** : Toujours sérieuse, elle prépare des potions sombres avec des plumes noires.
+- **Xénomorphe** : Une créature alien noire avec queue articulée et bouche secondaire... mais qui continue de pondre.
 
 ## 👩‍🎤 Époques & Styles
 
 - **Années 70** : Afro, pattes d’eph’ et disco dans la basse-cour.
 - **Écolière japonaise** : Sérieuse, studieuse… et fan de mangas bien sûr.
 
-## 🧑‍🚀 Aventure & Exploration
+## 🧑‍🚀 Aventure
 
 - **Pirate** : À la recherche du trésor… ou d’un ver de terre doré.
 - **Astronaute** : Première poule sur la Lune. Elle a pondu dans l’espace.
@@ -54,11 +56,9 @@
 - **Lion** : Elle règne sur le poulailler avec une crinière majestueuse et un rugissement… très aigu.
 - **Pieuvre** : Avec huit tentacules cousus à ses ailes, elle nage dans les flaques comme personne.
 
-## 🍍 Végétaux & Nature
-
-- **Ananas** : Avec sa coiffe feuillue et son corps en écailles dorées, elle est prête pour une parade tropicale.
-- **Cactus** : Recouverte de piquants (inoffensifs), elle garde son calme en milieu aride… ou sur le rebord de fenêtre.
-
-## 🥚 Nourriture & Ingrédients
+## 🥚 Nourriture & Nature
 
 - **Œuf** : Elle rend hommage à ses origines. Costume minimaliste mais philosophique.
+- **Bière** : En canette dorée avec une mousse sur la crête, elle fait pétiller la basse-cour à chaque pas.
+- **Ananas** : Avec sa coiffe feuillue et son corps en écailles dorées, elle est prête pour une parade tropicale.
+- **Cactus** : Recouverte de piquants (inoffensifs), elle garde son calme en milieu aride… ou sur le rebord de fenêtre.
