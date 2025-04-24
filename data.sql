@@ -1,6 +1,6 @@
 -- EFFACEMENT DES TABLES
 DROP TABLE IF EXISTS product_orders;
-DROP TABLE IF EXISTS product_sub_category;
+DROP TABLE IF EXISTS product_subcategory;
 DROP TABLE IF EXISTS product_category;
 DROP TABLE IF EXISTS comment;
 DROP TABLE IF EXISTS orders;
@@ -68,27 +68,26 @@ CREATE TABLE comment (
     FOREIGN KEY (id_user) REFERENCES user(id_user) ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
-----------------------
--- TABLE DE LIAISON --
-----------------------
 
--- Création de la table produit / catégorie
+-- TABLE DE LIAISON --
+
+-- Création de la table produit - catégorie
 CREATE TABLE product_category (
     id_product INT,
-    id_category INT,
-    PRIMARY KEY (id_product, id_category)
+    id_category INT, 
+    PRIMARY KEY (id_product, id_category),
     FOREIGN KEY (id_product) REFERENCES product(id_product),
     FOREIGN KEY (id_category) REFERENCES category(id_category)
 ) ENGINE=InnoDB;
--- Création de la table produit / sous-catégorie
+-- Création de la table produit - sous-catégorie
 CREATE TABLE product_subcategory (
     id_product INT,
-    id_subcategory INT
-    PRIMARY KEY (id_product, id_subcategory)
+    id_subcategory INT, 
+    PRIMARY KEY (id_product, id_subcategory),
     FOREIGN KEY (id_product) REFERENCES product(id_product),
     FOREIGN KEY (id_subcategory) REFERENCES sub_category(id_subcategory)
 ) ENGINE=InnoDB;
--- Création de la table produit / commande
+-- Création de la table produit - commande
 CREATE TABLE product_orders (
     id_product_orders INT AUTO_INCREMENT PRIMARY KEY,
     id_product INT,
