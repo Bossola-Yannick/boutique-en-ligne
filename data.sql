@@ -1,9 +1,11 @@
 -- EFFACEMENT DES TABLES
+DROP TABLE IF EXISTS product_cart;
 DROP TABLE IF EXISTS product_orders;
 DROP TABLE IF EXISTS product_subcategory;
 DROP TABLE IF EXISTS product_category;
 DROP TABLE IF EXISTS comment;
 DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS cart;
 DROP TABLE IF EXISTS sub_category;
 DROP TABLE IF EXISTS category;
 DROP TABLE IF EXISTS product;
@@ -51,10 +53,16 @@ CREATE TABLE orders (
     id_order INT AUTO_INCREMENT PRIMARY KEY,
     num_order INT NOT NULL UNIQUE,
     date_order DATE,
-    status VARCHAR(100) NOT NULL,
     id_user INT NOT NULL,
-    FOREIGN KEY (id_user) REFERENCES user(id_user) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (id_user) REFERENCES user(id_user)
 ) ENGINE=InnoDB;
+
+-- Création de la table panier
+CREATE TABLE cart(
+    id_cart INT AUTO_INCREMENT PRIMARY KEY,
+    id_user INT NOT NULL,
+    FOREIGN KEY (id_user) REFERENCES user(id_user) ON DELETE CASCADE
+)
 
 -- Création de la table commentaire
 CREATE TABLE comment (
@@ -65,7 +73,7 @@ CREATE TABLE comment (
     id_product INT,
     id_user INT,
     FOREIGN KEY (id_product) REFERENCES product(id_product) ON DELETE CASCADE,
-    FOREIGN KEY (id_user) REFERENCES user(id_user) ON UPDATE CASCADE
+    FOREIGN KEY (id_user) REFERENCES user(id_user) 
 ) ENGINE=InnoDB;
 
 
@@ -93,8 +101,17 @@ CREATE TABLE product_orders (
     id_product INT,
     id_order INT,
     quantity INT NOT NULL,
-    price_per_unit DECIMAL(10,2) NOT NULL,
+    unit_price DECIMAL(10,2) NOT NULL,
     FOREIGN KEY (id_product) REFERENCES product(id_product),
     FOREIGN KEY (id_order) REFERENCES orders(id_order)
 ) ENGINE=InnoDB;
-
+-- Création de la table product - panier
+CREATE TABLE product_cart (
+    id_product_cart INT AUTO_INCREMENT PRIMARY KEY,
+    id_product INT,
+    id_cart INT,
+    quantity INT NOT NULL,
+    unit_price DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (id_product) REFERENCES product(id_product),
+    FOREIGN KEY (id_cart) REFERENCES cart(id_cart)
+)
