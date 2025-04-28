@@ -5,8 +5,8 @@ DROP TABLE IF EXISTS product_orders;
 DROP TABLE IF EXISTS comment;
 DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS cart;
-DROP TABLE IF EXISTS sub_category;
 DROP TABLE IF EXISTS product;
+DROP TABLE IF EXISTS sub_category;
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS tag;
 
@@ -23,6 +23,12 @@ CREATE TABLE user (
     role VARCHAR(100) NOT NULL
 ) ENGINE=InnoDB;
 
+-- Création de la table sous-catégorie
+CREATE TABLE sub_category (
+    id_subcategory INT AUTO_INCREMENT PRIMARY KEY,
+    name_subcategory VARCHAR(100) NOT NULL
+) ENGINE=InnoDB;
+
 -- Création de la table produit
 CREATE TABLE product (
     id_product INT AUTO_INCREMENT PRIMARY KEY,
@@ -33,15 +39,9 @@ CREATE TABLE product (
     price_ttc DECIMAL(10,2) NOT NULL,
     price_discount DECIMAL(10,2) NOT NULL,
     image_link VARCHAR(100),
-    category VARCHAR(100) NOT NULL
+    category VARCHAR(100) NOT NULL,
     id_subcategory INT NOT NULL,
     FOREIGN Key (id_subcategory) REFERENCES sub_category(id_subcategory)
-) ENGINE=InnoDB;
-
--- Création de la table sous-catégorie
-CREATE TABLE sub_category (
-    id_subcategory INT AUTO_INCREMENT PRIMARY KEY,
-    name_subcategory VARCHAR(100) NOT NULL,
 ) ENGINE=InnoDB;
 
 -- Création de la table commande
@@ -107,4 +107,4 @@ CREATE TABLE product_cart (
     unit_price DECIMAL(10,2) NOT NULL,
     FOREIGN KEY (id_product) REFERENCES product(id_product),
     FOREIGN KEY (id_cart) REFERENCES cart(id_cart)
-)
+) ENGINE=InnoDB;

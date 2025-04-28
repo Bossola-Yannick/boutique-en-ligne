@@ -42,8 +42,6 @@ class Utilisateur extends ConnexionBdd
                         session_start();
                         $_SESSION['user'] = $user['id'];
                         $_SESSION['score'] = $user['score'];
-                        $userNum = new Utilisateur();
-                        $_SESSION['userNumber'] =  $userNum->changeNumber($user['id']);
                         header("location: ../index.php");
                         exit(); // Ajout d'un exit() après la redirection
                     } else {
