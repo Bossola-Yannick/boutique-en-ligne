@@ -8,8 +8,9 @@
     <script
         src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"
         defer></script>
-    <script src="./script.js" defer></script>
-    <link rel="stylesheet" href="./style.css" />
+    <script src="../js/connexion-inscription.js" defer></script>
+    <link rel="stylesheet" href="../styles/reset.css" />
+    <link rel="stylesheet" href="../styles/style.css" />
 </head>
 
 <body>
@@ -26,6 +27,6 @@
         <button type="submit">Connexion</button>
         <span id="connexionMessage"></span>
     </form>
-</body>
-
-</html>
+    <?php
+    include '../components/footer.php';
+    ?>
