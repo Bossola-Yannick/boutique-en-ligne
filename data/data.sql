@@ -82,9 +82,9 @@ CREATE TABLE tag (
 
 -- Création de la table produit - catégorie
 CREATE TABLE product_tag (
+    PRIMARY KEY (id_product, id_tag),
     id_product INT,
     id_tag INT, 
-    PRIMARY KEY (id_product, id_tag),
     FOREIGN KEY (id_product) REFERENCES product(id_product),
     FOREIGN KEY (id_tag) REFERENCES tag(id_tag)
 ) ENGINE=InnoDB;
@@ -108,3 +108,4 @@ CREATE TABLE product_cart (
     FOREIGN KEY (id_product) REFERENCES product(id_product),
     FOREIGN KEY (id_cart) REFERENCES cart(id_cart)
 ) ENGINE=InnoDB;
+
