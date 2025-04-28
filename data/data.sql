@@ -34,14 +34,14 @@ CREATE TABLE product (
     price_discount DECIMAL(10,2) NOT NULL,
     image_link VARCHAR(100),
     category VARCHAR(100) NOT NULL
+    id_subcategory INT NOT NULL,
+    FOREIGN Key (id_subcategory) REFERENCES sub_category(id_subcategory)
 ) ENGINE=InnoDB;
 
 -- Création de la table sous-catégorie
 CREATE TABLE sub_category (
     id_subcategory INT AUTO_INCREMENT PRIMARY KEY,
     name_subcategory VARCHAR(100) NOT NULL,
-    id_product INT,
-    FOREIGN KEY (id_product) REFERENCES product(id_product)
 ) ENGINE=InnoDB;
 
 -- Création de la table commande
