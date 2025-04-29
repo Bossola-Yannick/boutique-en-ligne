@@ -12,7 +12,7 @@ searchInput.addEventListener("input", function () {
   if (name === "") {
     displayDiv.innerHTML = "";
   } else {
-    fetch("../models/SearchData.php", {
+    fetch("../controller/SearchController.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",

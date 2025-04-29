@@ -21,17 +21,3 @@ class Search extends ConnexionBdd
         return $queryStmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
-
-$resultSearch = new Search();
-
-if (isset($_POST['search'])) {
-    $search = trim($_POST['search']);
-
-    if (!empty($search)) {
-        $result = $resultSearch->search($search);
-        foreach ($results as $result) {
-            echo '<li onclick="fill(\'' . $result['name_product'] . '\')">';
-            echo '<a href="../vue/detail.php">' . $result['name_product'] . '</a></li>';
-        }
-    }
-}

@@ -1,9 +1,3 @@
-<?php
-
-include "../models/SearchData.php";
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
