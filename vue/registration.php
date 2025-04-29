@@ -2,8 +2,8 @@
 include '../components/header.php';
 ?>
 <main>
-    <form action="" id="inscription">
-        <h2 id="statusInscription"></h2>
+    <form action="" id="form-registration">
+        <h2 id="status-registration"></h2>
         <label for="nom">Nom</label>
         <input type="text" name="nom" id="nom" />
         <label for="prenom">Prénom</label>
