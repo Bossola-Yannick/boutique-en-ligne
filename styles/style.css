@@ -1,6 +1,7 @@
 :root {
   /* couleur */
   --primary-color: #0b3058;
+  --hover-color: #134c8b;
   --discount-color: #e53935;
   --active-color: #ffe600;
   --secondary-color: #c8e3bc;
@@ -10,12 +11,34 @@
   --text-font: "lato", sans-serif;
   --title-font: "chewy", serif;
 }
-
+* {
+  box-sizing: border-box;
+}
+html {
+  background-color: var(--hover-color);
+}
 body {
   width: 1440px;
   margin: 0 auto;
   border: 2px solid #0b3058;
+  background-color: var(--text-color);
 }
 main {
   min-height: 80vh;
+}
+
+/** --- Gestion des Bouttons --- */
+.button {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  padding: 0.5rem;
+  width: 195px;
+  height: 59px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.button:hover {
+  background-color: var(--hover-color);
 }
