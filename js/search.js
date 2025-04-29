@@ -23,6 +23,14 @@ searchInput.addEventListener("input", function () {
       .then((html) => {
         displayDiv.innerHTML = html;
         displayDiv.style.display = "block";
+        let resultSearch = Array.from(displayDiv.children);
+        // console.log(displayDiv.children);
+        resultSearch.forEach((element) => {
+          element.addEventListener("click", () => {
+            let detail = encodeURIComponent(element.textContent);
+            window.location.href = `../vue/detail.php?product=${detail}`;
+          });
+        });
       })
       .catch((error) => {
         console.error("Erreur search:", error);
