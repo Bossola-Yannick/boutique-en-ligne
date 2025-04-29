@@ -1,5 +1,6 @@
 let verifMail = false;
 let passwordIdentique = false;
+//* VERIFICATION DES INPUTS
 $("document").ready(function () {
   const regexMail = new RegExp(
     "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,10}$"
@@ -56,7 +57,8 @@ $("document").ready(function () {
   });
 });
 
-$("#connexion").submit(function (e) {
+//* CONNEXION
+$("#form-connection").submit(function (e) {
   e.preventDefault();
   // récupération des valeurs du formulaire et traitement
   let email = $("#email").val().trim();
@@ -64,15 +66,16 @@ $("#connexion").submit(function (e) {
 
   if (verifMail) {
     if (!password || !email) {
-      $("#connexionMessage")
+      $("#connection-message")
         .text("Mot de passe ou Email non renseigné !")
         .css("color", "red");
     } else
-      $("#connexionMessage").text("Connexion Réussi !").css("color", "green");
-  } else $("#connexionMessage").text("Connexion Echoué !").css("color", "red");
+      $("#connection-message").text("Connexion Réussi !").css("color", "green");
+  } else $("#connection-message").text("Connexion Echoué !").css("color", "red");
 });
 
-$("#inscription").submit(function (e) {
+//* INSCRIPTION
+$("#form-registration").submit(function (e) {
   e.preventDefault();
   // récupération des valeurs du formulaire et traitement
   let nom = $("#nom").val().trim();
@@ -91,13 +94,15 @@ $("#inscription").submit(function (e) {
     !password ||
     !confirmPassword
   ) {
-    $("#statusInscription")
+    $("#status-registration")
       .text("Veuillez remplir tous les champs CORRECTEMENT!")
       .css("color", "red");
     return;
   }
   if (passwordIdentique) {
-    $("#statusInscription").text("Inscription Validée !").css("color", "green");
+    $("#status-registration")
+      .text("Inscription Validée !")
+      .css("color", "green");
     console.log(nom, prenom, email, adresse, codeP, password, confirmPassword);
   }
 });

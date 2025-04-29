@@ -1,3 +1,3 @@
 <section class="banner">
-    <img src="../assets/images/icones/banner2.png" alt="">
+    <img src="../assets/images/icones/banner-pano.png" alt="">
 </section>
