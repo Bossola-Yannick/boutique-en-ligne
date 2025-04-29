@@ -11,6 +11,11 @@
   --title-font: "chewy", serif;
 }
 
+* {
+  box-sizing: border-box;
+  font-family: var(--text-font);
+}
+
 body {
   width: 1440px;
   margin: 0 auto;
