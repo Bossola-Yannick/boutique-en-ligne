@@ -1,6 +1,9 @@
 <?php
 include '../components/header.php';
 ?>
+<?php
+include '../components/banner.php';
+?>
 <form action="" id="connexion">
     <label for="email">Votre Email</label>
     <input type="email" name="email" id="email" />
