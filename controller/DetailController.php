@@ -11,7 +11,8 @@ $productInfos = $product->detail($productClicked);
 $allInfos = [
     "product" => [],
     "tags" => [],
-    "comments" => []
+    "comments" => [],
+    "recommand" => []
 ];
 
 $dubTag = [];
@@ -37,9 +38,7 @@ foreach ($productInfos as $info) {
 
     if (!in_array($info['name_tag'], $dubTag)) {
         $dubTag[] = $info['name_tag'];
-        $allInfos["tags"][] = [
-            "name_tag" => $info['name_tag']
-        ];
+        $allInfos["tags"][] = $info['name_tag'];
     }
 
     if (!in_array($info['comment'], $dubComment)) {
@@ -55,7 +54,14 @@ foreach ($productInfos as $info) {
     }
 }
 
-// print_r($allInfos);
+// recupération des produits similaires
+$tagOne = $allInfos['tags'][0];
+$tagTwo = $allInfos['tags'][1];
 
-// header('Content-Type: application/json');
+$recommand = $product->recommand($tagOne, $tagTwo);
+foreach ($recommand as $value) {
+    $allInfos['recommand'][] =
+        $value;
+}
+
 echo json_encode($allInfos);

@@ -31,4 +31,25 @@ class Detail extends ConnexionBdd
         $queryStmt->execute(['name' => $name]);
         return $queryStmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function recommand($tagOne, $tagTwo)
+    {
+        $query = "SELECT
+        tag.id_tag, tag.name_tag, 
+        product.id_product, product.name_product, product.price_ttc, product.price_discount, product.image_link
+        FROM tag
+        JOIN product_tag ON product_tag.id_tag = tag.id_tag
+        JOIN product ON product_tag.id_product = product.id_product
+        WHERE tag.name_tag IN (:tagOne, :tagTwo)
+        GROUP BY product.id_product, product.name_product, product.price_ttc, product.price_discount, product.image_link
+        ";
+        $queryStmt = $this->bdd->prepare($query);
+        $queryStmt->execute(
+            [
+                'tagOne' => $tagOne,
+                'tagTwo' => $tagTwo
+            ]
+        );
+        return $queryStmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
