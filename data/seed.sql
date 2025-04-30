@@ -1,6 +1,9 @@
 INSERT INTO user (last_name, first_name, email, password, adress, postal_code, city, role) VALUES
-('yannick', 'bossola', 'yannick@example.io', 'example', 'rue hozier', 13000, 'Marseille', 'admin'),
-('james', 'sanchez', 'james@example.io', 'example', 'rue hozier', 13000, 'Marseille', 'admin');
+('bossola', 'yannick', 'yannick@example.io', 'example', 'rue hozier', 13000, 'Marseille', 'admin'),
+('sanchez', 'james', 'james@example.io', 'example', 'rue hozier', 13000, 'Marseille', 'admin'),
+('abc', 'test', 'test@example.io', 'example', 'rue hozier', 13000, 'Marseille', 'user'),
+('def', 'test2', 'test2@example.io', 'example', 'rue hozier', 13000, 'Marseille', 'user'),
+('dgh', 'test3', 'test3@example.io', 'example', 'rue hozier', 13000, 'Marseille', 'user');
 
 INSERT INTO sub_category (id_subcategory, name_subcategory) VALUES
 (1, 'Fantastique & Légendaire'),
@@ -272,3 +275,14 @@ INSERT INTO product_tag (id_product, id_tag) VALUES
 (79, 3), -- Sabre laser de Jedi : Chevalier / Héroïque
 (80, 17); -- Sac d'Hôtesse de l'air : Noël
 
+INSERT INTO comment (rating_comment, comment, date_comment, admin_reply, id_product, id_user)
+VALUES 
+(5, 'Très bon produit, je recommande !', '2025-04-15', NULL, 20, 1),
+
+(4, 'Livraison rapide, mais l’emballage était abîmé.', '2025-04-18', 'Merci pour votre retour, nous allons améliorer ce point.', 20, 3),
+
+(3, 'Le produit ne correspond pas tout à fait à la description.', '2025-04-20', NULL, 20, 4),
+
+(5, 'Excellente qualité, rien à redire.', '2025-04-22', NULL, 20, 5),
+
+(2, 'Produit défectueux à la réception.', '2025-04-25', 'Nous sommes désolés pour cela. Veuillez contacter notre service client.', 20, 2);

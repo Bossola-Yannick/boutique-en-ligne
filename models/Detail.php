@@ -1,0 +1,34 @@
+<?php
+
+require '../config.php';
+
+
+include __DIR__ . "/ConnexionBdd.php";
+
+class Detail extends ConnexionBdd
+{
+
+    public function __construct()
+    {
+        parent::__construct($this->bdd);
+    }
+
+    public function detail($name)
+    {
+        $query = "SELECT 
+        product.id_product, product.name_product, product.description, product.stock, 
+        product.price_ttc, product.price_discount, product.image_link, product.category, rating_product,
+        tag.id_tag, tag.name_tag,
+        comment.rating_comment, comment.comment, comment.date_comment, comment.admin_reply, comment.id_user,
+        user.email
+        FROM product 
+        JOIN product_tag ON product_tag.id_product = product.id_product        
+        JOIN tag ON tag.id_tag = product_tag.id_tag
+        JOIN comment ON comment.id_product = product.id_product
+        JOIN user ON comment.id_user = user.id_user
+        WHERE name_product = :name";
+        $queryStmt = $this->bdd->prepare($query);
+        $queryStmt->execute(['name' => "$name"]);
+        return $queryStmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+}
