@@ -24,11 +24,11 @@ class Detail extends ConnexionBdd
         FROM product 
         JOIN product_tag ON product_tag.id_product = product.id_product        
         JOIN tag ON tag.id_tag = product_tag.id_tag
-        JOIN comment ON comment.id_product = product.id_product
-        JOIN user ON comment.id_user = user.id_user
+        LEFT JOIN comment ON comment.id_product = product.id_product
+        LEFT JOIN user ON comment.id_user = user.id_user
         WHERE name_product = :name";
         $queryStmt = $this->bdd->prepare($query);
-        $queryStmt->execute(['name' => "$name"]);
+        $queryStmt->execute(['name' => $name]);
         return $queryStmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

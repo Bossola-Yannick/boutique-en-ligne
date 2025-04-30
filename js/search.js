@@ -27,8 +27,10 @@ searchInput.addEventListener("input", function () {
         // console.log(displayDiv.children);
         resultSearch.forEach((element) => {
           element.addEventListener("click", () => {
-            let detail = encodeURIComponent(element.textContent);
-            window.location.href = `../vue/detail.php?product=${detail}`;
+            let detail = element.textContent;
+            window.location.href = `../vue/detail.php?product=${encodeURIComponent(
+              detail
+            )}`;
           });
         });
       })
