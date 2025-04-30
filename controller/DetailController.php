@@ -6,7 +6,7 @@ $productClicked = isset($_GET['product']) ? urldecode($_GET['product']) : '';
 
 $product = new Detail();
 $productInfos = $product->detail($productClicked);
-// $productInfos = $product->detail("Fée");
+
 
 $allInfos = [
     "product" => [],
@@ -15,9 +15,12 @@ $allInfos = [
     "recommand" => []
 ];
 
+// variables pour traiter les doublons
 $dubTag = [];
 $dubComment = [];
 
+
+// récupère les infos du produit, ses tags et ses commentaires
 foreach ($productInfos as $info) {
 
     if (empty($allInfos["product"])) {
