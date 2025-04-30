@@ -16,11 +16,110 @@ fetch(`../controller/DetailController.php${productName}`, {
     let product = data.product;
     let tags = data.tags;
     let comments = data.comments;
+    let recommand = data.recommand;
 
     console.log(product);
     console.log(tags);
     console.log(comments);
+    console.log(recommand);
+
+    createDetail(
+      product.category,
+      product.image_link,
+      product.name_product,
+      product.description,
+      product.price_ttc,
+      product.price_discount,
+      product.rating_product,
+      product.stock,
+      tags
+    );
   })
   .catch((error) => console.error("Erreur fetch :", error));
 
-const productDesc = () => {};
+// créer la boite detail du produit
+const createDetail = (
+  category,
+  image,
+  name,
+  description,
+  price_ttc,
+  price_discount,
+  rating,
+  stock,
+  tags
+) => {
+  // boite image
+  const leftBox = document.createElement("div");
+  leftBox.classList.add("detail-left-box");
+  const detailImage = document.createElement("img");
+  if (category === "déguisement") {
+    detailImage.setAttribute("src", `../assets/images/cosplay/${image}`);
+  } else {
+    detailImage.setAttribute("src", `../assets/images/accessories/${image}`);
+  }
+  const notInclude = document.createElement("p");
+  notInclude.classList.add("not-included");
+  if (category === "déguisement") {
+    notInclude.innerText = "*Poule et accessoires non-inclus.";
+  } else {
+    notInclude.innerText = "*Poule et déguisement non-inclus.";
+  }
+
+  leftBox.appendChild(detailImage);
+  leftBox.appendChild(notInclude);
+  productBox.appendChild(leftBox);
+
+  // boite details
+  const rightBox = document.createElement("div");
+  rightBox.classList.add("detail-right-box");
+  rightBox.innerHTML = `
+        <div class="detail-product">
+        <!-- title -->
+            <div class="detail-title">
+                <h2>${name}</h2>
+                <div class="rating-box">
+                    <p>${rating}</p>
+                    <img class="star-rating" src="../assets/images/icones/icon-rating.png">
+                </div>
+            </div>  
+        
+        <!-- body -->
+            <div class="detail-body">
+                <div class="desc-box">
+                    <p class="detail-desc">Description:</p>
+                    <p>${description}</p>
+                </div>
+                <div class="price-stock-box">
+                    <p>Stock: <span>${stock}</span></p>
+                    <div class="price-box">
+                        <p>Prix:<span class="default-price">${price_ttc}</span></p>
+                    </div>
+                    <div class="discount-box">
+                        <p>Prix:<span class="price ">${price_ttc}</span></p>
+                        <p class="default-price red">${price_discount}</p>
+                    </div>
+                </div>
+                <div class="button-add-cart">
+                    <button type="submit" id="button-add" class="button-add">
+                    Ajouter au panier
+                    <img src="../assets/images/icones/add.png"/>
+                    </button>
+                </div>
+            </div>
+    `;
+  const footerRightBox = document.createElement("div");
+  footerRightBox.classList.add("detail-footer");
+
+  tags.forEach((tag) => {
+    const tagDiv = document.createElement("div");
+    tagDiv.classList.add("tag-box");
+    tagDiv.innerHTML = `<p>${tag}</p>`;
+    footerRightBox.appendChild(tagDiv);
+  });
+
+  rightBox.appendChild(footerRightBox);
+  productBox.appendChild(rightBox);
+};
+
+// ajouter price box
