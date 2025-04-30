@@ -30,6 +30,13 @@
 .subtitle-registration {
   color: var(--active-color);
   /* font-family: var(--title-font); */
-  font-size: 1.5rem;
+  font-size: 2rem;
   padding-block: 0.7rem;
+}
+#status-registration,
+#emailError,
+#passwordError,
+#identiquePasswordError,
+#codePostalError {
+  padding: 0.2rem;
 }

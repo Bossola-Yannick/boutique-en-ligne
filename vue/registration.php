@@ -23,7 +23,7 @@ include '../components/header.php';
         <label for="codeP">Code Postale</label>
         <input type="number" name="codeP" id="codeP" />
         <span id="codePostalError"></span>
-        <button type="submit" class="button">Valider</button>
+        <div class="button button-registration">Valider</div>
     </form>
 </section>
 <?php

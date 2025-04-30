@@ -38,6 +38,10 @@ main {
   cursor: pointer;
   font-size: 1.5rem;
   font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .button:hover {
   background-color: var(--hover-color);

@@ -8,7 +8,7 @@
     <script
         src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"
         defer></script>
-    <script src="../js/connexion-inscription.js" defer></script>
+    <script src="../js/connection-registration.js" defer></script>
     <link rel="stylesheet" href="../styles/reset.css" />
     <link rel="stylesheet" href="../styles/style.css" />
     <link rel="stylesheet" href="../styles/header-banner-search-footer.css" />
