@@ -11,12 +11,16 @@
   --text-font: "lato", sans-serif;
   --title-font: "chewy", serif;
 }
+
 * {
   box-sizing: border-box;
+  font-family: var(--text-font);
 }
+
 html {
   background-color: var(--hover-color);
 }
+
 body {
   width: 1440px;
   margin: 0 auto;
