@@ -43,7 +43,10 @@ INSERT INTO tag (id_tag, name_tag) VALUES
 (24, 'Western / Aventure'),
 (25, 'Japon / Traditionnel'),
 (26, 'Glamour / Mode'),
-(27, 'Rétro / Vintage');
+(27, 'Rétro / Vintage'),
+(28, 'Chapeau'),
+(29, 'Chaussures'),
+(30, 'Armes');
 
 -- deguisements
 INSERT INTO product (name_product, description, stock, price_ht, price_ttc, price_discount, image_link, category, id_subcategory, rating_product) VALUES
@@ -89,7 +92,7 @@ INSERT INTO product (name_product, description, stock, price_ht, price_ttc, pric
 ('Princesse', 'Avec sa robe majestueuse et sa couronne scintillante, votre poule règne sur le royaume du perchoir. Étiquette stricte : ne picorez qu’avec grâce.', 24, 17.88, 21.46, 21.46, 'princesse.png', 'déguisement', 1, 4),
 ('Prisonnier', 'Barreaux fictifs et rayures réalistes, ce costume donne à votre poule un petit air rebelle. "Je suis innocente, j’ai été piquée à tort !"', 28, 22.87, 27.44, 27.44, 'prisonnier.png', 'déguisement', 3, 4),
 ('Samouraï', 'Discipline, honneur et sabre de blé. Le costume de samouraï transforme votre poule en guerrière du soleil levant, gardienne du dojo du pondoir.', 12, 23.53, 28.24, 28.24, 'samourai.png', 'déguisement', 2, 4),
-('Soldat militaire', 'Pour une poule toujours prête à défendre le territoire contre les intrusions félines. Tenue camouflée, œufs en rang, mission accomplie.', 36, 18.23, 21.88, 21.88, 'soldat-militaire.png', 'déguisement', 3, 4),
+('Militaire', 'Pour une poule toujours prête à défendre le territoire contre les intrusions félines. Tenue camouflée, œufs en rang, mission accomplie.', 36, 18.23, 21.88, 21.88, 'soldat-militaire.png', 'déguisement', 3, 4),
 ('Sorcière', 'Chapeau pointu, robe noire et grimoire de graines, votre poule devient une magicienne du crépuscule. Gare aux sorts de picage et potions de picotements.', 13, 19.89, 23.87, 23.87, 'sorciere.png', 'déguisement', 1, 4),
 ('Spiderman', 'Une piqûre radioactive et la voilà prête à escalader le grillage du poulailler. Elle ne pond plus, elle tisse ! "Avec un grand bec vient une grande responsabilité."', 49, 23.41, 28.09, 28.09, 'spiderman.png', 'déguisement', 5, 4),
 ('Sushi', 'Créez la confusion et l’hilarité : une poule déguisée en sushi, c’est une fusion culinaire. À consommer avec humour uniquement.', 24, 18.61, 22.33, 22.33, 'sushi.png', 'déguisement', 9, 4),
@@ -103,7 +106,7 @@ INSERT INTO product (name_product, description, stock, price_ht, price_ttc, pric
 ('Casque de Chevalier', 'Protège le noble crâne de ta poule en mission. Idéal pour les joutes amicales dans le jardin ou pour surveiller son fief depuis la mangeoire. Le devoir avant la pondeuse !', 40, 18.47, 22.16, 17.73, 'casque-chevalier.png', 'accessoire', 2, 4),
 ('Casque Militaire', 'Camouflée et prête à l’action ! Ce casque transforme ta poule en stratège de terrain, parfaite pour planifier des assauts sur le compost ou des opérations de reconnaissance au potager.', 35, 20.32, 24.38, 19.50, 'casque-militaire.png', 'accessoire', 3, 4),
 ('Casque de Viking', 'Cornes imposantes et attitude farouche. Ce casque confère à ta poule la force d’un drakkar ! Idéal pour partir à la conquête du jardin ou piller la mangeoire de la voisine.', 28, 19.15, 22.98, 18.38, 'casque-viking.png', 'accessoire', 2, 4),
-('Champignon de Nain', 'Une ambiance de conte de fées au plumage ! Ce chapeau-champignon donne à ta poule un look mystique. Parfait pour se fondre dans le décor de la forêt enchantée (ou le pot de fleurs).', 43, 10.50, 12.60, 12.60, 'champignon-nain.png', 'accessoire', 6, 4),
+('Champignon de Nain de jardin', 'Une ambiance de conte de fées au plumage ! Ce chapeau-champignon donne à ta poule un look mystique. Parfait pour se fondre dans le décor de la forêt enchantée (ou le pot de fleurs).', 43, 10.50, 12.60, 12.60, 'champignon-nain.png', 'accessoire', 6, 4),
 ('Chapeau coquelicot', 'Poétique et printanier, ce chapeau fait de ta poule une fleur parmi les plumes. Idéal pour les shooting champêtres ou les bals de la basse-cour.', 50, 14.76, 17.71, 17.71, 'chapeau-coquelicot.png', 'accessoire', 8, 4),
 ('Chapeau de Cowboy', 'Yee-haw ! Ce chapeau envoie ta poule tout droit dans un western. Elle gardera le poulailler avec style, tout en grattant la terre comme une véritable shérif du Far West.', 30, 16.95, 20.34, 20.34, 'chapeau-cowboy.png', 'accessoire', 5, 4),
 ('Chapeau de Cuisinier', 'Chef Coq entre en cuisine ! Avec ce chapeau, ta poule devient la star du barbecue ou du brunch. Idéal pour préparer la meilleure omelette de la basse-cour (sans sacrifier ses propres oeufs).', 45, 12.30, 14.76, 14.76, 'toque-cuisinier.png', 'accessoire', 3, 4),
@@ -112,7 +115,7 @@ INSERT INTO product (name_product, description, stock, price_ht, price_ttc, pric
 ("Chapeau d'Infirmière", 'Pour une poule attentive au bien-être du poulailler. Ce chapeau rouge et blanc rassure les poussins et veille au moral des troupes. Becs et soins au programme !', 50, 13.90, 16.68, 16.68, 'chapeau-infirmiere.png', 'accessoire', 3, 4),
 ('Chapeau de Link', 'Une aventure légendaire commence. Avec ce bonnet vert emblématique, ta poule devient une héroïne de la nature, prête à affronter les vers les plus redoutables.', 35, 18.60, 22.32, 22.32, 'chapeau-link.png', 'accessoire', 1, 4),
 ('Chapeau de Lutin', 'Petit et malin, ce chapeau transforme ta poule en assistante du Père Noël ou en farceuse professionnelle. Parfait pour les fêtes et les oeufs surprises.', 40, 14.22, 17.07, 17.07, 'chapeau-lutin.png', 'accessoire', 2, 4),
-('Chapeau de Nain', 'Ta poule devient un ouvrier mystique du jardin. Ce chapeau pointu fait d’elle une créature légendaire... avec des pattes. Idéal pour veiller sur les carottes.', 55, 13.56, 16.27, 16.27, 'chapeau-nain.png', 'accessoire', 6, 4),
+('Chapeau de Nain de jardin', 'Ta poule devient un ouvrier mystique du jardin. Ce chapeau pointu fait d’elle une créature légendaire... avec des pattes. Idéal pour veiller sur les carottes.', 55, 13.56, 16.27, 16.27, 'chapeau-nain.png', 'accessoire', 6, 4),
 ('Chapeau et nez de Clown', 'Un look hilarant pour la star du poulailler. Entre roulades dans la paille et jonglage avec les vers, elle fait rire toute la basse-cour. Attention aux poulettes sensibles.', 50, 10.35, 12.42, 12.42, 'chapeau-nez-clown.png', 'accessoire', 4, 4),
 ('Chapeau de pailles', 'Rustique et stylé, ce chapeau donne à ta poule l’air d’une fermiere aguerrie. Parfait pour la sieste sous le soleil ou le picorage à l’ancienne.', 60, 9.47, 11.36, 11.36, 'chapeau-paille-cactus.png', 'accessoire', 9, 4),
 ('Chapeau de Pinup', 'Un vent de glamour souffle sur le poulailler ! Ce chapeau vintage est idéal pour les poules qui aiment être admirées (et elles ont raison).', 38, 16.88, 20.26, 20.26, 'chapeau-pinup.png', 'accessoire', 6, 4),
@@ -122,7 +125,7 @@ INSERT INTO product (name_product, description, stock, price_ht, price_ttc, pric
 ('Chapeau de Samouraï', 'Honneur, discipline et crête créstée. Ce couvre-chef métamorphose ta poule en guerrière silencieuse. Elle coupera le vent avant de couper du pain.', 30, 19.34, 23.21, 23.21, 'chapeau-samourai.png', 'accessoire', 2, 4),
 ('Chapeau de Sorcière', 'Mystérieuse et un peu perchée, elle sait préparer des potions à base de vers et d’orties. Ce chapeau pointu est idéal pour des sortilèges de picorage.', 55, 13.76, 16.51, 16.51, 'chapeau-sorciere.png', 'accessoire', 1, 4),
 ('Chaussures Pots de fleurs', 'Des chaussures ? Non. De l’art de jardinage ambulant ! Ta poule devient la fierté de tout balcon fleuri. Elle piétine le style comme personne.', 22, 25.43, 30.52, 30.52, 'chaussure-pots-cactus.png', 'accessoire', 9, 4),
-('Couteau de Cuisine', "Une déco redoutable accrochée au flanc. Avec ce faux couteau, ta poule a l'air d'un chef... ou d'un thriller à plumes. Suspense garanti.", 40, 15.88, 19.06, 19.06, 'couteau-chucky.png', 'accessoire', 3, 4),
+('Couteau de Chucky', "Une déco redoutable accrochée au flanc. Avec ce faux couteau, ta poule a l'air d'un chef... ou d'un thriller à plumes. Suspense garanti.", 40, 15.88, 19.06, 19.06, 'couteau-chucky.png', 'accessoire', 3, 4),
 ('Cuillère de Cuisinier', 'Accessoire incontournable pour la poule gourmette. Elle goûte tout, juge avec bec précis et garde toujours sa cuillère prête au cas où.', 50, 12.74, 15.29, 15.29, 'cuillere-cuisinier.png', 'accessoire', 3, 4),
 ('Epee de Link', 'La quête de l’oeuf d’or commence. Avec cette épée symbolique, ta poule brave tous les dangers du jardin. Un héros ne craint pas les limaces !', 35, 24.22, 29.06, 29.06, 'epee-link.png', 'accessoire', 1, 4),
 ('Fusil de Militaire', 'Armée jusqu’au bec, ta poule est prête à tout pour protéger sa bande. Ce jouet stratégique donne une allure imposante et beaucoup d’autorégie. Sir, oui sir !', 20, 27.48, 32.98, 32.98, 'famas-militaire.png', 'accessoire', 3, 4),
@@ -234,74 +237,109 @@ INSERT INTO product_tag (id_product, id_tag) VALUES
 (49, 2), -- Baguette de Fée - ID: 49 -> Tag: Magique / Féerique, Élégance
 (49, 19),
 (49, 16),
+(49, 30),
 (50, 3), -- Casque de Chevalier - ID: 50 -> Tag: Chevalier / Héroïque, Fantasy / Médiéval
 (50, 6),
+(50, 28),
 (51, 5), -- Casque Militaire - ID: 51 -> Tag: Militaire / Camouflage, Héroïque
 (51, 12),
+(51, 28),
 (52, 8), -- Casque de Viking - ID: 52 -> Tag: Viking / Guerrier, Fantasy / Médiéval
 (52, 6),
+(52, 28),
 (53, 27), -- Champignon de Nain - ID: 53 -> Tag: Rétro / Vintage, Nature / Jardin / Fleur
 (53, 7),
+(53, 30),
 (54, 13), -- Chapeau coquelicot - ID: 54 -> Tag: Nature / Jardin / Fleur, Plante / Nature
 (54, 7),
+(54, 28),
 (55, 9), -- Chapeau de Cowboy - ID: 55 -> Tag: Far West / Cowboy, Aventure / Héros
 (55, 24),
+(55, 28),
 (56, 21), -- Chapeau de Cuisinier - ID: 56 -> Tag: Gastronomie / Cuisine, Comique / Humour
 (56, 11),
+(56, 28),
 (57, 2), -- Chapeau de Fée - ID: 57 -> Tag: Magique / Féerique, Mystique
 (57, 16),
+(57, 28),
 (58, 19), -- Chapeau d'hotesse de l'air - ID: 58 -> Tag: Élégance, Mode
 (58, 26),
+(58, 28),
 (59, 19), -- Chapeau d'Infirmière - ID: 59 -> Tag: Militaire / Camouflage, Élégance
 (59, 12),
+(59, 28),
 (60, 3), -- Chapeau de Link - ID: 60 -> Tag: Fantasy / Médiéval, Chevalier / Héroïque
 (60, 6),
+(60, 28),
 (61, 17), -- Chapeau de Lutin - ID: 61 -> Tag: Noël, Espiègle / Joyeux
 (61, 18),
+(61, 28),
 (62, 27), -- Chapeau de Nain - ID: 62 -> Tag: Rétro / Vintage, Nature / Jardin / Fleur
 (62, 7),
+(62, 28),
 (63, 11), -- Chapeau et nez de Clown - ID: 63 -> Tag: Comique / Humour, Aventure / Héros
 (63, 5),
+(63, 28),
 (64, 7), -- Chapeau de pailles - ID: 64 -> Tag: Nature / Jardin / Fleur, Festif
 (64, 18),
+(64, 28),
 (65, 27), -- Chapeau de Pinup - ID: 65 -> Tag: Glamour / Mode, Rétro / Vintage
 (65, 26),
+(65, 28),
 (66, 5), -- Chapeau de Pirate - ID: 66 -> Tag: Aventure / Héros, Western / Aventure
 (66, 24),
+(66, 28),
 (67, 5), -- Chapeau de Policier - ID: 67 -> Tag: Militaire / Camouflage, Héroïque
 (67, 12),
+(67, 28),
 (68, 12), -- Chapeau de Pompier - ID: 68 -> Tag: Militaire / Camouflage, Comique / Humour
 (68, 5),
+(68, 28),
 (69, 25), -- Chapeau de Samouraï - ID: 69 -> Tag: Japon / Traditionnel, Guerrier
 (69, 8),
+(69, 28),
 (70, 1), -- Chapeau de Sorcière - ID: 70 -> Tag: Halloween / Sorcière, Magique / Féerique
 (70, 2),
+(70, 28),
 (71, 7), -- Chaussures Pots de fleurs - ID: 71 -> Tag: Nature / Jardin / Fleur, Plante / Nature
 (71, 13),
+(71, 29),
 (72, 21), -- Couteau de Cuisine - ID: 72 -> Tag: Gastronomie / Cuisine, Comique / Humour
 (72, 11),
+(72, 30),
 (73, 21), -- Cuillère de Cuisinier - ID: 73 -> Tag: Gastronomie / Cuisine, Comique / Humour
 (73, 11),
+(73, 30),
 (74, 3), -- Epee de Link - ID: 74 -> Tag: Fantasy / Médiéval, Chevalier / Héroïque
 (74, 6),
+(74, 30),
 (75, 5), -- Fusil de Militaire - ID: 75 -> Tag: Militaire / Camouflage, Aventure / Héros
 (75, 12),
+(75, 30),
 (76, 8), -- hache de viking ID 76
 (76, 6),
+(76, 30),
 (77, 25), -- shuriken ninja ID 77
 (77, 8),
+(77, 30),
 (78, 11), -- perruque blonde ID 78
 (78, 26),
+(78, 28),
 (79, 27), -- perruque lunette années 70 ID 79
 (79, 18),
+(79, 28),
 (80, 11), -- perruque rousse ID 80
 (80, 26),
+(80, 28),
 (81, 9), -- revolver cowboy ID 81
 (81, 24),
+(81, 30),
 (82, 10), -- sabre laser ID 82
 (82, 5),
+(82, 30),
 (83, 19), -- sac hotesse ID 83
-(83, 26);
+(83, 26),
+(83, 30);
 
 INSERT INTO comment (rating_comment, comment, date_comment, admin_reply, id_product, id_user)
 VALUES 
