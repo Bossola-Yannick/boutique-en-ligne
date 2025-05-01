@@ -268,7 +268,6 @@
     min-height: 3rem;
     margin: 0 auto;
 }
-
 .button-add {
     background-color: var(--hover-color);
     height: fit-content;
@@ -283,10 +282,14 @@
     font-size: 1.1rem;
     letter-spacing: 2px;
     cursor: pointer;
+    transition: all 0.3s ease-in-out;
 }
 .button-add img {
     width: fit-content;
     height: 3rem;
+}
+.button-add:hover {
+    background-color: var(--primary-color);
 }
 
 /* detail footer */

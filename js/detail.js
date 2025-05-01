@@ -271,4 +271,11 @@ const createCard = (
   }
   card.appendChild(infoDiv);
   boxToAppend.appendChild(card);
+
+  card.addEventListener("click", () => {
+    const product = card.getAttribute("value");
+    window.location.href = `../vue/detail.php?product=${encodeURIComponent(
+      product
+    )}`;
+  });
 };
