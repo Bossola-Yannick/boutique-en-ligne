@@ -220,10 +220,16 @@ const createCard = (
   card.classList.add("card-box");
   card.setAttribute("value", name_product);
 
+  const imgDiscount = document.createElement("img");
+  imgDiscount.classList.add("card-img-discount");
+  imgDiscount.setAttribute("src", "../assets/images/icones/discount.png");
+  card.appendChild(imgDiscount);
+
   const divImg = document.createElement("div");
   divImg.classList.add("card-img-box");
 
   const cardImage = document.createElement("img");
+  cardImage.classList.add("card-img-product");
   if (category === "déguisement") {
     cardImage.setAttribute("src", `../assets/images/cosplay/${image}`);
   } else {
@@ -264,6 +270,7 @@ const createCard = (
     }
     if (cardDiscountPriceBox) {
       cardDiscountPriceBox.style.display = "flex";
+      imgDiscount.style.display = "block";
       card.style.backgroundColor = "var(--discount-color)";
       card.style.border = "4px solid var(--discount-color)";
       infoDiv.style.color = "black";
