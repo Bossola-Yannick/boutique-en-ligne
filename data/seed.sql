@@ -108,7 +108,7 @@ INSERT INTO product (name_product, description, stock, price_ht, price_ttc, pric
 ('Chapeau de Cowboy', 'Yee-haw ! Ce chapeau envoie ta poule tout droit dans un western. Elle gardera le poulailler avec style, tout en grattant la terre comme une véritable shérif du Far West.', 30, 16.95, 20.34, 20.34, 'chapeau-cowboy.png', 'accessoire', 5, 4),
 ('Chapeau de Cuisinier', 'Chef Coq entre en cuisine ! Avec ce chapeau, ta poule devient la star du barbecue ou du brunch. Idéal pour préparer la meilleure omelette de la basse-cour (sans sacrifier ses propres oeufs).', 45, 12.30, 14.76, 14.76, 'toque-cuisinier.png', 'accessoire', 3, 4),
 ('Chapeau de Fée', 'Un chapeau conique scintillant pour ajouter un zeste de magie à ses aventures. Elle peut maintenant faire apparaître des miettes par enchantement (ou gratter la terre pour les trouver).', 60, 11.99, 14.39, 14.39, 'chapeau-fee.png', 'accessoire', 1, 4),
-("Chapeau d'hotesse de l'air", 'Coiffée pour décoller ! Ce chapeau donne à ta poule un air distingué. Elle ne se contente plus de voler du grain, elle le distribue avec le sourire.', 30, 17.62, 21.14, 21.14, 'chapeau-hotesse.png', 'accessoire', 3, 4),
+("Chapeau d'Hôtesse de l'air", 'Coiffée pour décoller ! Ce chapeau donne à ta poule un air distingué. Elle ne se contente plus de voler du grain, elle le distribue avec le sourire.', 30, 17.62, 21.14, 21.14, 'chapeau-hotesse.png', 'accessoire', 3, 4),
 ("Chapeau d'Infirmière", 'Pour une poule attentive au bien-être du poulailler. Ce chapeau rouge et blanc rassure les poussins et veille au moral des troupes. Becs et soins au programme !', 50, 13.90, 16.68, 16.68, 'chapeau-infirmiere.png', 'accessoire', 3, 4),
 ('Chapeau de Link', 'Une aventure légendaire commence. Avec ce bonnet vert emblématique, ta poule devient une héroïne de la nature, prête à affronter les vers les plus redoutables.', 35, 18.60, 22.32, 22.32, 'chapeau-link.png', 'accessoire', 1, 4),
 ('Chapeau de Lutin', 'Petit et malin, ce chapeau transforme ta poule en assistante du Père Noël ou en farceuse professionnelle. Parfait pour les fêtes et les oeufs surprises.', 40, 14.22, 17.07, 17.07, 'chapeau-lutin.png', 'accessoire', 2, 4),
@@ -133,12 +133,12 @@ INSERT INTO product (name_product, description, stock, price_ht, price_ttc, pric
 ('Perruque Rousse', 'Du caractère et des plumes flamboyantes. Cette perruque donne à ta poule une aura de diva intrépide. Elle mène la danse du poulailler, un pas de bec à la fois.', 50, 17.64, 21.17, 21.17, 'perruque-rousse-chucky.png', 'accessoire', 5, 4),
 ('Revolver de Cowboy', 'Pan ! Le shérif est en ville. Ce mini revolver accroché au plumage suffit à imposer le respect dans toute la basse-cour. Elle tire plus vite que son ombre… surtout quand il s’agit de voler une graine.', 35, 22.10, 26.52, 26.52, 'revolver-cowboy.png', 'accessoire', 5, 4),
 ('Sabre laser de Jedi', "La Poule Réveil a son arme. Avec ce sabre lumineux (en plastique, hein), elle garde l'équilibre dans la Force du Picorage. Que le grain soit avec toi.", 30, 27.92, 33.50, 33.50, 'sabre-laser-jedi.png', 'accessoire', 1, 4),
-("Sac d'hotesse de l'air", 'Voyageuse élégante, ta poule transporte ses essentiels : miettes de pain, plume de rechange et un plan de vol. Le style cabine, mais version basse-cour.', 20, 22.50, 27.00, 27.00, 'sac-hotesse.png', 'accessoire', 3, 4);
+("Sac d'Hôtesse de l'air", 'Voyageuse élégante, ta poule transporte ses essentiels : miettes de pain, plume de rechange et un plan de vol. Le style cabine, mais version basse-cour.', 20, 22.50, 27.00, 27.00, 'sac-hotesse.png', 'accessoire', 3, 4);
 
 INSERT INTO product_tag (id_product, id_tag) VALUES
 (1, 1),   -- Abeille - ID: 1 -> Tag: Halloween / Sorcière, Magique / Féerique
 (1, 2),
-(2, 2),   -- Alien - ID: 2 -> Tag: Magique / Féerique, Science-fiction / Futuriste
+(2, 5),   -- Alien - ID: 2 -> Tag: Magique / Féerique, Science-fiction / Futuriste
 (2, 10),
 (3, 23),   -- Ananas - ID: 3 -> Tag: Tropical / Fruit, Gastronomie / Cuisine
 (3, 21),
@@ -285,7 +285,23 @@ INSERT INTO product_tag (id_product, id_tag) VALUES
 (74, 3), -- Epee de Link - ID: 74 -> Tag: Fantasy / Médiéval, Chevalier / Héroïque
 (74, 6),
 (75, 5), -- Fusil de Militaire - ID: 75 -> Tag: Militaire / Camouflage, Aventure / Héros
-(75, 12);
+(75, 12),
+(76, 8), -- hache de viking ID 76
+(76, 6),
+(77, 25), -- shuriken ninja ID 77
+(77, 8),
+(78, 11), -- perruque blonde ID 78
+(78, 26),
+(79, 27), -- perruque lunette années 70 ID 79
+(79, 18),
+(80, 11), -- perruque rousse ID 80
+(80, 26),
+(81, 9), -- revolver cowboy ID 81
+(81, 24),
+(82, 10), -- sabre laser ID 82
+(82, 5),
+(83, 19), -- sac hotesse ID 83
+(83, 26);
 
 INSERT INTO comment (rating_comment, comment, date_comment, admin_reply, id_product, id_user)
 VALUES 

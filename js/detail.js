@@ -8,7 +8,7 @@ const documentName = document.querySelector("title");
 const productBox = document.getElementById("product-box");
 const recommandBox = document.getElementById("recommand-box");
 const commentsBox = document.getElementById("comments-box");
-console.log(recommandBox);
+console.log(recommandBox); // <-- AJOUT: Vérifier si recommandBox est trouvé
 
 fetch(`../controller/DetailController.php${productName}`, {
   method: "GET",
@@ -65,15 +65,17 @@ fetch(`../controller/DetailController.php${productName}`, {
       .filter((reco) => reco.name_product !== product.name_product)
       .slice(0, 5);
 
-    // createCard(
-    //   product.category,
-    //   product.image_link,
-    //   product.name_product,
-    //   product.price_ttc,
-    //   product.price_discount,
-    //   recommandBox
-    // );
-    console.log(newRecommand);
+    filterRecommand.forEach((reco) => {
+      createCard(
+        reco.category,
+        reco.image_link,
+        reco.name_product,
+        reco.price_ttc,
+        reco.price_discount,
+        recommandBox
+      );
+    });
+    // console.log(newRecommand);
   })
   .catch((error) => console.error("Erreur fetch :", error));
 
@@ -200,7 +202,10 @@ const createCard = (
   boxToAppend
 ) => {
   const card = document.createElement("div");
-  card.setAttribute("id", "card-box");
+  card.classList.add("card-box");
+
+  const divImg = document.createElement("div");
+  divImg.classList.add("card-img-box");
 
   const cardImage = document.createElement("img");
   if (category === "déguisement") {
@@ -208,50 +213,46 @@ const createCard = (
   } else {
     cardImage.setAttribute("src", `../assets/images/accessories/${image}`);
   }
-  card.appendChild(cardImage);
+
+  divImg.appendChild(cardImage);
+  card.appendChild(divImg);
 
   const infoDiv = document.createElement("div");
-  infoDiv.classList.add("card-info-box");
-
+  infoDiv.classList.add("card-infos-box");
   infoDiv.innerHTML = `
         <h3>${name_product}</h3>
         <div class="card-infos">
           <div class="card-price-box">
             <div class="card-default-box">
-              <p class="price">${price_ttc}€</p>
+              <p class="card-price">${price_ttc}€</p>
             </div>
             <div class="card-discount-box">
               <div class="old-price">
-                <p class="strike-price">${price_ttc}€</p>
+                <p class="card-strike-price">${price_ttc}€</p>
               </div>
-                <p class="price red">${price_discount}€</p>
+                <p class="card-price">${price_discount}€</p>
             </div>
           </div>
-          <button type="submit" id="card-button-add" class="card-button-add" value="${name_product}">
+          <button type="submit" class="card-button-add" value="${name_product}">
             <img src="../assets/images/icones/add.png"/>
           </button>
         </div>
   `;
 
-  const cardDiscountPrice = document.querySelectorAll(".card-discount-box");
-  const cardDefaultPrice = document.querySelectorAll(".card-default-box");
+  const cardDefaultPriceBox = infoDiv.querySelector(".card-default-box");
+  const cardDiscountPriceBox = infoDiv.querySelector(".card-discount-box");
 
   if (price_discount < price_ttc) {
-    cardDiscountPrice.forEach((card) => {
-      card.style.display = "flex";
-    });
-    cardDefaultPrice.forEach((card) => {
-      card.style.display = "none";
-    });
-  } else if (price_discount === price_ttc) {
-    cardDiscountPrice.forEach((card) => {
-      card.style.display = "none";
-    });
-    cardDefaultPrice.forEach((card) => {
-      card.style.display = "flex";
-    });
+    if (cardDefaultPriceBox) {
+      cardDefaultPriceBox.style.display = "none";
+    }
+    if (cardDiscountPriceBox) {
+      cardDiscountPriceBox.style.display = "flex";
+      card.style.backgroundColor = "var(--discount-color)";
+      card.style.border = "4px solid var(--discount-color)";
+      infoDiv.style.color = "black";
+    }
   }
-
   card.appendChild(infoDiv);
   boxToAppend.appendChild(card);
 };
