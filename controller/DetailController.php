@@ -70,10 +70,6 @@ switch ($numberTags) {
         break;
 }
 
-
-
-
-
 $recommand = $product->recommand($tagOne, $tagTwo);
 foreach ($recommand as $value) {
     $allInfos['recommand'][] =

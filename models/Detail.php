@@ -17,13 +17,13 @@ class Detail extends ConnexionBdd
     {
         $query = "SELECT 
         product.id_product, product.name_product, product.description, product.stock, 
-        product.price_ttc, product.price_discount, product.image_link, product.category, rating_product,
+        product.price_ttc, product.price_discount, product.image_link, product.category, product.rating_product,
         tag.id_tag, tag.name_tag,
         comment.rating_comment, comment.comment, comment.date_comment, comment.admin_reply, comment.id_user,
         user.email
         FROM product 
-        JOIN product_tag ON product_tag.id_product = product.id_product        
-        JOIN tag ON tag.id_tag = product_tag.id_tag
+        LEFT JOIN product_tag ON product_tag.id_product = product.id_product        
+        LEFT JOIN tag ON tag.id_tag = product_tag.id_tag
         LEFT JOIN comment ON comment.id_product = product.id_product
         LEFT JOIN user ON comment.id_user = user.id_user
         WHERE name_product = :name";
@@ -36,11 +36,11 @@ class Detail extends ConnexionBdd
     {
         $query = "SELECT
         tag.id_tag, tag.name_tag, 
-        product.id_product, product.name_product, product.price_ttc, product.price_discount, product.image_link
+        product.id_product, product.name_product, product.price_ttc, product.price_discount, product.image_link, product.category
         FROM tag
         JOIN product_tag ON product_tag.id_tag = tag.id_tag
         JOIN product ON product_tag.id_product = product.id_product
-        WHERE tag.name_tag IN (:tagOne, :tagTwo)
+        WHERE tag.name_tag IN (:tagOne, :tagTwo) AND product.stock > 0
         GROUP BY product.id_product, product.name_product, product.price_ttc, product.price_discount, product.image_link
         ";
         $queryStmt = $this->bdd->prepare($query);

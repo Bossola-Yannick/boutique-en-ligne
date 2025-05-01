@@ -2,10 +2,13 @@ const productName = window.location.search;
 
 // console.log(productName);
 
+const documentName = document.querySelector("title");
+
 // elements
 const productBox = document.getElementById("product-box");
 const recommandBox = document.getElementById("recommand-box");
 const commentsBox = document.getElementById("comments-box");
+console.log(recommandBox);
 
 fetch(`../controller/DetailController.php${productName}`, {
   method: "GET",
@@ -20,11 +23,31 @@ fetch(`../controller/DetailController.php${productName}`, {
     let comments = data.comments;
     let recommand = data.recommand;
 
-    console.log(product);
-    console.log(tags);
-    console.log(comments);
-    console.log(recommand);
+    //gestion des tags
+    let tagList = [];
+    if (tags && tags.length >= 1) {
+      tags.forEach((tag) => {
+        if (tag && tag.includes("/")) {
+          let newTag = tag.split("/");
+          newTag.forEach((tag) => {
+            tagList.push(tag);
+          });
+        } else if (tag) {
+          tagList.push(tag);
+        }
+      });
+    } else {
+      tagList = tags;
+    }
 
+    // gestion du titre du document (balise title)
+    if (product.category === "déguisement") {
+      documentName.innerText = `Déguisement: ${product.name_product}`;
+    } else {
+      documentName.innerText = product.name_product;
+    }
+
+    // création de la partie detail du produit
     createDetail(
       product.category,
       product.image_link,
@@ -34,8 +57,23 @@ fetch(`../controller/DetailController.php${productName}`, {
       product.price_discount,
       product.rating_product,
       product.stock,
-      tags
+      tagList
     );
+
+    // gestion des recommandations
+    const filterRecommand = recommand
+      .filter((reco) => reco.name_product !== product.name_product)
+      .slice(0, 5);
+
+    // createCard(
+    //   product.category,
+    //   product.image_link,
+    //   product.name_product,
+    //   product.price_ttc,
+    //   product.price_discount,
+    //   recommandBox
+    // );
+    console.log(newRecommand);
   })
   .catch((error) => console.error("Erreur fetch :", error));
 
@@ -97,7 +135,8 @@ const createDetail = (
             <div class="price-stock-box">
                 <p class="stock-box">Stock: <span>${stock}</span></p>
                 <div id="default" class="price-box">
-                    <p>Prix: <span class="price">${price_ttc}€</span></p>
+                    <p>Prix: </p>
+                    <p class="price">${price_ttc}€</p>
                 </div>
                 <div id="discount" class="discount-box">
                   <div class="old-price">
@@ -109,7 +148,8 @@ const createDetail = (
             </div>
         </div>
         <div class="button-add-cart">
-            <button type="submit" id="button-add" class="button-add">
+            <p class="bold red no-stock">Rupture de stock</p>
+            <button type="submit" id="button-add" class="button-add" value=${name}>
             Ajouter au panier
             <img src="../assets/images/icones/add.png"/>
             </button>
@@ -119,12 +159,14 @@ const createDetail = (
   const footerRightBox = document.createElement("div");
   footerRightBox.classList.add("detail-footer");
 
-  tags.forEach((tag) => {
-    const tagDiv = document.createElement("div");
-    tagDiv.classList.add("tag-box");
-    tagDiv.innerHTML = `<p>${tag}</p>`;
-    footerRightBox.appendChild(tagDiv);
-  });
+  if (tags) {
+    tags.forEach((tag) => {
+      const tagDiv = document.createElement("div");
+      tagDiv.classList.add("tag-box");
+      tagDiv.innerHTML = `<p>${tag}</p>`;
+      footerRightBox.appendChild(tagDiv);
+    });
+  }
 
   detailProduct.appendChild(footerRightBox);
   rightBox.appendChild(detailProduct);
@@ -138,7 +180,78 @@ const createDetail = (
     document.getElementById("discount").style.display = "none";
     document.getElementById("default").style.display = "flex";
   }
+
+  if (stock === 0) {
+    document.getElementById("button-add").style.display = "none";
+    document.querySelector(".no-stock").style.display = "block";
+  } else {
+    document.getElementById("button-add").style.display = "flex";
+    document.querySelector(".no-stock").style.display = "none";
+  }
 };
 
-// ajouter if pour price box
-//! ajouter if stock 0 , hide button + change texte
+// créer la card du produit
+const createCard = (
+  category,
+  image,
+  name_product,
+  price_ttc,
+  price_discount,
+  boxToAppend
+) => {
+  const card = document.createElement("div");
+  card.setAttribute("id", "card-box");
+
+  const cardImage = document.createElement("img");
+  if (category === "déguisement") {
+    cardImage.setAttribute("src", `../assets/images/cosplay/${image}`);
+  } else {
+    cardImage.setAttribute("src", `../assets/images/accessories/${image}`);
+  }
+  card.appendChild(cardImage);
+
+  const infoDiv = document.createElement("div");
+  infoDiv.classList.add("card-info-box");
+
+  infoDiv.innerHTML = `
+        <h3>${name_product}</h3>
+        <div class="card-infos">
+          <div class="card-price-box">
+            <div class="card-default-box">
+              <p class="price">${price_ttc}€</p>
+            </div>
+            <div class="card-discount-box">
+              <div class="old-price">
+                <p class="strike-price">${price_ttc}€</p>
+              </div>
+                <p class="price red">${price_discount}€</p>
+            </div>
+          </div>
+          <button type="submit" id="card-button-add" class="card-button-add" value="${name_product}">
+            <img src="../assets/images/icones/add.png"/>
+          </button>
+        </div>
+  `;
+
+  const cardDiscountPrice = document.querySelectorAll(".card-discount-box");
+  const cardDefaultPrice = document.querySelectorAll(".card-default-box");
+
+  if (price_discount < price_ttc) {
+    cardDiscountPrice.forEach((card) => {
+      card.style.display = "flex";
+    });
+    cardDefaultPrice.forEach((card) => {
+      card.style.display = "none";
+    });
+  } else if (price_discount === price_ttc) {
+    cardDiscountPrice.forEach((card) => {
+      card.style.display = "none";
+    });
+    cardDefaultPrice.forEach((card) => {
+      card.style.display = "flex";
+    });
+  }
+
+  card.appendChild(infoDiv);
+  boxToAppend.appendChild(card);
+};
