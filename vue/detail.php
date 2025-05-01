@@ -7,7 +7,10 @@ include '../components/search.php';
 
 <section id="product-box"></section>
 <hr class="separation">
-<section id="recommand-box"></section>
+<section class="recommand-box">
+    <h2>Nos recommandations:</h2>
+    <div id="recommand-items"></div>
+</section>
 <hr class="separation">
 <section id="comments-box"></section>
 

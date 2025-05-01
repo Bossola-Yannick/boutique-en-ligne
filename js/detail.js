@@ -1,14 +1,10 @@
 const productName = window.location.search;
-
-// console.log(productName);
-
 const documentName = document.querySelector("title");
 
 // elements
 const productBox = document.getElementById("product-box");
-const recommandBox = document.getElementById("recommand-box");
+const recommandBox = document.getElementById("recommand-items");
 const commentsBox = document.getElementById("comments-box");
-console.log(recommandBox); // <-- AJOUT: Vérifier si recommandBox est trouvé
 
 fetch(`../controller/DetailController.php${productName}`, {
   method: "GET",
@@ -22,8 +18,6 @@ fetch(`../controller/DetailController.php${productName}`, {
     let tags = data.tags;
     let comments = data.comments;
     let recommand = data.recommand;
-
-    console.log(tags);
 
     //gestion des tags
     let tagList = [];
@@ -263,6 +257,7 @@ const createCard = (
 
   const cardDefaultPriceBox = infoDiv.querySelector(".card-default-box");
   const cardDiscountPriceBox = infoDiv.querySelector(".card-discount-box");
+  const cardButton = infoDiv.querySelector(".card-button-add");
 
   if (price_discount < price_ttc) {
     if (cardDefaultPriceBox) {
@@ -284,5 +279,10 @@ const createCard = (
     window.location.href = `../vue/detail.php?product=${encodeURIComponent(
       product
     )}`;
+  });
+
+  cardButton.addEventListener("click", (e) => {
+    e.stopPropagation();
+    console.log("ajout");
   });
 };
