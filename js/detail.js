@@ -79,8 +79,8 @@ const createDetail = (
             <div class="detail-title">
                 <h2>${name}</h2>
                 <div class="rating-box">
-                    <p>${rating}</p>
-                    <img class="star-rating" src="../assets/images/icones/icon-rating.png">
+                    <p>note: ${rating} / 5</p>
+                    <img src="../assets/images/icones/icon-rating.png"/>
                 </div>
             </div>  
         
@@ -92,12 +92,12 @@ const createDetail = (
                 </div>
                 <div class="price-stock-box">
                     <p>Stock: <span>${stock}</span></p>
-                    <div class="price-box">
-                        <p>Prix:<span class="default-price">${price_ttc}</span></p>
+                    <div id="default" class="price-box">
+                        <p>Prix: <span class="default-price">${price_ttc}€</span></p>
                     </div>
-                    <div class="discount-box">
-                        <p>Prix:<span class="price ">${price_ttc}</span></p>
-                        <p class="default-price red">${price_discount}</p>
+                    <div id="discount" class="discount-box">
+                        <p>Prix: <span class="price">${price_ttc}€</span></p>
+                        <p class="default-price red">${price_discount}€</p>
                     </div>
                 </div>
                 <div class="button-add-cart">
@@ -120,6 +120,16 @@ const createDetail = (
 
   rightBox.appendChild(footerRightBox);
   productBox.appendChild(rightBox);
+
+  // affiche la bonne boite de prix
+  if (price_discount < price_ttc) {
+    document.getElementById("discount").style.display = "flex";
+    document.getElementById("default").style.display = "none";
+  } else {
+    document.getElementById("discount").style.display = "none";
+    document.getElementById("default").style.display = "block";
+  }
 };
 
-// ajouter price box
+// ajouter if pour price box
+//! ajouter if stock 0 , hide button + change texte
