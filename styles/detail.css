@@ -44,6 +44,7 @@
 .card-box img {
     width: 100%;
     object-fit: cover;
+    object-position: left;
     border-radius: 50px 50px 0 0;
     /* height: 100%; */
 }
@@ -223,8 +224,6 @@
 .discount-box {
     justify-content: flex-end;
     align-items: flex-start;
-}
-.price-box {
     gap: 0.8rem;
 }
 .price-box p {

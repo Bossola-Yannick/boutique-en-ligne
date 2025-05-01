@@ -57,23 +57,32 @@ foreach ($productInfos as $info) {
     }
 }
 
-$numberTags = count($allInfos['tags']);
+// $numberTags = count($allInfos['tags']);
 // recupération des produits similaires
-switch ($numberTags) {
-    case 1:
-        $tagOne = $allInfos['tags'][0];
-        $tagTwo = "";
-        break;
-    case 2:
-        $tagOne = $allInfos['tags'][0];
-        $tagTwo = $allInfos['tags'][1];
-        break;
-}
+// switch ($numberTags) {
+//     case 1:
+//         $tagOne = $allInfos['tags'][0];
+//         $tagTwo = "";
+//         $tagThree = "";
+//         break;
+//     case 2:
+//         $tagOne = $allInfos['tags'][0];
+//         $tagTwo = $allInfos['tags'][1];
+//         $tagThree = "";
+//         break;
+//     case 3:
+//         $tagOne = $allInfos['tags'][0];
+//         $tagTwo = $allInfos['tags'][1];
+//         $tagThree = $allInfos['tags'][2];
+//         break;
+// }
 
-$recommand = $product->recommand($tagOne, $tagTwo);
-foreach ($recommand as $value) {
-    $allInfos['recommand'][] =
-        $value;
+foreach ($allInfos['tags'] as $tag) {
+    $recommand = $product->recommand($tag);
+    foreach ($recommand as $value) {
+        $allInfos['recommand'][] =
+            $value;
+    }
 }
 
 echo json_encode($allInfos);

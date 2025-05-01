@@ -32,7 +32,7 @@ class Detail extends ConnexionBdd
         return $queryStmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function recommand($tagOne, $tagTwo)
+    public function recommand($tagOne)
     {
         $query = "SELECT
         tag.id_tag, tag.name_tag, 
@@ -40,14 +40,13 @@ class Detail extends ConnexionBdd
         FROM tag
         JOIN product_tag ON product_tag.id_tag = tag.id_tag
         JOIN product ON product_tag.id_product = product.id_product
-        WHERE tag.name_tag IN (:tagOne, :tagTwo) AND product.stock > 0
+        WHERE tag.name_tag IN (:tagOne) AND product.stock > 0
         GROUP BY product.id_product, product.name_product, product.price_ttc, product.price_discount, product.image_link
         ";
         $queryStmt = $this->bdd->prepare($query);
         $queryStmt->execute(
             [
-                'tagOne' => $tagOne,
-                'tagTwo' => $tagTwo
+                'tagOne' => $tagOne
             ]
         );
         return $queryStmt->fetchAll(PDO::FETCH_ASSOC);

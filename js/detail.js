@@ -23,6 +23,8 @@ fetch(`../controller/DetailController.php${productName}`, {
     let comments = data.comments;
     let recommand = data.recommand;
 
+    console.log(tags);
+
     //gestion des tags
     let tagList = [];
     if (tags && tags.length >= 1) {
@@ -61,10 +63,24 @@ fetch(`../controller/DetailController.php${productName}`, {
     );
 
     // gestion des recommandations
-    const filterRecommand = recommand
+    // vérifie et supprime les doublons
+    const noDubRecommand = recommand.filter(
+      (reco, index, self) =>
+        index ===
+        self.findIndex((dub) => dub.name_product === reco.name_product)
+    );
+    // range les produits associés au produit affiché en premier
+    const sortedRecommand = noDubRecommand.sort((a, b) => {
+      const aMatch = a.name_product.includes(product.name_product) ? 0 : 1;
+      const bMatch = b.name_product.includes(product.name_product) ? 0 : 1;
+      return aMatch - bMatch;
+    });
+    // retire un produit doublon et garde 5 resultats
+    const filterRecommand = sortedRecommand
       .filter((reco) => reco.name_product !== product.name_product)
       .slice(0, 5);
 
+    // créer la carte pour chaque recommandation
     filterRecommand.forEach((reco) => {
       createCard(
         reco.category,
@@ -75,7 +91,6 @@ fetch(`../controller/DetailController.php${productName}`, {
         recommandBox
       );
     });
-    // console.log(newRecommand);
   })
   .catch((error) => console.error("Erreur fetch :", error));
 
@@ -203,6 +218,7 @@ const createCard = (
 ) => {
   const card = document.createElement("div");
   card.classList.add("card-box");
+  card.setAttribute("value", name_product);
 
   const divImg = document.createElement("div");
   divImg.classList.add("card-img-box");
