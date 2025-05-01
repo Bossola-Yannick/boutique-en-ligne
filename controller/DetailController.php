@@ -57,9 +57,22 @@ foreach ($productInfos as $info) {
     }
 }
 
+$numberTags = count($allInfos['tags']);
 // recupération des produits similaires
-$tagOne = $allInfos['tags'][0];
-$tagTwo = $allInfos['tags'][1];
+switch ($numberTags) {
+    case 1:
+        $tagOne = $allInfos['tags'][0];
+        $tagTwo = "";
+        break;
+    case 2:
+        $tagOne = $allInfos['tags'][0];
+        $tagTwo = $allInfos['tags'][1];
+        break;
+}
+
+
+
+
 
 $recommand = $product->recommand($tagOne, $tagTwo);
 foreach ($recommand as $value) {

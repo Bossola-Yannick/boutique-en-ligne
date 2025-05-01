@@ -1,5 +1,7 @@
 const productName = window.location.search;
 
+// console.log(productName);
+
 // elements
 const productBox = document.getElementById("product-box");
 const recommandBox = document.getElementById("recommand-box");
@@ -50,7 +52,7 @@ const createDetail = (
   tags
 ) => {
   // boite image
-  const leftBox = document.createElement("div");
+  const leftBox = document.createElement("section");
   leftBox.classList.add("detail-left-box");
   const detailImage = document.createElement("img");
   if (category === "déguisement") {
@@ -61,9 +63,9 @@ const createDetail = (
   const notInclude = document.createElement("p");
   notInclude.classList.add("not-included");
   if (category === "déguisement") {
-    notInclude.innerText = "*Poule et accessoires non-inclus.";
+    notInclude.innerHTML = `*Poule et accessoires <span class="bold">non-inclus</span>.`;
   } else {
-    notInclude.innerText = "*Poule et déguisement non-inclus.";
+    notInclude.innerHTML = `*Poule et déguisement <span class="bold">non-inclus</span>.`;
   }
 
   leftBox.appendChild(detailImage);
@@ -71,42 +73,48 @@ const createDetail = (
   productBox.appendChild(leftBox);
 
   // boite details
-  const rightBox = document.createElement("div");
+  const rightBox = document.createElement("section");
   rightBox.classList.add("detail-right-box");
-  rightBox.innerHTML = `
-        <div class="detail-product">
-        <!-- title -->
-            <div class="detail-title">
-                <h2>${name}</h2>
-                <div class="rating-box">
-                    <p>note: ${rating} / 5</p>
-                    <img src="../assets/images/icones/icon-rating.png"/>
-                </div>
-            </div>  
+  const detailProduct = document.createElement("div");
+  detailProduct.classList.add("detail-product");
+  detailProduct.innerHTML = `
         
-        <!-- body -->
-            <div class="detail-body">
-                <div class="desc-box">
-                    <p class="detail-desc">Description:</p>
-                    <p>${description}</p>
+    <!-- title -->
+        <div class="detail-title">
+            <h2>${name}</h2>
+            <div class="rating-box">
+                <p>note: <span class="bold">${rating} / 5</span></p>
+                <img src="../assets/images/icones/icon-rating.png"/>
+            </div>
+        </div>  
+    
+    <!-- body -->
+        <div class="detail-body">
+            <div class="desc-box">
+                <p class="desc-title bold">Description:</p>
+                <p>${description}</p>
+            </div>
+            <div class="price-stock-box">
+                <p class="stock-box">Stock: <span>${stock}</span></p>
+                <div id="default" class="price-box">
+                    <p>Prix: <span class="price">${price_ttc}€</span></p>
                 </div>
-                <div class="price-stock-box">
-                    <p>Stock: <span>${stock}</span></p>
-                    <div id="default" class="price-box">
-                        <p>Prix: <span class="default-price">${price_ttc}€</span></p>
-                    </div>
-                    <div id="discount" class="discount-box">
-                        <p>Prix: <span class="price">${price_ttc}€</span></p>
-                        <p class="default-price red">${price_discount}€</p>
-                    </div>
-                </div>
-                <div class="button-add-cart">
-                    <button type="submit" id="button-add" class="button-add">
-                    Ajouter au panier
-                    <img src="../assets/images/icones/add.png"/>
-                    </button>
+                <div id="discount" class="discount-box">
+                  <div class="old-price">
+                    <p>Prix:</p>
+                    <p class="strike-price">${price_ttc}€</p>
+                  </div>
+                    <p class="price red">${price_discount}€</p>
                 </div>
             </div>
+        </div>
+        <div class="button-add-cart">
+            <button type="submit" id="button-add" class="button-add">
+            Ajouter au panier
+            <img src="../assets/images/icones/add.png"/>
+            </button>
+        </div>
+            
     `;
   const footerRightBox = document.createElement("div");
   footerRightBox.classList.add("detail-footer");
@@ -118,7 +126,8 @@ const createDetail = (
     footerRightBox.appendChild(tagDiv);
   });
 
-  rightBox.appendChild(footerRightBox);
+  detailProduct.appendChild(footerRightBox);
+  rightBox.appendChild(detailProduct);
   productBox.appendChild(rightBox);
 
   // affiche la bonne boite de prix
@@ -127,7 +136,7 @@ const createDetail = (
     document.getElementById("default").style.display = "none";
   } else {
     document.getElementById("discount").style.display = "none";
-    document.getElementById("default").style.display = "block";
+    document.getElementById("default").style.display = "flex";
   }
 };
 
