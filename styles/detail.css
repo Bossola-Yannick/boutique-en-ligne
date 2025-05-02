@@ -6,6 +6,10 @@
     color: red;
 }
 
+.yellow {
+    color: var(--active-color);
+}
+
 .separation {
     width: 50%;
     height: 0.2rem;
@@ -320,16 +324,19 @@
 }
 
 /* section recommandation */
-.recommand-box {
+.recommand-box,
+.comments-box {
     width: 100%;
     padding: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    gap: 1.5rem;
 }
 
-.recommand-box h2 {
-    margin-left: 2rem;
+.recommand-box h2,
+.comments-box h2 {
+    margin-left: 6%;
     font-family: var(--title-font);
     font-size: 2rem;
     letter-spacing: 3px;
@@ -337,9 +344,83 @@
 
 #recommand-items {
     width: 100%;
-    padding: 3rem 1rem 1.5rem 1rem;
+    padding: 1.5rem 1rem;
     display: flex;
     justify-content: space-between;
 }
 
+/* commentaires section */
+
+#comments-items {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+}
+
+.comment-and-reply {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+}
+
+.comment-box,
+.admin-reply-box {
+    padding: 1.5rem;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    border-radius: 15px;
+}
+.comment-box {
+    width: 100%;
+    background-color: var(--hover-color);
+}
+.admin-reply-box {
+    background-color: var(--primary-color);
+    width: 90%;
+}
+
+.comment-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+.header-first-row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.comment-title,
+.admin-reply-box .admin-title {
+    width: fit-content;
+    font-family: var(--title-font);
+    font-size: 1.2rem;
+    letter-spacing: 3px;
+}
+.comment-title span {
+    font-family: var(--text-font);
+    font-size: 1rem;
+    letter-spacing: normal;
+}
+.comment-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    text-align: justify;
+}
+
+.admin-reply-box .admin-title{
+    width: 90%;
+    margin: 0 auto;
+    font-size: 1.6rem;
+    font-family: var(--title-font);
+}
 

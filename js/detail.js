@@ -308,13 +308,20 @@ const createCard = (
 
 // affiche les commentaires
 const createCommentBox = (email, date, comment, rating, admin_reply) => {
+  const newEmail = email.split("@");
+  email = `${newEmail[0]}@******`;
+
+  const commentAndReplyBox = document.createElement("div");
+  commentAndReplyBox.classList.add("comment-and-reply");
   const commentBox = document.createElement("div");
   commentBox.classList.add("comment-box");
   commentBox.innerHTML = `
     <div class="comment-header">
+      <div class="header-first-row">
       <p class="comment-title">Nom: <span>${email}</span></p>
-      <p class="comment-title">Date: <span>${date}</span></p>
       <p class="comment-title">Note: <span>${rating} / 5</span></p>
+      </div>
+      <p class="comment-title comment-date">Date: <span>${date}</span></p>
     </div>
     <div class="comment-body">
       <p class="comment-title">Avis:</p>
@@ -322,14 +329,14 @@ const createCommentBox = (email, date, comment, rating, admin_reply) => {
     </div>
   `;
 
-  commentsBox.appendChild(commentBox);
+  commentAndReplyBox.appendChild(commentBox);
 
   if (admin_reply) {
     const adminReply = document.createElement("div");
     adminReply.classList.add("admin-reply-box");
     adminReply.innerHTML = `
     <div class="comment-header">
-      <p class="comment-title yellow">Admin</span></p>
+      <p class="admin-title yellow">Admin</span></p>
     </div>
     <div class="comment-body">
       <p class="comment-title">Réponse:</p>
@@ -337,6 +344,8 @@ const createCommentBox = (email, date, comment, rating, admin_reply) => {
     </div>
     `;
 
-    commentsBox.appendChild(adminReply);
+    commentAndReplyBox.appendChild(adminReply);
   }
+
+  commentsBox.appendChild(commentAndReplyBox);
 };
