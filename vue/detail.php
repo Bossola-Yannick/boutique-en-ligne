@@ -16,7 +16,10 @@ include '../components/search.php';
     <div id="recommand-items"></div>
 </section>
 <hr class="separation">
-<section id="comments-box"></section>
+<section id="comments-box">
+    <h2>Vos Avis:</h2>
+    <div id="comments-items"></div>
+</section>
 
 
 <?php include '../components/footer.php'; ?>

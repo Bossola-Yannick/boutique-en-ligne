@@ -8,7 +8,7 @@ const documentName = document.querySelector("title");
 // elements
 const productBox = document.getElementById("product-box");
 const recommandBox = document.getElementById("recommand-items");
-const commentsBox = document.getElementById("comments-box");
+const commentsBox = document.getElementById("comments-items");
 
 fetch(`../controller/ProductController.php${productName}`, {
   method: "GET",
@@ -23,7 +23,7 @@ fetch(`../controller/ProductController.php${productName}`, {
     let comments = data.comments;
     let recommand = data.recommand;
 
-    console.log(data);
+    console.log(comments);
     //gestion des tags
     let tagList = [];
     if (tags && tags.length >= 1) {
@@ -90,14 +90,21 @@ fetch(`../controller/ProductController.php${productName}`, {
         recommandBox
       );
     });
+
+    // affichage commentaires
+    comments.forEach((com) => {
+      createCommentBox(
+        com.email,
+        com.date_comment,
+        com.comment,
+        com.rating_comment,
+        com.admin_reply
+      );
+    });
   })
   .catch((error) => console.error("Erreur fetch :", error));
 
-// recup info produit
-const getInfoProduct = ($name) => {
-  fetch;
-};
-
+//-------------------------------------------------
 // créer la boite detail du produit
 const createDetail = (
   category,
@@ -297,4 +304,39 @@ const createCard = (
     console.log(productAdded);
     // gestion ajout au panier
   });
+};
+
+// affiche les commentaires
+const createCommentBox = (email, date, comment, rating, admin_reply) => {
+  const commentBox = document.createElement("div");
+  commentBox.classList.add("comment-box");
+  commentBox.innerHTML = `
+    <div class="comment-header">
+      <p class="comment-title">Nom: <span>${email}</span></p>
+      <p class="comment-title">Date: <span>${date}</span></p>
+      <p class="comment-title">Note: <span>${rating} / 5</span></p>
+    </div>
+    <div class="comment-body">
+      <p class="comment-title">Avis:</p>
+      <p class="comment-text">${comment}</p>
+    </div>
+  `;
+
+  commentsBox.appendChild(commentBox);
+
+  if (admin_reply) {
+    const adminReply = document.createElement("div");
+    adminReply.classList.add("admin-reply-box");
+    adminReply.innerHTML = `
+    <div class="comment-header">
+      <p class="comment-title yellow">Admin</span></p>
+    </div>
+    <div class="comment-body">
+      <p class="comment-title">Réponse:</p>
+      <p class="comment-text">${admin_reply}</p>
+    </div>
+    `;
+
+    commentsBox.appendChild(adminReply);
+  }
 };
