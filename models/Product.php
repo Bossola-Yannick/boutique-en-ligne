@@ -54,7 +54,6 @@ class Product extends ConnexionBdd
 
     public function getProduct($name)
     {
-
         $query = "SELECT
         product.id_product, product.name_product, product.price_ttc, product.price_discount, product.image_link, product.category
         FROM product

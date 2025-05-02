@@ -349,3 +349,30 @@ const createCommentBox = (email, date, comment, rating, admin_reply) => {
 
   commentsBox.appendChild(commentAndReplyBox);
 };
+
+// vérification commentaires
+document.addEventListener("DOMContentLoaded", function () {
+  const commentForm = document.getElementById("comment-form");
+  const commentText = document.getElementById("comment-text");
+  const commentError = document.getElementById("comment-error");
+
+  if (commentForm) {
+    commentForm.addEventListener("submit", function (event) {
+      commentError.textContent = "";
+
+      const commentValue = commentText.value.trim();
+
+      // vérifier si le commentaire est vide
+      if (commentValue === "") {
+        event.preventDefault();
+        commentError.textContent =
+          "Veuillez écrire un commentaire avant de valider.";
+      } else if (commentValue.length < 5) {
+        event.preventDefault();
+        commentError.textContent = "Un petit effort... Dites nous tous!";
+      } else {
+        console.log("JS ok, envoie au serveur...");
+      }
+    });
+  }
+});
