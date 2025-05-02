@@ -8,6 +8,10 @@
     <script
         src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"
         defer></script>
+    <!-- recup du $_SESSION en js -->
+    <script>
+        const userId = <?php echo json_encode($_SESSION['user_id'] ?? null, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT); ?>;
+    </script>
     <script src="../js/connexion-inscription.js" defer></script>
     <script src="../js/search.js" defer></script>
     <script src="../js/detail.js" defer></script>
