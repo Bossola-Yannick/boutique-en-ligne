@@ -3,7 +3,6 @@
 session_start();
 $_SESSION['user_id'] = 2;
 
-echo $_SESSION['user_id'];
 
 include '../components/header.php';
 include '../components/search.php';

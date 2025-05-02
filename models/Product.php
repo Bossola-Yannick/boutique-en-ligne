@@ -5,7 +5,7 @@ require '../config.php';
 
 include __DIR__ . "/ConnexionBdd.php";
 
-class Detail extends ConnexionBdd
+class Product extends ConnexionBdd
 {
 
     public function __construct()
@@ -13,7 +13,7 @@ class Detail extends ConnexionBdd
         parent::__construct($this->bdd);
     }
 
-    public function detail($name)
+    public function detail($name): array
     {
         $query = "SELECT 
         product.id_product, product.name_product, product.description, product.stock, 
@@ -32,7 +32,7 @@ class Detail extends ConnexionBdd
         return $queryStmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function recommand($tagOne)
+    public function recommand($tagOne): array
     {
         $query = "SELECT
         tag.id_tag, tag.name_tag, 
@@ -49,6 +49,21 @@ class Detail extends ConnexionBdd
                 'tagOne' => $tagOne
             ]
         );
+        return $queryStmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getProduct($name)
+    {
+
+        $query = "SELECT
+        product.id_product, product.name_product, product.price_ttc, product.price_discount, product.image_link, product.category
+        FROM product
+        WHERE product.name_product = :name
+        ";
+        $queryStmt = $this->bdd->prepare($query);
+        $queryStmt->execute([
+            ':name' => $name
+        ]);
         return $queryStmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

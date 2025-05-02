@@ -1,10 +1,10 @@
 <?php
 
-require_once '../models/Detail.php';
+require_once '../models/Product.php';
 
 $productClicked = isset($_GET['product']) ? urldecode($_GET['product']) : '';
 
-$product = new Detail();
+$product = new Product();
 $productInfos = $product->detail($productClicked);
 
 

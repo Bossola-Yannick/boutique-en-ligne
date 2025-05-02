@@ -1,3 +1,7 @@
+if (!sessionStorage.getItem("user")) {
+  sessionStorage.setItem("user", userId);
+}
+
 const productName = window.location.search;
 const documentName = document.querySelector("title");
 
@@ -6,7 +10,7 @@ const productBox = document.getElementById("product-box");
 const recommandBox = document.getElementById("recommand-items");
 const commentsBox = document.getElementById("comments-box");
 
-fetch(`../controller/DetailController.php${productName}`, {
+fetch(`../controller/ProductController.php${productName}`, {
   method: "GET",
   headers: {
     "Content-Type": "application/json",
@@ -19,6 +23,7 @@ fetch(`../controller/DetailController.php${productName}`, {
     let comments = data.comments;
     let recommand = data.recommand;
 
+    console.log(data);
     //gestion des tags
     let tagList = [];
     if (tags && tags.length >= 1) {
@@ -87,6 +92,11 @@ fetch(`../controller/DetailController.php${productName}`, {
     });
   })
   .catch((error) => console.error("Erreur fetch :", error));
+
+// recup info produit
+const getInfoProduct = ($name) => {
+  fetch;
+};
 
 // créer la boite detail du produit
 const createDetail = (
@@ -283,6 +293,8 @@ const createCard = (
 
   cardButton.addEventListener("click", (e) => {
     e.stopPropagation();
-    console.log("ajout");
+    const productAdded = card.getAttribute("value");
+    console.log(productAdded);
+    // gestion ajout au panier
   });
 };
