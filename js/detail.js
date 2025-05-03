@@ -166,6 +166,10 @@ const createDetail = (
   stock,
   tags
 ) => {
+  if (rating === 0) {
+    rating = "?";
+  }
+
   // boite image
   const leftBox = document.createElement("section");
   leftBox.classList.add("detail-left-box");
@@ -198,7 +202,7 @@ const createDetail = (
         <div class="detail-title">
             <h2>${name}</h2>
             <div class="rating-box">
-                <p>note: <span class="bold">${rating} / 5</span></p>
+                <p>note: <span class="left-mar bold">${rating} / 5</span></p>
                 <img src="../assets/images/icones/icon-rating.png"/>
             </div>
         </div>  

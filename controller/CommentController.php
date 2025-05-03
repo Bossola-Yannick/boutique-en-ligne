@@ -2,6 +2,7 @@
 
 session_start();
 require_once '../models/Comment.php';
+require_once '../models/Product.php';
 
 
 
@@ -9,7 +10,7 @@ if (isset($_POST['send-comment'])) {
     $productId = filter_input(INPUT_POST, 'product_id', FILTER_VALIDATE_INT);
     $commentText = trim($_POST['comment-text'] ?? '');
     $userId = $_SESSION['user_id'] ?? null;
-    $ratingComment = 3;
+    $ratingComment = $_POST['comment-rating'];
 
     if (empty($commentText)) {
         $_SESSION["comment-error"] = "Le commentaire ne peut pas être vide.";

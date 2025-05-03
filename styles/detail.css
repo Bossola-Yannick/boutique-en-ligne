@@ -11,6 +11,9 @@
 .green{
     color: green;
 }
+.left-mar {
+    margin-left: 0.5rem;
+}
 
 .separation {
     width: 50%;

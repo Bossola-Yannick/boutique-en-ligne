@@ -5,7 +5,7 @@ include '../components/search.php';
 
 $_SESSION['user_id'] = 2;
 $_SESSION['user_name'] = "james";
-$_SESSION['user_role'] = "admin";
+$_SESSION['user_role'] = "user";
 
 ?>
 
@@ -37,6 +37,13 @@ $_SESSION['user_role'] = "admin";
 
             <form id="comment-form" method="post" action="../controller/CommentController.php">
                 <input type="hidden" name="product_id" id="product_id" value="">
+                <label for="comment-rating">Votre note :</label>
+                <select name="comment-rating">
+                    <option>----</option>
+                    <?php for ($i = 1; $i <= 5; $i++): ?>
+                        <option value="<?= $i ?>"><?= $i ?></option>
+                    <?php endfor; ?>
+                </select>
                 <label for="comment-text">Votre commentaire :</label>
                 <textarea id="comment-text" rows="5" name="comment-text" placeholder="écrivez votre commentaire..." required></textarea>
                 <div id="comment-error" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
