@@ -5,9 +5,11 @@
 .red {
     color: red;
 }
-
 .yellow {
     color: var(--active-color);
+}
+.green{
+    color: green;
 }
 
 .separation {
@@ -351,19 +353,67 @@
 
 /* commentaires section */
 
+.msg-login-com {
+    width: fit-content;
+    margin: 0 auto;
+}
+.msg-login-com a {
+    color: var(--hover-color);
+}
+
 #comments-items {
     width: 100%;
     margin: 0 auto;
+    padding-bottom: 3rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 3rem;
 }
 
-.comment-and-reply {
+.comment-form-box {
+    background-color: rgb(201, 201, 201);
+    padding: 1rem;
+    margin: 0 auto;
+    align-items: center;
+    border-radius: 15px;
+    gap: 2rem;
+}
+
+.reply-form-box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#comment-form,
+.reply-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+#comment-text {
+    width: 95%;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    resize: none;
+}
+
+.comment-and-reply,
+.comment-form-box {
     width: 80%;
     display: flex;
     flex-direction: column;
+}
+
+.comment-and-reply {
     align-items: flex-end;
     gap: 0.5rem;
 }
@@ -426,15 +476,14 @@
 
 /* fake button */
 
-.reply-form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.fake-button {
+.fake-button,
+.add-comment {
     width: fit-content;
-    background-color: red;
-    padding: 1rem 1.5rem;
+    background-color: var(--secondary-color);
+    padding: 0.5rem 1.5rem;
+    border-radius: 5px;
+    color: black;
+    border: none;
     cursor: pointer;
+    font-size: 1rem;
 }

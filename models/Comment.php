@@ -41,7 +41,6 @@ class Comment extends ConnexionBdd
             ":id_comment" => $id_comment,
             ":product_id" => $productId
         ]);
-        $_SESSION["comment-success"] = "Réponse ajouté avec succès !";
         header("Location: ../vue/detail.php?product=" . $productId . "&comment_success=1");
         exit;
     }

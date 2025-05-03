@@ -112,6 +112,7 @@ fetch(`../controller/ProductController.php${productId}`, {
 
     // vérification commentaires
     const commentForm = document.getElementById("comment-form");
+
     // input caché avec id produit
     const productIdInput = document.getElementById("product_id");
     if (productIdInput) {
@@ -145,8 +146,6 @@ fetch(`../controller/ProductController.php${productId}`, {
         } else if (productIdInput > 0) {
           event.preventDefault();
           commentError.textContent = "Erreur: ID produit invalide";
-        } else {
-          console.log("JS ok, envoie au serveur...");
         }
       });
     }
@@ -367,12 +366,11 @@ const createCommentBox = (
   admin_reply
 ) => {
   const newEmail = email.split("@");
-  email = `${newEmail[0]}@******`;
+  email = newEmail[0];
 
   let roleAdmin;
   if (!admin_reply && userRole === "admin") {
     roleAdmin = true;
-    console.log(roleAdmin);
   } else {
     roleAdmin = false;
   }
@@ -396,7 +394,7 @@ const createCommentBox = (
     ${
       roleAdmin
         ? `
-      <div class="reply-form">
+      <div class="reply-form-box">
         <p class="fake-button">Répondre</p>
       </div>
       `
@@ -404,20 +402,20 @@ const createCommentBox = (
     }
   `;
 
-  commentAndReplyBox.appendChild(commentBox); // Append commentBox first
+  commentAndReplyBox.appendChild(commentBox);
 
   if (roleAdmin && !admin_reply) {
-    const replyForm = commentBox.querySelector(".reply-form");
+    const replyForm = commentBox.querySelector(".reply-form-box");
     const replyButton = commentBox.querySelector(".fake-button");
 
     if (replyForm && replyButton) {
       replyButton.addEventListener("click", () => {
         replyForm.innerHTML = `
-          <form id="comment-form-${id_comment}" method="post" action="../controller/CommentController.php">
+          <form id="comment-form-${id_comment}" method="post" class="reply-form" action="../controller/CommentController.php">
             <input type="hidden" name="comment_id" value="${id_comment}">
             <input type="hidden" name="product_id" id="product_id" value="${id_product}">
-            <label for="comment-text-${id_comment}">Réponse :</label>
-            <textarea id="comment-text-${id_comment}" name="reply-text" placeholder="écrire la réponse..." required></textarea>
+            <label for="comment-text">Réponse :</label>
+            <textarea id="comment-text" name="reply-text" placeholder="écrire la réponse..." required></textarea>
             <button name="reply-comment" type="submit" class="reply-admin">Répondre</button>
           </form>
       `;

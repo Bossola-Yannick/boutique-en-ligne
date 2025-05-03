@@ -26,7 +26,8 @@ class Product extends ConnexionBdd
         LEFT JOIN tag ON tag.id_tag = product_tag.id_tag
         LEFT JOIN comment ON comment.id_product = product.id_product
         LEFT JOIN user ON comment.id_user = user.id_user
-        WHERE product.id_product = :id";
+        WHERE product.id_product = :id
+        ORDER BY comment.date_comment DESC";
         $queryStmt = $this->bdd->prepare($query);
         $queryStmt->execute(['id' => $id]);
         return $queryStmt->fetchAll(PDO::FETCH_ASSOC);
