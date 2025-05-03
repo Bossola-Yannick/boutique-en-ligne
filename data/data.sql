@@ -66,7 +66,7 @@ CREATE TABLE comment (
     id_comment INT AUTO_INCREMENT PRIMARY KEY,
     rating_comment INT,
     comment TEXT NOT NULL,
-    date_comment DATE NOT NULL,
+    date_comment DATETIME NOT NULL,
     admin_reply TEXT,
     id_product INT,
     id_user INT,
