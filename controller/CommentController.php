@@ -2,8 +2,6 @@
 
 session_start();
 require_once '../models/Comment.php';
-require_once '../models/Product.php';
-
 
 
 if (isset($_POST['send-comment'])) {

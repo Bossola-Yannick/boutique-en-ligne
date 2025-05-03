@@ -7,6 +7,7 @@ $_SESSION['user_id'] = 2;
 $_SESSION['user_name'] = "james";
 $_SESSION['user_role'] = "user";
 
+
 ?>
 
 <section id="product-box"></section>
@@ -39,9 +40,9 @@ $_SESSION['user_role'] = "user";
                 <input type="hidden" name="product_id" id="product_id" value="">
                 <label for="comment-rating">Votre note :</label>
                 <select name="comment-rating">
-                    <option>----</option>
+                    <option value="0">----</option>
                     <?php for ($i = 1; $i <= 5; $i++): ?>
-                        <option value="<?= $i ?>"><?= $i ?></option>
+                        <option value="<?= $i ?>" required><?= $i ?></option>
                     <?php endfor; ?>
                 </select>
                 <label for="comment-text">Votre commentaire :</label>

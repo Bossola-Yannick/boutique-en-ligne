@@ -80,4 +80,15 @@ class Product extends ConnexionBdd
         ]);
         return $queryStmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function setProductRating($id_product, $rating)
+    {
+        $query = "UPDATE product SET product.rating_product = :rating_product
+        WHERE product.id_product = :id_product";
+        $queryStmt = $this->bdd->prepare($query);
+        $queryStmt->execute([
+            ":rating_product" => $rating,
+            ":id_product" => $id_product
+        ]);
+    }
 }
