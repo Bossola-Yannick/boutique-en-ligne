@@ -4,6 +4,7 @@ session_start();
 require_once '../models/Comment.php';
 
 
+
 if (isset($_POST['send-comment'])) {
     $productId = filter_input(INPUT_POST, 'product_id', FILTER_VALIDATE_INT);
     $commentText = trim($_POST['comment-text'] ?? '');
@@ -31,8 +32,27 @@ if (isset($_POST['send-comment'])) {
         $addComment->addComment($ratingComment, $commentText, $productId, $userId);
         exit;
     }
-} 
-// else {
-//     header("Location: ../index.php");
-//     exit;
-// }
+}
+
+if (isset($_POST['reply-comment'])) {
+    $commentId = filter_input(INPUT_POST, 'comment_id', FILTER_VALIDATE_INT);
+    $productId = filter_input(INPUT_POST, 'product_id', FILTER_VALIDATE_INT);
+    $replyText = trim($_POST['reply-text'] ?? '');
+
+    if (empty($replyText)) {
+        $_SESSION["comment-error"] = "Le commentaire ne peut pas être vide.";
+        header("Location: ../vue/detail.php?product=" . $productId . "&comment_error=1");
+        exit;
+    } elseif ($productId === false || $productId <= 0) {
+        $_SESSION["comment-error"] = "ID de produit invalide.";
+        header("Location: ../vue/detail.php?comment_error=4");
+        exit;
+    } else {
+        $addComment = new Comment();
+        $addComment->adminReply($productId, $commentId, $replyText);
+        exit;
+    }
+} else {
+    header("Location: ../index.php");
+    exit;
+}

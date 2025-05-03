@@ -424,3 +424,17 @@
     font-family: var(--title-font);
 }
 
+/* fake button */
+
+.reply-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fake-button {
+    width: fit-content;
+    background-color: red;
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+}

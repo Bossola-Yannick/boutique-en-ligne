@@ -1,5 +1,8 @@
-if (!sessionStorage.getItem("user")) {
-  sessionStorage.setItem("user", userId);
+if (!sessionStorage.getItem("user_id")) {
+  sessionStorage.setItem("user_id", userId);
+}
+if (!sessionStorage.getItem("user_role")) {
+  sessionStorage.setItem("user_role", userRole);
 }
 
 const productId = window.location.search;
@@ -96,6 +99,8 @@ fetch(`../controller/ProductController.php${productId}`, {
     if (comments) {
       comments.forEach((com) => {
         createCommentBox(
+          product.id_product,
+          com.id_comment,
           com.email,
           com.date_comment,
           com.comment,
@@ -107,7 +112,7 @@ fetch(`../controller/ProductController.php${productId}`, {
 
     // vérification commentaires
     const commentForm = document.getElementById("comment-form");
-    // Cible le champ caché au lieu du bouton
+    // input caché avec id produit
     const productIdInput = document.getElementById("product_id");
     if (productIdInput) {
       productIdInput.value = product.id_product;
@@ -353,6 +358,7 @@ const createCard = (
 
 // affiche les commentaires
 const createCommentBox = (
+  id_product,
   id_comment,
   email,
   date,
@@ -363,8 +369,12 @@ const createCommentBox = (
   const newEmail = email.split("@");
   email = `${newEmail[0]}@******`;
 
-  if (userRole === "admin") {
+  let roleAdmin;
+  if (!admin_reply && userRole === "admin") {
     roleAdmin = true;
+    console.log(roleAdmin);
+  } else {
+    roleAdmin = false;
   }
 
   const commentAndReplyBox = document.createElement("div");
@@ -387,22 +397,38 @@ const createCommentBox = (
       roleAdmin
         ? `
       <div class="reply-form">
-        <button name="reply-comment" type="submit" class="reply-admin">Répondre</button>
+        <p class="fake-button">Répondre</p>
       </div>
       `
-        : ``
+        : ""
     }
   `;
 
-  const replyForm = document.querySelector(".reply-form");
-  const replyButton = document.querySelector(".reply-admin");
+  commentAndReplyBox.appendChild(commentBox); // Append commentBox first
 
-  replyButton.addEventListener("click", () => {
-    replyForm.innerHTML = `
-    <button name="reply-comment" type="submit" class="reply-admin">Répondre</button>
-    `;
-  });
-  commentAndReplyBox.appendChild(commentBox);
+  if (roleAdmin && !admin_reply) {
+    const replyForm = commentBox.querySelector(".reply-form");
+    const replyButton = commentBox.querySelector(".fake-button");
+
+    if (replyForm && replyButton) {
+      replyButton.addEventListener("click", () => {
+        replyForm.innerHTML = `
+          <form id="comment-form-${id_comment}" method="post" action="../controller/CommentController.php">
+            <input type="hidden" name="comment_id" value="${id_comment}">
+            <input type="hidden" name="product_id" id="product_id" value="${id_product}">
+            <label for="comment-text-${id_comment}">Réponse :</label>
+            <textarea id="comment-text-${id_comment}" name="reply-text" placeholder="écrire la réponse..." required></textarea>
+            <button name="reply-comment" type="submit" class="reply-admin">Répondre</button>
+          </form>
+      `;
+      });
+    } else {
+      console.error(
+        "Reply form or button not found within comment box for comment ID:",
+        id_comment
+      );
+    }
+  }
 
   if (admin_reply) {
     const adminReply = document.createElement("div");

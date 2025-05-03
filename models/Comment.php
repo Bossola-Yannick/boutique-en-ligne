@@ -28,6 +28,23 @@ class Comment extends ConnexionBdd
         header("Location: ../vue/detail.php?product=" . $productId . "&comment_success=1");
         exit;
     }
+
+    public function adminReply($productId, $id_comment, $reply)
+    {
+        $query = "
+        UPDATE comment SET comment.admin_reply = :admin_reply
+        WHERE comment.id_comment = :id_comment AND comment.id_product = :product_id
+        ";
+        $queryStmt = $this->bdd->prepare($query);
+        $queryStmt->execute([
+            ":admin_reply" => $reply,
+            ":id_comment" => $id_comment,
+            ":product_id" => $productId
+        ]);
+        $_SESSION["comment-success"] = "Réponse ajouté avec succès !";
+        header("Location: ../vue/detail.php?product=" . $productId . "&comment_success=1");
+        exit;
+    }
 }
 
 // $addComment = new Comment();

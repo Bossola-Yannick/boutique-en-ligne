@@ -49,6 +49,7 @@ foreach ($productInfos as $info) {
     } elseif (!in_array($info['comment'], $dubComment)) {
         $dubComment[] = $info['comment'];
         $allInfos["comments"][] = [
+            "id_comment" => $info['id_comment'],
             "rating_comment" => $info['rating_comment'],
             "comment" => $info['comment'],
             "date_comment" => $info['date_comment'],
