@@ -44,7 +44,9 @@ foreach ($productInfos as $info) {
         $allInfos["tags"][] = $info['name_tag'];
     }
 
-    if (!in_array($info['comment'], $dubComment)) {
+    if (!$info['comment']) {
+        $allInfos["comments"] = null;
+    } elseif (!in_array($info['comment'], $dubComment)) {
         $dubComment[] = $info['comment'];
         $allInfos["comments"][] = [
             "rating_comment" => $info['rating_comment'],

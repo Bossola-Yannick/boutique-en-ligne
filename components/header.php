@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,8 +14,10 @@
     <!-- recup du $_SESSION en js -->
     <script>
         const userId = <?php echo json_encode($_SESSION['user_id'] ?? null, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT); ?>;
+        const userRole = <?php echo json_encode($_SESSION['user_role'] ?? null, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT); ?>;
     </script>
-    <script src="../js/connexion-inscription.js" defer></script>
+    <!-- fin recup -->
+    <!-- <script src="../js/connexion-inscription.js" defer></script> -->
     <script src="../js/search.js" defer></script>
     <script src="../js/detail.js" defer></script>
     <link rel="stylesheet" href="../styles/reset.css" />

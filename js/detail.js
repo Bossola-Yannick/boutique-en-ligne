@@ -2,7 +2,7 @@ if (!sessionStorage.getItem("user")) {
   sessionStorage.setItem("user", userId);
 }
 
-const productName = window.location.search;
+const productId = window.location.search;
 const documentName = document.querySelector("title");
 
 // elements
@@ -10,7 +10,7 @@ const productBox = document.getElementById("product-box");
 const recommandBox = document.getElementById("recommand-items");
 const commentsBox = document.getElementById("comments-items");
 
-fetch(`../controller/ProductController.php${productName}`, {
+fetch(`../controller/ProductController.php${productId}`, {
   method: "GET",
   headers: {
     "Content-Type": "application/json",
@@ -84,6 +84,7 @@ fetch(`../controller/ProductController.php${productName}`, {
       createCard(
         reco.category,
         reco.image_link,
+        reco.id_product,
         reco.name_product,
         reco.price_ttc,
         reco.price_discount,
@@ -92,16 +93,60 @@ fetch(`../controller/ProductController.php${productName}`, {
     });
 
     // affichage commentaires
-    comments.forEach((com) => {
-      createCommentBox(
-        com.email,
-        com.date_comment,
-        com.comment,
-        com.rating_comment,
-        com.admin_reply
-      );
-    });
+    if (comments) {
+      comments.forEach((com) => {
+        createCommentBox(
+          com.email,
+          com.date_comment,
+          com.comment,
+          com.rating_comment,
+          com.admin_reply
+        );
+      });
+    }
+
+    // vérification commentaires
+    const commentForm = document.getElementById("comment-form");
+    // Cible le champ caché au lieu du bouton
+    const productIdInput = document.getElementById("product_id");
+    if (productIdInput) {
+      productIdInput.value = product.id_product;
+    }
+    const commentText = document.getElementById("comment-text");
+    const commentError = document.getElementById("comment-error");
+
+    if (commentForm) {
+      commentForm.addEventListener("submit", function (event) {
+        commentError.textContent = "";
+
+        const commentValue = commentText.value.trim();
+
+        // vérifier si le commentaire est vide
+        if (commentValue === "") {
+          event.preventDefault();
+          commentError.textContent =
+            "Veuillez écrire un commentaire avant de valider.";
+        } else if (commentValue.length < 5) {
+          event.preventDefault();
+          commentError.textContent = "Un petit effort... Dites nous tous!";
+        } else if (commentValue.length > 500) {
+          event.preventDefault();
+          commentError.textContent =
+            "Le commentaire est trop long (max 500 caractères).";
+        } else if (!userId) {
+          event.preventDefault();
+          commentError.textContent =
+            "Vous devez être connecté écrire un commentaire.";
+        } else if (productIdInput > 0) {
+          event.preventDefault();
+          commentError.textContent = "Erreur: ID produit invalide";
+        } else {
+          console.log("JS ok, envoie au serveur...");
+        }
+      });
+    }
   })
+
   .catch((error) => console.error("Erreur fetch :", error));
 
 //-------------------------------------------------
@@ -222,6 +267,7 @@ const createDetail = (
 const createCard = (
   category,
   image,
+  id_product,
   name_product,
   price_ttc,
   price_discount,
@@ -292,9 +338,8 @@ const createCard = (
   boxToAppend.appendChild(card);
 
   card.addEventListener("click", () => {
-    const product = card.getAttribute("value");
     window.location.href = `../vue/detail.php?product=${encodeURIComponent(
-      product
+      id_product
     )}`;
   });
 
@@ -307,9 +352,20 @@ const createCard = (
 };
 
 // affiche les commentaires
-const createCommentBox = (email, date, comment, rating, admin_reply) => {
+const createCommentBox = (
+  id_comment,
+  email,
+  date,
+  comment,
+  rating,
+  admin_reply
+) => {
   const newEmail = email.split("@");
   email = `${newEmail[0]}@******`;
+
+  if (userRole === "admin") {
+    roleAdmin = true;
+  }
 
   const commentAndReplyBox = document.createElement("div");
   commentAndReplyBox.classList.add("comment-and-reply");
@@ -327,8 +383,25 @@ const createCommentBox = (email, date, comment, rating, admin_reply) => {
       <p class="comment-title">Avis:</p>
       <p class="comment-text">${comment}</p>
     </div>
+    ${
+      roleAdmin
+        ? `
+      <div class="reply-form">
+        <button name="reply-comment" type="submit" class="reply-admin">Répondre</button>
+      </div>
+      `
+        : ``
+    }
   `;
 
+  const replyForm = document.querySelector(".reply-form");
+  const replyButton = document.querySelector(".reply-admin");
+
+  replyButton.addEventListener("click", () => {
+    replyForm.innerHTML = `
+    <button name="reply-comment" type="submit" class="reply-admin">Répondre</button>
+    `;
+  });
   commentAndReplyBox.appendChild(commentBox);
 
   if (admin_reply) {
@@ -349,30 +422,3 @@ const createCommentBox = (email, date, comment, rating, admin_reply) => {
 
   commentsBox.appendChild(commentAndReplyBox);
 };
-
-// vérification commentaires
-document.addEventListener("DOMContentLoaded", function () {
-  const commentForm = document.getElementById("comment-form");
-  const commentText = document.getElementById("comment-text");
-  const commentError = document.getElementById("comment-error");
-
-  if (commentForm) {
-    commentForm.addEventListener("submit", function (event) {
-      commentError.textContent = "";
-
-      const commentValue = commentText.value.trim();
-
-      // vérifier si le commentaire est vide
-      if (commentValue === "") {
-        event.preventDefault();
-        commentError.textContent =
-          "Veuillez écrire un commentaire avant de valider.";
-      } else if (commentValue.length < 5) {
-        event.preventDefault();
-        commentError.textContent = "Un petit effort... Dites nous tous!";
-      } else {
-        console.log("JS ok, envoie au serveur...");
-      }
-    });
-  }
-});

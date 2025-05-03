@@ -1,8 +1,9 @@
 <?php
 
-session_start();
+
 $_SESSION['user_id'] = 2;
 $_SESSION['user_name'] = "JAMES";
+$_SESSION['user_role'] = "admin";
 
 
 include '../components/header.php';
@@ -25,25 +26,30 @@ include '../components/search.php';
 
         <p>Connecté en tant que : <?= htmlspecialchars($_SESSION['user_name']) ?></p>
 
-        <?php if ($commentErrorMessage): ?>
-            <p style="color: red;"><?= htmlspecialchars($commentErrorMessage) ?></p>
+        <?php if (isset($_SESSION["comment-error"])): ?>
+            <p style="color: red;"><?= $_SESSION["comment-error"] ?></p>
+            <?php unset($_SESSION["comment-error"]); ?>
         <?php endif; ?>
-        <?php if ($commentSuccessMessage): ?>
-            <p style="color: green;"><?= htmlspecialchars($commentSuccessMessage) ?></p>
+        <?php if (isset($_SESSION["comment-success"])): ?>
+            <p style="color: green;"><?= $_SESSION["comment-success"] ?></p>
+            <?php unset($_SESSION["comment-success"]); ?>
         <?php endif; ?>
 
-        <form id="comment-form" method="post" action="detail.php?id=<?= $productId ?>">
-            <input type="hidden" name="product_id" value="<?= $productId ?>">
+        <form id="comment-form" method="post" action="../controller/CommentController.php">
+            <input type="hidden" name="product_id" id="product_id" value="">
             <label for="comment-text">Votre commentaire :</label>
             <textarea id="comment-text" name="comment-text" placeholder="écrivez votre commentaire..." required></textarea>
             <div id="comment-error" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
-            <button name="send-comment" type="submit">Valider</button>
+            <button name="send-comment" type="submit" id="add-comment">Valider</button>
         </form>
 
     <?php endif; ?>
     <!-- echo test -->
     <?php
-    echo $_POST['comment-text'];
+    if (isset($_POST['post-comment'])) {
+        echo $_POST['comment-text'];
+    }
+
     ?>
     <!-- fin test -->
 

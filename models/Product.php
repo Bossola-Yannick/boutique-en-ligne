@@ -13,7 +13,7 @@ class Product extends ConnexionBdd
         parent::__construct($this->bdd);
     }
 
-    public function detail($name): array
+    public function detail($id): array
     {
         $query = "SELECT 
         product.id_product, product.name_product, product.description, product.stock, 
@@ -26,9 +26,9 @@ class Product extends ConnexionBdd
         LEFT JOIN tag ON tag.id_tag = product_tag.id_tag
         LEFT JOIN comment ON comment.id_product = product.id_product
         LEFT JOIN user ON comment.id_user = user.id_user
-        WHERE name_product = :name";
+        WHERE product.id_product = :id";
         $queryStmt = $this->bdd->prepare($query);
-        $queryStmt->execute(['name' => $name]);
+        $queryStmt->execute(['id' => $id]);
         return $queryStmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -62,6 +62,20 @@ class Product extends ConnexionBdd
         $queryStmt = $this->bdd->prepare($query);
         $queryStmt->execute([
             ':name' => $name
+        ]);
+        return $queryStmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getProductName($id)
+    {
+        $query = "SELECT
+        product.id_product, product.name_product
+        FROM product
+        WHERE product.id_product = :id
+        ";
+        $queryStmt = $this->bdd->prepare($query);
+        $queryStmt->execute([
+            ':id' => $id
         ]);
         return $queryStmt->fetchAll(PDO::FETCH_ASSOC);
     }
