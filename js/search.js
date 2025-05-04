@@ -1,8 +1,3 @@
-function fill(value) {
-  document.getElementById("search").value = value;
-  document.getElementById("display-result").style.display = "none";
-}
-
 const searchInput = document.getElementById("search");
 const displayDiv = document.getElementById("display-result");
 
