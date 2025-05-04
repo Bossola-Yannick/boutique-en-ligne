@@ -26,7 +26,7 @@ fetch(`../controller/ProductController.php${productId}`, {
     let comments = data.comments;
     let recommand = data.recommand;
 
-    console.log(comments);
+    //------------------------------- //
     //gestion des tags
     let tagList = [];
     if (tags && tags.length >= 1) {
@@ -44,6 +44,7 @@ fetch(`../controller/ProductController.php${productId}`, {
       tagList = tags;
     }
 
+    //------------------------------- //
     // gestion du titre du document (balise title)
     if (product.category === "déguisement") {
       documentName.innerText = `Déguisement: ${product.name_product}`;
@@ -51,6 +52,7 @@ fetch(`../controller/ProductController.php${productId}`, {
       documentName.innerText = product.name_product;
     }
 
+    //------------------------------- //
     // création de la partie detail du produit
     createDetail(
       product.category,
@@ -64,8 +66,9 @@ fetch(`../controller/ProductController.php${productId}`, {
       tagList
     );
 
+    //------------------------------- //
     // gestion des recommandations
-    // vérifie et supprime les doublons
+    // supprime les doublons
     const noDubRecommand = recommand.filter(
       (reco, index, self) =>
         index ===
@@ -77,7 +80,7 @@ fetch(`../controller/ProductController.php${productId}`, {
       const bMatch = b.name_product.includes(product.name_product) ? 0 : 1;
       return aMatch - bMatch;
     });
-    // retire un produit doublon et garde 5 resultats
+    // retire le produit actuel et garde les 5 premiers resultats
     const filterRecommand = sortedRecommand
       .filter((reco) => reco.name_product !== product.name_product)
       .slice(0, 5);
@@ -95,6 +98,7 @@ fetch(`../controller/ProductController.php${productId}`, {
       );
     });
 
+    //------------------------------- //
     // affichage commentaires
     if (comments) {
       comments.forEach((com) => {
@@ -153,7 +157,7 @@ fetch(`../controller/ProductController.php${productId}`, {
 
   .catch((error) => console.error("Erreur fetch :", error));
 
-//-------------------------------------------------
+//------------------------------- //
 // créer la boite detail du produit
 const createDetail = (
   category,
@@ -271,94 +275,7 @@ const createDetail = (
   }
 };
 
-// créer la card du produit
-const createCard = (
-  category,
-  image,
-  id_product,
-  name_product,
-  price_ttc,
-  price_discount,
-  boxToAppend
-) => {
-  const card = document.createElement("div");
-  card.classList.add("card-box");
-  card.setAttribute("value", name_product);
-
-  const imgDiscount = document.createElement("img");
-  imgDiscount.classList.add("card-img-discount");
-  imgDiscount.setAttribute("src", "../assets/images/icones/discount.png");
-  card.appendChild(imgDiscount);
-
-  const divImg = document.createElement("div");
-  divImg.classList.add("card-img-box");
-
-  const cardImage = document.createElement("img");
-  cardImage.classList.add("card-img-product");
-  if (category === "déguisement") {
-    cardImage.setAttribute("src", `../assets/images/cosplay/${image}`);
-  } else {
-    cardImage.setAttribute("src", `../assets/images/accessories/${image}`);
-  }
-
-  divImg.appendChild(cardImage);
-  card.appendChild(divImg);
-
-  const infoDiv = document.createElement("div");
-  infoDiv.classList.add("card-infos-box");
-  infoDiv.innerHTML = `
-        <h3>${name_product}</h3>
-        <div class="card-infos">
-          <div class="card-price-box">
-            <div class="card-default-box">
-              <p class="card-price">${price_ttc}€</p>
-            </div>
-            <div class="card-discount-box">
-              <div class="old-price">
-                <p class="card-strike-price">${price_ttc}€</p>
-              </div>
-                <p class="card-price">${price_discount}€</p>
-            </div>
-          </div>
-          <button type="submit" class="card-button-add" value="${name_product}">
-            <img src="../assets/images/icones/add.png"/>
-          </button>
-        </div>
-  `;
-
-  const cardDefaultPriceBox = infoDiv.querySelector(".card-default-box");
-  const cardDiscountPriceBox = infoDiv.querySelector(".card-discount-box");
-  const cardButton = infoDiv.querySelector(".card-button-add");
-
-  if (price_discount < price_ttc) {
-    if (cardDefaultPriceBox) {
-      cardDefaultPriceBox.style.display = "none";
-    }
-    if (cardDiscountPriceBox) {
-      cardDiscountPriceBox.style.display = "flex";
-      imgDiscount.style.display = "block";
-      card.style.backgroundColor = "var(--discount-color)";
-      card.style.border = "4px solid var(--discount-color)";
-      infoDiv.style.color = "black";
-    }
-  }
-  card.appendChild(infoDiv);
-  boxToAppend.appendChild(card);
-
-  card.addEventListener("click", () => {
-    window.location.href = `../vue/detail.php?product=${encodeURIComponent(
-      id_product
-    )}`;
-  });
-
-  cardButton.addEventListener("click", (e) => {
-    e.stopPropagation();
-    const productAdded = card.getAttribute("value");
-    console.log(productAdded);
-    // gestion ajout au panier
-  });
-};
-
+//------------------------------- //
 // affiche les commentaires
 const createCommentBox = (
   id_product,

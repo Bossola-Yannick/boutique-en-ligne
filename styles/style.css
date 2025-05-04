@@ -22,7 +22,8 @@ html {
 }
 
 body {
-  width: 1440px;
+  width: 100%;
+  max-width: 1440px;
   margin: 0 auto;
   border: 2px solid #0b3058;
   background-color: var(--text-color);
