@@ -51,6 +51,7 @@ session_start();
         <div class="cart-box">
             <a href="">
                 <img src="../assets/images/icones/cart.png" alt="">
+                <p class="cart-number-items">0</p>
             </a>
         </div>
     </header>
