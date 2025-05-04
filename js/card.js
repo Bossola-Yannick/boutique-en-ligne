@@ -47,17 +47,24 @@ const createCard = (
                   <p class="card-price">${price_discount}€</p>
               </div>
             </div>
-            <button type="submit" class="card-button-add" value="${id_product}">
-              <img src="../assets/images/icones/add.png"/>
-            </button>
+            <form id="cart" method="post" action="../controller/CartController.php">
+            <input type="hidden" name="price_product" id="price_product">
+            <input type="hidden" name="product_id" value="${id_product}">
+              <button type="submit" name="add-to-cart" class="card-button-add">
+                <img src="../assets/images/icones/add.png"/>
+              </button>
+            </form>
           </div>
     `;
 
   const cardDefaultPriceBox = infoDiv.querySelector(".card-default-box");
   const cardDiscountPriceBox = infoDiv.querySelector(".card-discount-box");
   const cardButton = infoDiv.querySelector(".card-button-add");
+  const hiddenPrice = infoDiv.querySelector("#price_product");
+  hiddenPrice.setAttribute("value", price_discount);
 
   if (price_discount < price_ttc) {
+    hiddenPrice.setAttribute("value", price_discount);
     if (cardDefaultPriceBox) {
       cardDefaultPriceBox.style.display = "none";
     }
@@ -68,6 +75,8 @@ const createCard = (
       card.style.border = "4px solid var(--discount-color)";
       infoDiv.style.color = "black";
     }
+  } else {
+    hiddenPrice.setAttribute("value", price_ttc);
   }
   card.appendChild(infoDiv);
   boxToAppend.appendChild(card);
@@ -89,5 +98,6 @@ const createCard = (
     console.log("quantity default: ", 1);
     console.log("unit price: ");
     // gestion ajout au panier
+    // console.log(checkCart($userId))
   });
 };
