@@ -9,7 +9,6 @@ $_SESSION['user_role'] = "user";
 
 ?>
 
-<p class="alert-box green"></p>
 <section id="product-box">
 </section>
 <hr class="separation">
@@ -53,8 +52,6 @@ $_SESSION['user_role'] = "user";
             </form>
         </div>
     <?php endif; ?>
-
-
 
     <div id="comments-items"></div>
 </section>
