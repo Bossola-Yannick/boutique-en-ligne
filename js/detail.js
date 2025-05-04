@@ -80,13 +80,19 @@ fetch(`../controller/ProductController.php${productId}`, {
       const bMatch = b.name_product.includes(product.name_product) ? 0 : 1;
       return aMatch - bMatch;
     });
-    // retire le produit actuel et garde les 5 premiers resultats
-    const filterRecommand = sortedRecommand
-      .filter((reco) => reco.name_product !== product.name_product)
-      .slice(0, 5);
+    // retire le produit actuel
+    const filterRecommand = sortedRecommand.filter(
+      (reco) => reco.name_product !== product.name_product
+    );
+
+    // affiche nombre de carte selon la taille de l'écran
+    const ratio = Math.floor(window.innerWidth / 259);
+    console.log(window.innerWidth);
+    let showCard;
+    window.innerWidth < 1440 ? (showCard = ratio) : (showCard = 5);
 
     // créer la carte pour chaque recommandation
-    filterRecommand.forEach((reco) => {
+    filterRecommand.slice(0, showCard).forEach((reco) => {
       createCard(
         reco.category,
         reco.image_link,

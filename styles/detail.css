@@ -353,7 +353,8 @@
     width: 100%;
     padding: 1.5rem 1rem;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    gap: 2rem;
 }
 
 /* commentaires section */
