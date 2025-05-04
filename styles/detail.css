@@ -200,6 +200,7 @@
 }
 
 .detail-title h2 {
+    text-align: center;
     font-family: var(--title-font);
     font-size: 3.2rem;
     letter-spacing: 3px;
@@ -325,7 +326,8 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    gap: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
 /* section recommandation */

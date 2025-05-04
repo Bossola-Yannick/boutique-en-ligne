@@ -19,6 +19,7 @@ session_start();
     <!-- fin recup -->
     <!-- <script src="../js/connexion-inscription.js" defer></script> -->
     <script src="../js/search.js" defer></script>
+    <script src="../js/card.js" defer></script>
     <script src="../js/detail.js" defer></script>
     <link rel="stylesheet" href="../styles/reset.css" />
     <link rel="stylesheet" href="../styles/style.css" />
