@@ -86,4 +86,63 @@ const createCard = (
       id_product
     )}`;
   });
+
+  // formulaire d'ajout via js Fetch
+  cardButton.addEventListener("click", (e) => {
+    e.stopPropagation();
+  });
+
+  const cartForm = infoDiv.querySelector("#cart");
+  if (cartForm) {
+    cartForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const formData = new FormData(cartForm);
+      // Ajouter manuellement le paramètre du bouton submit
+      formData.append("add-to-cart", "true");
+
+      fetch("../controller/CartController.php", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            // message de success
+            alertBox.innerText = "Produit ajouté au panier !";
+            alertBox.classList.add("visible", "green");
+            alertBox.classList.remove("red");
+
+            setTimeout(() => {
+              alertBox.classList.remove("visible");
+              alertBox.innerText = "";
+            }, 2000);
+            // TODO: mettre a jour l'icône du panier
+          } else {
+            // message d'erreur
+            alertBox.innerText = `Erreur: ${data.message || "Erreur inconnue"}`;
+            alertBox.classList.add("visible", "red");
+            alertBox.classList.remove("green");
+
+            setTimeout(() => {
+              alertBox.classList.remove("visible");
+              alertBox.innerText = "";
+            }, 3000);
+          }
+        })
+        .catch((error) => {
+          console.error("Erreur lors de l'envoi du formulaire:", error);
+          alertBox.innerText = "Une erreur technique est survenue.";
+          alertBox.style.visibility = "visible";
+          alertBox.classList.add("red");
+          alertBox.classList.remove("green");
+          if (alertBox.innerText) {
+            setTimeout(() => {
+              alertBox.style.visibility = "hidden";
+              alertBox.innerText = "";
+            }, 1000);
+          }
+        });
+    });
+  }
 };
