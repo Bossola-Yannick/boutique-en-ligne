@@ -304,9 +304,10 @@ const createDetail = (
       })
         .then((response) => response.json())
         .then((data) => {
+          console.log(data);
           if (data.success) {
             showToast("Produit ajouté au panier !", "success");
-            // TODO: mettre a jour l'icône du panier
+            cartItemsNumber.innerText = data.cart_items;
           } else {
             showToast(
               `Erreur: ${data.message || "Erreur inconnue"}`,

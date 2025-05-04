@@ -90,4 +90,18 @@ class Cart extends ConnexionBdd
             return $this->addToCart($cartId, $id_product, $quantity, $price);
         }
     }
+
+    public function getItemsNumber($id_user): int
+    {
+        $query = "SELECT SUM(quantity) 
+        FROM product_cart
+        JOIN cart ON cart.id_cart = product_cart.id_cart
+        WHERE cart.id_user = :id_user";
+        $queryStmt = $this->bdd->prepare($query);
+        $queryStmt->execute([
+            ':id_user' => $id_user
+        ]);
+        $totalQuantity = $queryStmt->fetchColumn();
+        return $totalQuantity === null ? 0 : $totalQuantity;
+    }
 }

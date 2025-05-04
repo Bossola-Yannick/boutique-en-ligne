@@ -56,9 +56,11 @@
 }
 .cart-number-items {
   background-color: black;
-  padding: 0.5rem 0.8rem;
+  width: 35px;
+  height: 30px;
   color: white;
   text-align: center;
+  align-content: center;
   position: absolute;
   border-radius: 5px;
   bottom: -10px;

@@ -1,3 +1,5 @@
+const cartItemsNumber = document.querySelector(".cart-number-items");
+
 // créer la card du produit
 const createCard = (
   category,
@@ -108,7 +110,7 @@ const createCard = (
         .then((data) => {
           if (data.success) {
             showToast("Produit ajouté au panier !", "success");
-            // TODO: mettre a jour l'icône du panier
+            cartItemsNumber.innerText = data.cart_items;
           } else {
             showToast(
               `Erreur: ${data.message || "Erreur inconnue"}`,
