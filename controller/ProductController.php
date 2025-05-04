@@ -19,6 +19,9 @@ $allInfos = [
 $dubTag = [];
 $dubComment = [];
 
+// ratings
+$allRatings = 0;
+$countComment = 0;
 
 // récupère les infos du produit, ses tags et ses commentaires
 foreach ($productInfos as $info) {
@@ -57,6 +60,8 @@ foreach ($productInfos as $info) {
             "id_user" => $info['id_user'],
             "email" => $info['email']
         ];
+        $allRatings += $info['rating_comment'];
+        $countComment++;
     }
 }
 
@@ -67,5 +72,13 @@ foreach ($allInfos['tags'] as $tag) {
             $value;
     }
 }
+
+if ($allRatings > 0 && $countComment > 0) {
+    $ratingProduct = round($allRatings / $countComment, 2);
+    $allInfos["product"]['rating_product'] = $ratingProduct;
+
+    $product->setProductRating($productClicked, $ratingProduct);
+}
+
 
 echo json_encode($allInfos);
