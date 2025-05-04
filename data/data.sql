@@ -107,6 +107,6 @@ CREATE TABLE product_cart (
     quantity INT NOT NULL,
     unit_price DECIMAL(10,2) NOT NULL,
     FOREIGN KEY (id_product) REFERENCES product(id_product),
-    FOREIGN KEY (id_cart) REFERENCES cart(id_cart)
+    FOREIGN KEY (id_cart) REFERENCES cart(id_cart) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
