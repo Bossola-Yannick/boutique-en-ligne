@@ -7,10 +7,11 @@ $_SESSION['user_id'] = 2;
 $_SESSION['user_name'] = "james";
 $_SESSION['user_role'] = "user";
 
-
 ?>
 
-<section id="product-box"></section>
+<p class="alert-box green"></p>
+<section id="product-box">
+</section>
 <hr class="separation">
 <section class="recommand-box">
     <h2>Nos recommandations:</h2>

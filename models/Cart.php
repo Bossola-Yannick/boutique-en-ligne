@@ -39,7 +39,7 @@ class Cart extends ConnexionBdd
         }
     }
 
-    // change la quantité
+    // change la quantité du produit
     public function addQuantity($newQuantity, $cartId, $id_product)
     {
         $query = "UPDATE product_cart SET quantity = :quantity WHERE id_cart = :id_cart AND id_product = :id_product";
@@ -51,6 +51,7 @@ class Cart extends ConnexionBdd
         ]);
     }
 
+    // ajoute un produit au panier
     public function addToCart($cartId, $id_product, $quantity, $unit_price)
     {
         $query = "INSERT INTO product_cart (id_cart, id_product, quantity, unit_price) VALUES (:id_cart, :id_product, :quantity, :unit_price)";
@@ -63,17 +64,13 @@ class Cart extends ConnexionBdd
         ]);
     }
 
-    // ajouter au panier
+    // AJOUT AU PANIER: avec recup/creation du panier; quantity modification et ajout au panier
     public function addProductToCart($id_user, $id_product, $price, $quantity = 1): bool
     {
         // récupérer ou créer le panier de l'utilisateur
         $cartId = $this->getCartIdByUser($id_user);
         if ($cartId === null) {
             $cartId = $this->createCart($id_user);
-            if ($cartId === false) {
-                error_log("Échec de la récupération/création du panier pour l'utilisateur ID: " . $id_user);
-                return false;
-            }
         }
         // vérifie si le produit existe deja dans le panier
         $query = "SELECT quantity FROM product_cart WHERE id_cart = :id_cart AND id_product = :id_product";
@@ -93,11 +90,4 @@ class Cart extends ConnexionBdd
             return $this->addToCart($cartId, $id_product, $quantity, $price);
         }
     }
-
-    // --- Autres méthodes potentielles ---
-    // getCartContent(int $id_user)
-    // updateProductQuantity(int $id_user, int $id_product, int $new_quantity)
-    // removeProductFromCart(int $id_user, int $id_product)
-    // deleteCart(int $id_user)
-    // getTotalCartAmount(int $id_user)
 }

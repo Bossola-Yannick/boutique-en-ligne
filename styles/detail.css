@@ -23,6 +23,21 @@
     background-color: var(--secondary-color);
 }
 
+/* alert box */
+.alert-box {
+    height: 2.5rem;
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    text-align: center;
+    font-weight: bold;
+    opacity: 0; 
+    transition: opacity 0.2s ease-in-out; 
+}
+
+.alert-box.visible {
+    opacity: 1; 
+}
+
 /* tag */
 .tag-box {
     background-color: rgb(187, 187, 187);
@@ -34,7 +49,6 @@
     height: 100%;
     padding: 0.3rem 1rem;
     align-content: center;
-    /* font-family: var(--title-font); */
     font-size: 0.6rem;
 }
 
@@ -147,7 +161,7 @@
     /* background-color: brown; */
     width: 100%;
     min-height: 39.5rem;
-    padding: 2rem 1rem;
+    padding: 0 1rem 2rem;
     display: flex;
     justify-content: center;
     gap: 3rem;

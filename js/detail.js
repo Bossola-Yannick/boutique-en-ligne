@@ -12,6 +12,7 @@ const documentName = document.querySelector("title");
 const productBox = document.getElementById("product-box");
 const recommandBox = document.getElementById("recommand-items");
 const commentsBox = document.getElementById("comments-items");
+const alertBox = document.querySelector(".alert-box");
 
 fetch(`../controller/ProductController.php${productId}`, {
   method: "GET",
@@ -55,6 +56,7 @@ fetch(`../controller/ProductController.php${productId}`, {
     //------------------------------- //
     // création de la partie detail du produit
     createDetail(
+      product.id_product,
       product.category,
       product.image_link,
       product.name_product,
@@ -165,6 +167,7 @@ fetch(`../controller/ProductController.php${productId}`, {
 //------------------------------- //
 // créer la boite detail du produit
 const createDetail = (
+  id_product,
   category,
   image,
   name,
@@ -239,10 +242,14 @@ const createDetail = (
         </div>
         <div class="button-add-cart">
             <p class="bold red no-stock">Rupture de stock</p>
-            <button type="submit" id="button-add" class="button-add">
-            Ajouter au panier
-            <img src="../assets/images/icones/add.png"/>
-            </button>
+            <form id="cart" method="post" action="../controller/CartController.php">
+              <input type="hidden" name="price_product" id="price_product">
+              <input type="hidden" name="product_id" value="${id_product}">
+              <button type="submit" name="add-to-cart" id="button-add" class="button-add">
+              Ajouter au panier
+              <img src="../assets/images/icones/add.png"/>
+              </button>
+            </form>
         </div>
             
     `;
@@ -262,11 +269,15 @@ const createDetail = (
   rightBox.appendChild(detailProduct);
   productBox.appendChild(rightBox);
 
+  const hiddenPrice = detailProduct.querySelector("#price_product");
+
   // affiche la bonne boite de prix
   if (price_discount < price_ttc) {
+    hiddenPrice.setAttribute("value", price_discount);
     document.getElementById("discount").style.display = "flex";
     document.getElementById("default").style.display = "none";
   } else {
+    hiddenPrice.setAttribute("value", price_ttc);
     document.getElementById("discount").style.display = "none";
     document.getElementById("default").style.display = "flex";
   }
@@ -277,6 +288,61 @@ const createDetail = (
   } else {
     document.getElementById("button-add").style.display = "flex";
     document.querySelector(".no-stock").style.display = "none";
+  }
+
+  // formulaire d'ajout via js Fetch
+  const cartForm = detailProduct.querySelector("#cart");
+  if (cartForm) {
+    cartForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const formData = new FormData(cartForm);
+      // Ajouter manuellement le paramètre du bouton submit
+      formData.append("add-to-cart", "true");
+
+      fetch("../controller/CartController.php", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            // message de success
+            alertBox.innerText = "Produit ajouté au panier !";
+            alertBox.classList.add("visible", "green");
+            alertBox.classList.remove("red");
+
+            setTimeout(() => {
+              alertBox.classList.remove("visible");
+              alertBox.innerText = "";
+            }, 2000);
+            // TODO: mettre a jour l'icône du panier
+          } else {
+            // message d'erreur
+            alertBox.innerText = `Erreur: ${data.message || "Erreur inconnue"}`;
+            alertBox.classList.add("visible", "red");
+            alertBox.classList.remove("green");
+
+            setTimeout(() => {
+              alertBox.classList.remove("visible");
+              alertBox.innerText = "";
+            }, 3000);
+          }
+        })
+        .catch((error) => {
+          console.error("Erreur lors de l'envoi du formulaire:", error);
+          alertBox.innerText = "Une erreur technique est survenue.";
+          alertBox.style.visibility = "visible";
+          alertBox.classList.add("red");
+          alertBox.classList.remove("green");
+          if (alertBox.innerText) {
+            setTimeout(() => {
+              alertBox.style.visibility = "hidden";
+              alertBox.innerText = "";
+            }, 1000);
+          }
+        });
+    });
   }
 };
 

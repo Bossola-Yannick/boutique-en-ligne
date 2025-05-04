@@ -47,7 +47,7 @@ const createCard = (
                   <p class="card-price">${price_discount}€</p>
               </div>
             </div>
-            <form id="cart" method="post" action="../controller/CartController.php">
+            <form id="cart" class="cart" method="post" action="../controller/CartController.php">
             <input type="hidden" name="price_product" id="price_product">
             <input type="hidden" name="product_id" value="${id_product}">
               <button type="submit" name="add-to-cart" class="card-button-add">
@@ -61,7 +61,6 @@ const createCard = (
   const cardDiscountPriceBox = infoDiv.querySelector(".card-discount-box");
   const cardButton = infoDiv.querySelector(".card-button-add");
   const hiddenPrice = infoDiv.querySelector("#price_product");
-  hiddenPrice.setAttribute("value", price_discount);
 
   if (price_discount < price_ttc) {
     hiddenPrice.setAttribute("value", price_discount);
@@ -86,18 +85,5 @@ const createCard = (
     window.location.href = `../vue/detail.php?product=${encodeURIComponent(
       id_product
     )}`;
-  });
-
-  // évènement au click panier, ajout produit au panier
-  cardButton.addEventListener("click", (e) => {
-    e.stopPropagation();
-    const productAdded = card.getAttribute("value");
-    console.log(productAdded);
-    console.log(userId);
-    console.log(id_product);
-    console.log("quantity default: ", 1);
-    console.log("unit price: ");
-    // gestion ajout au panier
-    // console.log(checkCart($userId))
   });
 };
