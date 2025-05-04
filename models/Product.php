@@ -53,7 +53,7 @@ class Product extends ConnexionBdd
         return $queryStmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getProduct($name)
+    public function getProduct($name): array
     {
         $query = "SELECT
         product.id_product, product.name_product, product.price_ttc, product.price_discount, product.image_link, product.category
@@ -67,7 +67,7 @@ class Product extends ConnexionBdd
         return $queryStmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getProductName($id)
+    public function getProductName($id): array
     {
         $query = "SELECT
         product.id_product, product.name_product
@@ -81,7 +81,7 @@ class Product extends ConnexionBdd
         return $queryStmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function setProductRating($id_product, $rating)
+    public function setProductRating($id_product, $rating): void
     {
         $query = "UPDATE product SET product.rating_product = :rating_product
         WHERE product.id_product = :id_product";

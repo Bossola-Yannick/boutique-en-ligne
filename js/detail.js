@@ -87,7 +87,6 @@ fetch(`../controller/ProductController.php${productId}`, {
 
     // affiche nombre de carte selon la taille de l'écran
     const ratio = Math.floor(window.innerWidth / 259);
-    console.log(window.innerWidth);
     let showCard;
     window.innerWidth < 1440 ? (showCard = ratio) : (showCard = 5);
 
@@ -240,7 +239,7 @@ const createDetail = (
         </div>
         <div class="button-add-cart">
             <p class="bold red no-stock">Rupture de stock</p>
-            <button type="submit" id="button-add" class="button-add" value=${name}>
+            <button type="submit" id="button-add" class="button-add">
             Ajouter au panier
             <img src="../assets/images/icones/add.png"/>
             </button>
@@ -340,18 +339,13 @@ const createCommentBox = (
         replyForm.innerHTML = `
           <form id="comment-form-${id_comment}" method="post" class="reply-form" action="../controller/CommentController.php">
             <input type="hidden" name="comment_id" value="${id_comment}">
-            <input type="hidden" name="product_id" id="product_id" value="${id_product}">
+            <input type="hidden" name="product_id" value="${id_product}">
             <label for="comment-text">Réponse :</label>
             <textarea id="comment-text" name="reply-text" placeholder="écrire la réponse..." required></textarea>
             <button name="reply-comment" type="submit" class="reply-admin">Répondre</button>
           </form>
       `;
       });
-    } else {
-      console.error(
-        "Reply form or button not found within comment box for comment ID:",
-        id_comment
-      );
     }
   }
 
