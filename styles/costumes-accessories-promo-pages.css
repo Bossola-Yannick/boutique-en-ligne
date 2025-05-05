@@ -41,7 +41,15 @@
 }
 .pages-box a {
     cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--primary-color);
 }
+.pages-box .active-page {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--hover-color);
+  }
 
 /* boite affichage produit */
 .list-all-costumes {

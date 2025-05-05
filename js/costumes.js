@@ -1,10 +1,18 @@
+const header = document.querySelector("header");
 const sectionRightCol = document.getElementById("right-col");
 const listAllCostumesBox = document.querySelector(".list-all-costumes");
 
-let currentPage = 1;
+let currentPage;
+let pageHash = location.hash.split("#")[1];
+if (pageHash) {
+  currentPage = pageHash;
+} else {
+  currentPage = 1;
+}
+
 const productsPerPage = 12;
 
-if (window.location.pathname === "/boutique-en-ligne/vue/costume.php") {
+if (window.location.pathname === "/boutique-en-ligne/vue/costumes.php") {
   fetch(`../controller/ProductController.php?action=costumes`, {
     method: "GET",
     headers: {
@@ -13,8 +21,9 @@ if (window.location.pathname === "/boutique-en-ligne/vue/costume.php") {
   })
     .then((res) => res.json())
     .then((data) => {
-      const allCostumes = Object.values(data);
+      const allCostumes = data.products;
       console.log(data);
+      console.log(allCostumes);
       // change titre page (onglet)
       documentName.innerText = "Déguisements";
 
@@ -69,6 +78,7 @@ const pageNumberButtons = (products) => {
       prevButton.setAttribute("href", `#${currentPage}`);
       pageProducts(products, currentPage);
       pageNumberButtons(products);
+      header.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   });
   pagesBox.appendChild(prevButton);
@@ -93,6 +103,7 @@ const pageNumberButtons = (products) => {
       pageNumberP.setAttribute("href", `#${currentPage}`);
       pageProducts(products, currentPage);
       pageNumberButtons(products);
+      header.scrollIntoView({ behavior: "smooth", block: "start" });
     });
   }
 
@@ -110,6 +121,7 @@ const pageNumberButtons = (products) => {
       nextButton.setAttribute("href", `#${currentPage}`);
       pageProducts(products, currentPage);
       pageNumberButtons(products);
+      header.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   });
   pagesBox.appendChild(nextButton);
