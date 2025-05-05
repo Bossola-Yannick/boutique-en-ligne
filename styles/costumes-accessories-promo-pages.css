@@ -1,0 +1,53 @@
+.product-list-box {
+    background-color: yellow;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* colonne gauche filtre */
+.left-col-filter {
+    background-color: red;
+    width: 20%;
+    min-width: 9.5rem ;
+    display: flex;
+    flex-direction: column;
+}
+
+/* colonne droite produits */
+.right-col-items {
+    background-color: aquamarine;
+    width: 100%;
+    padding: 1rem;
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+/* titre colonne */
+.right-col-items h2 {
+    text-align: center;
+    font-family: var(--title-font);
+    font-size: 3.2rem;
+    letter-spacing: 3px;
+}
+
+.pages-box {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+.pages-box a {
+    cursor: pointer;
+}
+
+/* boite affichage produit */
+.list-all-costumes {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 3.5rem 1.5rem;
+}

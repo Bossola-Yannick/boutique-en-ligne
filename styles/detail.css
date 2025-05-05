@@ -2,6 +2,10 @@
     font-weight: bold;
 }
 
+.upp {
+    text-transform: uppercase;
+}
+
 .red {
     color: var(--discount-color);
 }

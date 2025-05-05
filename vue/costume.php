@@ -10,9 +10,12 @@ $_SESSION['user_role'] = "user";
 ?>
 
 <div class="product-list-box">
-    <section id="right" class="right-col-filter"></section>
-    <section id="left" class="left-col-items">
+    <section class="left-col-filter"></section>
+    <section id="right-col" class="right-col-items">
         <h2>Nos <span class="upp">pimp</span> pour vos <span class="upp">poules</span></h2>
-        <div class="list-all-product"></div>
+        <div class="list-all-costumes"></div>
+        <!-- js pagination -->
     </section>
 </div>
+
+<?php include '../components/footer.php'; ?>
