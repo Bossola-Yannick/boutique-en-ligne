@@ -13,6 +13,7 @@ class Product extends ConnexionBdd
         parent::__construct($this->bdd);
     }
 
+    // recup toutes les infos d'un produit via son id
     public function detail($id): array
     {
         $query = "SELECT 
@@ -33,6 +34,7 @@ class Product extends ConnexionBdd
         return $queryStmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // récup les recommandations via les tags du produit
     public function recommand($tagOne): array
     {
         $query = "SELECT
@@ -53,34 +55,7 @@ class Product extends ConnexionBdd
         return $queryStmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getProduct($name): array
-    {
-        $query = "SELECT
-        product.id_product, product.name_product, product.price_ttc, product.price_discount, product.image_link, product.category
-        FROM product
-        WHERE product.name_product = :name
-        ";
-        $queryStmt = $this->bdd->prepare($query);
-        $queryStmt->execute([
-            ':name' => $name
-        ]);
-        return $queryStmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function getProductName($id): array
-    {
-        $query = "SELECT
-        product.id_product, product.name_product
-        FROM product
-        WHERE product.id_product = :id
-        ";
-        $queryStmt = $this->bdd->prepare($query);
-        $queryStmt->execute([
-            ':id' => $id
-        ]);
-        return $queryStmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
+    // met a jour la note d'un produit
     public function setProductRating($id_product, $rating): void
     {
         $query = "UPDATE product SET product.rating_product = :rating_product
