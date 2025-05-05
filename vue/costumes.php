@@ -10,7 +10,18 @@ $_SESSION['user_role'] = "user";
 ?>
 
 <div class="product-list-box">
-    <section class="left-col-filter"></section>
+    <section class="left-col-filter">
+        <div class="filter-default">
+            <p>Trier par:</p>
+            <label for="filter-price">Prix</label>
+            <input type="checkbox" name="filter-price" />
+            <label for="filter-rating">Note</label>
+            <input type="checkbox" name="filter-rating" />
+        </div>
+        <div class="filter-by-subcategory">
+            <p>Categories:</p>
+        </div>
+    </section>
     <section id="right-col" class="right-col-items">
         <h2>Nos <span class="upp">pimp</span> pour vos <span class="upp">poules</span></h2>
         <div class="list-all-costumes"></div>

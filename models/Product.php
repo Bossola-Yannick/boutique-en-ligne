@@ -95,4 +95,14 @@ class Product extends ConnexionBdd
         $queryStmt->execute();
         return $queryStmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    // récup tous les tags
+    public function getTags(): array
+    {
+        $query = "SELECT tag.id_tag, tag.name_tag
+        FROM tag";
+        $queryStmt = $this->bdd->prepare($query);
+        $queryStmt->execute();
+        return $queryStmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

@@ -87,15 +87,23 @@ switch ($action) {
         break;
 
     case 'costumes':
+
         $costumes = $product->getAllCostume();
 
-        $allCostumes = [];
+        $allCostumes = [
+            "products" => [],
+            "sub_category" => [],
+            "tags" => []
+        ];
+
+        $productsById = [];
 
         foreach ($costumes as $info) {
             $id = $info['id_product'];
 
-            if (!isset($allCostumes[$id])) {
-                $allCostumes[$id] = [
+            // recupere un produit 
+            if (!isset($productsById[$id])) {
+                $productsById[$id] = [
                     "id_product" => $info['id_product'],
                     "name_product" => $info['name_product'],
                     "description" => $info['description'],
@@ -107,18 +115,40 @@ switch ($action) {
                     "rating_product" => $info['rating_product'],
                     "name_tag" => [],
                     "sub_category" => [
-                        $info['id_subcategory'] => $info['name_subcategory']
+                        "id_subcategory" => $info['id_subcategory'],
+                        "name_subcategory" => $info['name_subcategory']
                     ]
                 ];
             }
 
+            // ajout les tags au produit
             if (!empty($info['id_tag']) && !empty($info['name_tag'])) {
-                $allCostumes[$id]['name_tag'][] = [
-                    "id_tag" => $info['id_tag'],
-                    "name_tag" => $info['name_tag']
-                ];
+                // vérifie que le tag s'ajoute qu'une fois
+                $tagExists = false;
+                foreach ($productsById[$id]['name_tag'] as $existingTag) {
+                    if ($existingTag['id_tag'] === $info['id_tag']) {
+                        $tagExists = true;
+                        break;
+                    }
+                }
+                if (!$tagExists) {
+                    $productsById[$id]['name_tag'][] = [
+                        "id_tag" => $info['id_tag'],
+                        "name_tag" => $info['name_tag']
+                    ];
+                }
             }
         }
+
+        // ajoute le produit au tableau principal
+        $allCostumes["products"] = array_values($productsById);
+
+        // récupère les sous catégorie 
+        $allCostumes["sub_category"] = $product->getSubCategories();
+
+        // récupère les tags
+        $allCostumes["tags"] = $product->getTags();
+
 
         echo json_encode($allCostumes);
         break;
