@@ -20,6 +20,7 @@ session_start();
     <!-- <script src="../js/connexion-inscription.js" defer></script> -->
     <script src="../js/notification.js" defer></script>
     <script src="../js/detail.js" defer></script>
+    <script src="../js/costumes.js" defer></script>
     <script src="../js/search.js" defer></script>
     <script src="../js/card.js" defer></script>
     <link rel="stylesheet" href="../styles/reset.css" />

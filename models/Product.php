@@ -66,4 +66,23 @@ class Product extends ConnexionBdd
             ":id_product" => $id_product
         ]);
     }
+
+    // récup tous les produits
+    public function getAllCostume(): array
+    {
+        $query = "SELECT product.id_product, product.name_product, product.description, product.stock, 
+        product.price_ttc, product.price_discount, product.image_link, product.category, product.rating_product,
+        tag.id_tag, tag.name_tag,
+        sub_category.id_subcategory, sub_category.name_subcategory
+        FROM product 
+        LEFT JOIN product_tag ON product_tag.id_product = product.id_product
+        LEFT JOIN tag ON tag.id_tag = product_tag.id_tag
+        JOIN sub_category ON product.id_subcategory = sub_category.id_subcategory
+        WHERE product.category = :category";
+        $queryStmt = $this->bdd->prepare($query);
+        $queryStmt->execute([
+            ":category" => "déguisement"
+        ]);
+        return $queryStmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

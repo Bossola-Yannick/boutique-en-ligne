@@ -5,7 +5,9 @@ if (!sessionStorage.getItem("user_role")) {
   sessionStorage.setItem("user_role", userRole);
 }
 
-const productId = window.location.search;
+const URLproductId = new URLSearchParams(window.location.search);
+const productId = URLproductId.get("product");
+
 const documentName = document.querySelector("title");
 
 // elements
@@ -14,12 +16,17 @@ const recommandBox = document.getElementById("recommand-items");
 const commentsBox = document.getElementById("comments-items");
 
 if (window.location.pathname === "/boutique-en-ligne/vue/detail.php") {
-  fetch(`../controller/ProductController.php${productId}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
+  fetch(
+    `../controller/ProductController.php?action=detail&product=${encodeURIComponent(
+      productId
+    )}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  )
     .then((res) => res.json())
     .then((data) => {
       let product = data.product;
