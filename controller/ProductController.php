@@ -92,8 +92,6 @@ switch ($action) {
 
         $allCostumes = [
             "products" => [],
-            "sub_category" => [],
-            "tags" => []
         ];
 
         $productsById = [];
@@ -143,13 +141,23 @@ switch ($action) {
         // ajoute le produit au tableau principal
         $allCostumes["products"] = array_values($productsById);
 
-        // récupère les sous catégorie 
-        $allCostumes["sub_category"] = $product->getSubCategories();
-
-        // récupère les tags
-        $allCostumes["tags"] = $product->getTags();
-
 
         echo json_encode($allCostumes);
+        break;
+
+    case 'filter':
+
+        $allFilter = [
+            "sub_category" => [],
+            "tags" => []
+        ];
+
+        // récupère les sous catégorie 
+        $allFilter["sub_category"] = $product->getSubCategories();
+
+        // récupère les tags
+        $allFilter["tags"] = $product->getTags();
+
+        echo json_encode($allFilter);
         break;
 }

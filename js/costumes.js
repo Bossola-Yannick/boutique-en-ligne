@@ -13,6 +13,7 @@ if (pageHash) {
 const productsPerPage = 12;
 
 if (window.location.pathname === "/boutique-en-ligne/vue/costumes.php") {
+  // déguisements
   fetch(`../controller/ProductController.php?action=costumes`, {
     method: "GET",
     headers: {
@@ -22,14 +23,31 @@ if (window.location.pathname === "/boutique-en-ligne/vue/costumes.php") {
     .then((res) => res.json())
     .then((data) => {
       const allCostumes = data.products;
-      console.log(data);
-      console.log(allCostumes);
+      // console.log(allCostumes);
+
       // change titre page (onglet)
       documentName.innerText = "Déguisements";
 
       // pagination
       pageProducts(allCostumes, currentPage);
       pageNumberButtons(allCostumes);
+    })
+
+    .catch((error) => console.error("Erreur fetch :", error));
+
+  // filters
+  fetch(`../controller/ProductController.php?action=filter`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      const allSubCat = data.sub_category;
+      const allTags = data.tags;
+      console.log(allSubCat);
+      console.log(allTags);
     })
 
     .catch((error) => console.error("Erreur fetch :", error));
