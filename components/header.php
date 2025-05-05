@@ -18,10 +18,10 @@ session_start();
     </script>
     <!-- fin recup -->
     <!-- <script src="../js/connexion-inscription.js" defer></script> -->
-    <script src="../js/search.js" defer></script>
     <script src="../js/notification.js" defer></script>
-    <script src="../js/card.js" defer></script>
     <script src="../js/detail.js" defer></script>
+    <script src="../js/search.js" defer></script>
+    <script src="../js/card.js" defer></script>
     <link rel="stylesheet" href="../styles/reset.css" />
     <link rel="stylesheet" href="../styles/style.css" />
     <link rel="stylesheet" href="../styles/header-banner-search-footer.css" />

@@ -13,155 +13,157 @@ const productBox = document.getElementById("product-box");
 const recommandBox = document.getElementById("recommand-items");
 const commentsBox = document.getElementById("comments-items");
 
-fetch(`../controller/ProductController.php${productId}`, {
-  method: "GET",
-  headers: {
-    "Content-Type": "application/json",
-  },
-})
-  .then((res) => res.json())
-  .then((data) => {
-    let product = data.product;
-    let tags = data.tags;
-    let comments = data.comments;
-    let recommand = data.recommand;
+if (window.location.pathname === "/boutique-en-ligne/vue/detail.php") {
+  fetch(`../controller/ProductController.php${productId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      let product = data.product;
+      let tags = data.tags;
+      let comments = data.comments;
+      let recommand = data.recommand;
 
-    //------------------------------- //
-    //gestion des tags
-    let tagList = [];
-    if (tags && tags.length >= 1) {
-      tags.forEach((tag) => {
-        if (tag && tag.includes("/")) {
-          let newTag = tag.split("/");
-          newTag.forEach((tag) => {
+      //------------------------------- //
+      //gestion des tags
+      let tagList = [];
+      if (tags && tags.length >= 1) {
+        tags.forEach((tag) => {
+          if (tag && tag.includes("/")) {
+            let newTag = tag.split("/");
+            newTag.forEach((tag) => {
+              tagList.push(tag);
+            });
+          } else if (tag) {
             tagList.push(tag);
-          });
-        } else if (tag) {
-          tagList.push(tag);
-        }
-      });
-    } else {
-      tagList = tags;
-    }
+          }
+        });
+      } else {
+        tagList = tags;
+      }
 
-    //------------------------------- //
-    // gestion du titre du document (balise title)
-    if (product.category === "déguisement") {
-      documentName.innerText = `Déguisement: ${product.name_product}`;
-    } else {
-      documentName.innerText = product.name_product;
-    }
+      //------------------------------- //
+      // gestion du titre du document (balise title)
+      if (product.category === "déguisement") {
+        documentName.innerText = `Déguisement: ${product.name_product}`;
+      } else {
+        documentName.innerText = product.name_product;
+      }
 
-    //------------------------------- //
-    // création de la partie detail du produit
-    createDetail(
-      product.id_product,
-      product.category,
-      product.image_link,
-      product.name_product,
-      product.description,
-      product.price_ttc,
-      product.price_discount,
-      product.rating_product,
-      product.stock,
-      tagList
-    );
-
-    //------------------------------- //
-    // gestion des recommandations
-    // supprime les doublons
-    const noDubRecommand = recommand.filter(
-      (reco, index, self) =>
-        index ===
-        self.findIndex((dub) => dub.name_product === reco.name_product)
-    );
-    // range les produits associés au produit affiché en premier
-    const sortedRecommand = noDubRecommand.sort((a, b) => {
-      const aMatch = a.name_product.includes(product.name_product) ? 0 : 1;
-      const bMatch = b.name_product.includes(product.name_product) ? 0 : 1;
-      return aMatch - bMatch;
-    });
-    // retire le produit actuel
-    const filterRecommand = sortedRecommand.filter(
-      (reco) => reco.name_product !== product.name_product
-    );
-
-    // affiche nombre de carte selon la taille de l'écran
-    const ratio = Math.floor(window.innerWidth / 259);
-    let showCard;
-    window.innerWidth < 1440 ? (showCard = ratio) : (showCard = 5);
-
-    // créer la carte pour chaque recommandation
-    filterRecommand.slice(0, showCard).forEach((reco) => {
-      createCard(
-        reco.category,
-        reco.image_link,
-        reco.id_product,
-        reco.name_product,
-        reco.price_ttc,
-        reco.price_discount,
-        recommandBox
+      //------------------------------- //
+      // création de la partie detail du produit
+      createDetail(
+        product.id_product,
+        product.category,
+        product.image_link,
+        product.name_product,
+        product.description,
+        product.price_ttc,
+        product.price_discount,
+        product.rating_product,
+        product.stock,
+        tagList
       );
-    });
 
-    //------------------------------- //
-    // affichage commentaires
-    if (comments) {
-      comments.forEach((com) => {
-        createCommentBox(
-          product.id_product,
-          com.id_comment,
-          com.email,
-          com.date_comment,
-          com.comment,
-          com.rating_comment,
-          com.admin_reply
+      //------------------------------- //
+      // gestion des recommandations
+      // supprime les doublons
+      const noDubRecommand = recommand.filter(
+        (reco, index, self) =>
+          index ===
+          self.findIndex((dub) => dub.name_product === reco.name_product)
+      );
+      // range les produits associés au produit affiché en premier
+      const sortedRecommand = noDubRecommand.sort((a, b) => {
+        const aMatch = a.name_product.includes(product.name_product) ? 0 : 1;
+        const bMatch = b.name_product.includes(product.name_product) ? 0 : 1;
+        return aMatch - bMatch;
+      });
+      // retire le produit actuel
+      const filterRecommand = sortedRecommand.filter(
+        (reco) => reco.name_product !== product.name_product
+      );
+
+      // affiche nombre de carte selon la taille de l'écran
+      const ratio = Math.floor(window.innerWidth / 259);
+      let showCard;
+      window.innerWidth < 1440 ? (showCard = ratio) : (showCard = 5);
+
+      // créer la carte pour chaque recommandation
+      filterRecommand.slice(0, showCard).forEach((reco) => {
+        createCard(
+          reco.category,
+          reco.image_link,
+          reco.id_product,
+          reco.name_product,
+          reco.price_ttc,
+          reco.price_discount,
+          recommandBox
         );
       });
-    }
 
-    // vérification commentaires
-    const commentForm = document.getElementById("comment-form");
+      //------------------------------- //
+      // affichage commentaires
+      if (comments) {
+        comments.forEach((com) => {
+          createCommentBox(
+            product.id_product,
+            com.id_comment,
+            com.email,
+            com.date_comment,
+            com.comment,
+            com.rating_comment,
+            com.admin_reply
+          );
+        });
+      }
 
-    // input caché avec id produit
-    const productIdInput = document.getElementById("product_id");
-    if (productIdInput) {
-      productIdInput.value = product.id_product;
-    }
-    const commentText = document.getElementById("comment-text");
-    const commentError = document.getElementById("comment-error");
+      // vérification commentaires
+      const commentForm = document.getElementById("comment-form");
 
-    if (commentForm) {
-      commentForm.addEventListener("submit", function (event) {
-        commentError.textContent = "";
+      // input caché avec id produit
+      const productIdInput = document.getElementById("product_id");
+      if (productIdInput) {
+        productIdInput.value = product.id_product;
+      }
+      const commentText = document.getElementById("comment-text");
+      const commentError = document.getElementById("comment-error");
 
-        const commentValue = commentText.value.trim();
+      if (commentForm) {
+        commentForm.addEventListener("submit", function (event) {
+          commentError.textContent = "";
 
-        // vérifier si le commentaire est vide
-        if (commentValue === "") {
-          event.preventDefault();
-          commentError.textContent =
-            "Veuillez écrire un commentaire avant de valider.";
-        } else if (commentValue.length < 5) {
-          event.preventDefault();
-          commentError.textContent = "Un petit effort... Dites nous tous!";
-        } else if (commentValue.length > 500) {
-          event.preventDefault();
-          commentError.textContent =
-            "Le commentaire est trop long (max 500 caractères).";
-        } else if (!userId) {
-          event.preventDefault();
-          commentError.textContent =
-            "Vous devez être connecté écrire un commentaire.";
-        } else if (productIdInput > 0) {
-          event.preventDefault();
-          commentError.textContent = "Erreur: ID produit invalide";
-        }
-      });
-    }
-  })
+          const commentValue = commentText.value.trim();
 
-  .catch((error) => console.error("Erreur fetch :", error));
+          // vérifier si le commentaire est vide
+          if (commentValue === "") {
+            event.preventDefault();
+            commentError.textContent =
+              "Veuillez écrire un commentaire avant de valider.";
+          } else if (commentValue.length < 5) {
+            event.preventDefault();
+            commentError.textContent = "Un petit effort... Dites nous tous!";
+          } else if (commentValue.length > 500) {
+            event.preventDefault();
+            commentError.textContent =
+              "Le commentaire est trop long (max 500 caractères).";
+          } else if (!userId) {
+            event.preventDefault();
+            commentError.textContent =
+              "Vous devez être connecté écrire un commentaire.";
+          } else if (productIdInput > 0) {
+            event.preventDefault();
+            commentError.textContent = "Erreur: ID produit invalide";
+          }
+        });
+      }
+    })
+
+    .catch((error) => console.error("Erreur fetch :", error));
+}
 
 //------------------------------- //
 // créer la boite detail du produit
