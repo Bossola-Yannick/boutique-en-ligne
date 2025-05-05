@@ -85,4 +85,14 @@ class Product extends ConnexionBdd
         ]);
         return $queryStmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    // récup toutes les sous catégories
+    public function getSubCategories(): array
+    {
+        $query = "SELECT sub_category.id_subcategory, sub_category.name_subcategory
+        FROM sub_category";
+        $queryStmt = $this->bdd->prepare($query);
+        $queryStmt->execute();
+        return $queryStmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
