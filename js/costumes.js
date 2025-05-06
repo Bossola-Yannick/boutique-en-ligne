@@ -7,7 +7,7 @@ const filterTag = document.querySelector(".filter-by-tag");
 let currentPage;
 let pageHash = location.hash.split("#")[1];
 if (pageHash) {
-  currentPage = pageHash;
+  currentPage = parseInt(pageHash);
 } else {
   currentPage = 1;
 }
