@@ -1,104 +1,160 @@
 <?php
-include_once('ConnexionBdd.php');
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+require '../config.php';
+include_once(__DIR__ . "/ConnexionBdd.php");
 
-class Utilisateur extends ConnexionBdd
+class User extends ConnexionBdd
 {
-
     private $id;
-    private $pseudo;
+    private $email;
     private $password;
-    private $score;
+    private $firstName;
+    private $lastName;
+    private $adress;
+    private $postalCode;
+    private $city;
+    private $role;
 
 
     public function __construct()
     {
         parent::__construct($this->bdd);
         $this->id;
-        $this->pseudo;
+        $this->email;
         $this->password;
-        $this->score;
+        $this->firstName;
+        $this->lastName;
+        $this->adress;
+        $this->postalCode;
+        $this->city;
+        $this->role;
     }
 
-    public function connexion()
+    // Methode inscription
+
+    public function userSignUp($userMail, $userPass, $firstName, $lastName, $adress, $postalCode, $city)
     {
-
-        if (isset($_POST['submit'])) {
-            if (!empty($_POST['pseudo']) && !empty($_POST['password'])) {
-                $pseudo = htmlentities($_POST['pseudo']);
-                $password = $_POST['password'];
-                $req = $this->bdd->prepare("SELECT * FROM utilisateur WHERE pseudo = :pseudo");
-                $req->execute(["pseudo" => $pseudo]);
-                $user = $req->fetch(PDO::FETCH_ASSOC);
-
-                if (!$user) { // Vérifie si l'utilisateur existe
-                    $_SESSION['message']  = "Pseudo ou Mot de passe incorrect !";
-                } elseif ($user['score'] <= 0) {
-                    $_SESSION['message']  = "Vous ne pouvez plus vous connecter car vous êtes mort";
-                } else {
-
-
-                    if (password_verify($password, $user['password']) ||  $password == $user['password']) {
-
-                        session_start();
-                        $_SESSION['user'] = $user['id'];
-                        $_SESSION['score'] = $user['score'];
-                        header("location: ../index.php");
-                        exit(); // Ajout d'un exit() après la redirection
-                    } else {
-                        $_SESSION['message']  = "Pseudo ou Mot de passe incorrect !";
-                    }
-                }
-            } else {
-                $_SESSION['message']  = "Veuillez remplir tous les champs";
-            }
+        $checkStmt = "SELECT id_user 
+        FROM user
+        WHERE email = :userMail";
+        $checkStmt = $this->bdd->prepare($checkStmt);
+        $checkStmt->execute([
+            ':userMail' => $userMail
+        ]);
+        if ($checkStmt->fetch()) {
+            $_SESSION['message']  = "Cet adresse mail est déjà utilisé, veuillez vous connecter !";
+        } else {
+            $signUpStmt = "INSERT INTO user (email, password,first_name, last_name, adress,postal_code, city, role) VALUES (:email, :password, :firstname, :lastname, :adress, :postalCode, :city, :role)";
+            $signUpStmt = $this->bdd->prepare($signUpStmt);
+            $hashedPassword = password_hash($userPass, PASSWORD_DEFAULT);
+            $signUpStmt->execute([
+                ':email' => $userMail,
+                ':password' => $hashedPassword,
+                ':firstname' => $firstName,
+                ':lastname' => $lastName,
+                ':adress' => $adress,
+                ':postalCode' => $postalCode,
+                ':city' => $city,
+                ':role' => 'user'
+            ]);
+            $signUpStmt = $signUpStmt->fetch(PDO::FETCH_ASSOC);
+            $_SESSION['message']  = "Inscription réussie !";
         }
     }
 
-
-    public function inscription()
+    // Methode connexion
+    public function userConnexion($userMail, $userPass): void
     {
-
-        if (isset($_POST['submit'])) {
-            if (!empty($_POST['pseudo']) && !empty($_POST['password'])) {
-                $pseudo = htmlentities($_POST['pseudo']);
-                $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
-                $checkPseudo = $this->bdd->prepare("SELECT id FROM utilisateur WHERE pseudo = :pseudo");
-                $checkPseudo->execute(["pseudo" => $pseudo]);
-
-
-                if ($checkPseudo->fetch()) {
-                    $_SESSION['message']  = "Ce pseudo est déjà utilisé !";
-                } else {
-
-                    $req = $this->bdd->prepare("INSERT INTO utilisateur (pseudo, password, score) VALUES (:pseudo, :password, :score)");
-                    $req->execute([
-                        "pseudo" => $pseudo,
-                        "password" => $password,
-                        "score" => 10
-
-                    ]);
-                    $req = $req->fetch(PDO::FETCH_ASSOC);
-
-                    $_SESSION['message']  = "Inscription réussie !";
-
-                    $_SESSION['user'] = $req;
-
-                    header("location:connexion.php");
-                }
-            } else {
-                $_SESSION['message']  = "Veuillez remplir tous les champs";
-            }
+        $query = "SELECT *
+        FROM user
+        WHERE email = :userMail";
+        $userConnect = $this->bdd->prepare($query);
+        $userConnect->execute([
+            ':userMail' => $userMail
+        ]);
+        $userMail = $userConnect->fetch(PDO::FETCH_ASSOC);
+        if ($userMail && (password_verify($userPass, $userMail['password']) ||  $userMail['password'])) {
+            $_SESSION['userId'] = $userMail['id_user'];
+            $_SESSION['userRole'] = $userMail['role'];
+        } else {
+            $_SESSION['message']  = "Email ou mot de passe incorrect!";
         }
     }
 
-    //récupère toutes les infos utilisateurs (sauf mot de passe)
-    public function get_userInfo()
+    // Methode pour récuperer toutes les infos d'un utilisateur par ID
+    public function get_allById($userId): array
     {
-        $usersInfoStmt = $this->bdd->prepare("SELECT utilisateur.id, utilisateur.pseudo, utilisateur.score
-        FROM utilisateur
-        ORDER BY score ASC;
-            ");
-        $usersInfoStmt->execute();
-        return $usersInfoStmt->fetchAll(PDO::FETCH_ASSOC);
+        $getAllStmt = "SELECT user.id_user, user.eamil, user.password, user.role
+        FROM user
+        WHERE user.id = :userId";
+        $getAllStmt = $this->bdd->prepare($getAllStmt);
+        $getAllStmt->execute([
+            ':userId' => $userId
+        ]);
+
+        return $getAllStmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // // Méthode pour update user login
+    // public function updateUserLogin($userMail, $newLogin): void
+    // {
+    //     $checkStmt = "SELECT user.login 
+    //     FROM user
+    //     WHERE login = :newLogin";
+    //     $checkStmt = $this->bdd->prepare($checkStmt);
+    //     $checkStmt->execute([
+    //         ':newLogin' => $newLogin
+    //     ]);
+
+    //     if ($checkStmt->fetch()) {
+    //         $_SESSION['message']  = "Ce pseudo est déjà utilisé !";
+    //     } else {
+
+    //         $newLoginStmt = "UPDATE user SET login = :newLogin
+    //         WHERE login = :userLogin";
+    //         $newLoginStmt = $this->bdd->prepare($newLoginStmt);
+    //         $newLoginStmt->execute([
+    //             ':userLogin' => $userMail,
+    //             ':newLogin' => $newLogin
+    //         ]);
+
+    //         $_SESSION['message'] = "Pseudo modifié";
+    //         $_SESSION['userLogin'] = $newLogin;
+    //     }
+    // }
+
+    // Méthode pour vérifier et update le mot de passe
+    public function updateUserPassword($userId, $currentPass, $newPass)
+    {
+        // récup mdp actuel
+        $passStmt = "SELECT user.password
+        FROM user
+        WHERE user.id = :userId";
+        $passStmt = $this->bdd->prepare($passStmt);
+        $passStmt->execute([
+            ':userId' => $userId
+        ]);
+        $userPass = $passStmt->fetch(PDO::FETCH_ASSOC);
+
+        // vérifie s'il est correct
+        if (password_verify($currentPass, $userPass['password']) ||  $currentPass == $userPass['password']) {
+            $newHashPass = password_hash($newPass, PASSWORD_BCRYPT);
+
+            // met a jour le mot de passe
+            $updatePassStmt = "UPDATE user 
+            SET password = :newPass 
+            WHERE user.id = :userId";
+            $updatePassStmt = $this->bdd->prepare($updatePassStmt);
+            $updatePassStmt->execute([
+                ':newPass' => $newHashPass,
+                ':userId' => $userId
+            ]);
+
+            $_SESSION['message'] = "Succès - Mot de passe changé !";
+        } else {
+            $_SESSION['message'] = "Erreur - Mot de passe incorrect !";
+        }
     }
 }

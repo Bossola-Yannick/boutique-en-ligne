@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,6 +11,7 @@
     <script
         src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"
         defer></script>
+
     <script src="../js/connection-registration.js" defer></script>
     <script src="../js/search.js" defer></script>
     <link rel="stylesheet" href="../styles/reset.css" />
@@ -22,7 +26,7 @@
 <body>
     <header class="header">
         <div class="logo-box">
-            <a href="">
+            <a href="../index.php">
                 <img src="../assets/images/icones/logo-detour.png" alt="logo pimp my poule">
             </a>
         </div>
@@ -31,8 +35,17 @@
                 <li class="link-item"><a href="#">Déguisements</a></li>
                 <li class="link-item"><a href="#">Accessoires</a></li>
                 <li class="link-item"><a href="#">Promotion</a></li>
-                <li class="link-item"><a href="../vue/connection.php">Connexion</a></li>
-                <li class="link-item"><a href="../vue/registration.php">Inscription</a></li>
+                <?php if (isset($_SESSION['userId'])) : ?>
+                    <?php if ($_SESSION["userRole"] === "admin"): ?>
+                        <li class="link-item"><a href="../vue/adminVue.php">Gestion Boutique</a></li>
+                        <li class="logout"><button>Déconnexion</button></li>
+                    <?php elseif ($_SESSION["userRole"] === "user"): ?>
+                        <li class="link-item"><a href="../vue/profilVue.php">Profil</a></li>
+                    <?php endif ?>
+                <?php else : ?>
+                    <li class="link-item"><a href="../vue/connectionVue.php">Connexion</a></li>
+                    <li class="link-item"><a href="../vue/registrationVue.php">Inscription</a></li>
+                <?php endif ?>
             </ul>
         </div>
         <div class="cart-box">

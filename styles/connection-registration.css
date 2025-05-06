@@ -10,7 +10,7 @@
 #form-connection,
 #form-registration {
   width: 45%;
-  height: 80%;
+  height: auto;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -39,4 +39,10 @@
 #identiquePasswordError,
 #codePostalError {
   padding: 0.2rem;
+}
+.message-error {
+  color: red;
+  background-color: white;
+  padding: 0.5rem;
+  border-radius: 1rem;
 }
