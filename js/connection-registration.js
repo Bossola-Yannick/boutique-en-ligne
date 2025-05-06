@@ -25,7 +25,6 @@ $("document").ready(function () {
       return verifMail;
     }
   });
-
   // verif format code Postal
   $("#codeP").on("input", function () {
     let codeP = $(this).val();
@@ -35,7 +34,6 @@ $("document").ready(function () {
         .css({ color: "green" });
     } else $("#codePostalError").text("Format Code Postal invalide ! Veuillez mettre que les 5 chiffre de votre code postal.").css({ color: "red", background: "white" });
   });
-
   // verif format password
   $("#password").on("input", function () {
     var password = $(this).val();
@@ -67,18 +65,44 @@ $("#form-connection").submit(function (e) {
   // récupération des valeurs du formulaire et traitement
   let email = $("#email").val().trim();
   let password = $("#password").val().trim();
-
   if (verifMail) {
+    console.log("tentative de connexion");
+
     if (!password || !email) {
       $("#connection-message")
-        .text("Mot de passe ou Email non renseigné !")
+        .text("Mot de passe non renseigné !")
         .css({ color: "red", background: "white" });
-    } else
-      $("#connection-message")
-        .text("Connexion Réussi !")
-        .css({ color: "green" });
+    } else {
+      login(email, password);
+    }
   } else $("#connection-message").text("Connexion Echoué !").css({ color: "red", background: "white" });
 });
+
+const login = async (email, password) => {
+  try {
+    const response = await fetch("../controller/ConnectionController.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: email, password: password }),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.text();
+    const userConnect = JSON.parse(data);
+    console.log(userConnect);
+    sessionStorage.setItem("userConnectId", userConnect.userId);
+    sessionStorage.setItem("userConnectRole", userConnect.userRole);
+    document.location.href = "../index.php";
+  } catch (error) {
+    console.error("Erreur lors de la connexion :", error);
+    $("#connection-message")
+      .text("Erreur serveur, veuillez réessayer plus tard.")
+      .css({ color: "red", background: "white" });
+  }
+};
 
 //* INSCRIPTION
 $(".button-registration").on("click", function (e) {

@@ -31,8 +31,8 @@
                 <li class="link-item"><a href="#">Déguisements</a></li>
                 <li class="link-item"><a href="#">Accessoires</a></li>
                 <li class="link-item"><a href="#">Promotion</a></li>
-                <li class="link-item"><a href="../vue/connection.php">Connexion</a></li>
-                <li class="link-item"><a href="../vue/registration.php">Inscription</a></li>
+                <li class="link-item"><a href="../vue/connectionVue.php">Connexion</a></li>
+                <li class="link-item"><a href="../vue/registrationVue.php">Inscription</a></li>
             </ul>
         </div>
         <div class="cart-box">
