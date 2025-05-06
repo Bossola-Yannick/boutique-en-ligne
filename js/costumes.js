@@ -2,6 +2,7 @@ const header = document.querySelector("header");
 const sectionRightCol = document.getElementById("right-col");
 const listAllCostumesBox = document.querySelector(".list-all-costumes");
 const filterSubCat = document.querySelector(".filter-by-subcategory");
+const filterTag = document.querySelector(".filter-by-tag");
 
 let currentPage;
 let pageHash = location.hash.split("#")[1];
@@ -64,6 +65,9 @@ if (window.location.pathname === "/boutique-en-ligne/vue/costumes.php") {
         filterSubCat
       );
     });
+    // allTags.forEach((element) => {
+    //   createCheckbox(element.id_tag, element.name_tag, filterTag);
+    // });
   });
 }
 
@@ -84,9 +88,15 @@ const createCheckbox = (id, name, box) => {
   divCheck.appendChild(labelFor);
   box.appendChild(divCheck);
 
-  input.addEventListener("change", function () {
+  input.addEventListener("change", function (e) {
+    const checkboxList = box.querySelectorAll('input[type="checkbox"]');
     if (this.checked) {
-      console.log("checked");
+      console.log(e.target.value);
+      checkboxList.forEach((box) => {
+        if (box !== this) {
+          box.checked = false;
+        }
+      });
     } else {
       console.log("not checked");
     }

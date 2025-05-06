@@ -63,7 +63,8 @@
 }
 
 .filter-default,
-.filter-by-subcategory {
+.filter-by-subcategory,
+.filter-by-tag {
     width: 100%;
     display: flex;
     flex-direction: column;

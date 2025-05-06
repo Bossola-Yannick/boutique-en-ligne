@@ -25,6 +25,9 @@ $_SESSION['user_role'] = "user";
         <div class="filter-by-subcategory">
             <p>Categories:</p>
         </div>
+        <div class="filter-by-tag">
+            <p>Tags:</p>
+        </div>
     </section>
     <section id="right-col" class="right-col-items">
         <h2>Nos <span class="upp">pimp</span> pour vos <span class="upp">poules</span></h2>
