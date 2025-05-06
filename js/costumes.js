@@ -37,14 +37,27 @@ const fetchProduct = async (action) => {
 };
 
 if (window.location.pathname === "/boutique-en-ligne/vue/costumes.php") {
+  // change titre page (onglet)
+  documentName.innerText = "Déguisements";
+
   //------------------------------- //
   // déguisements
   fetchProduct("costumes").then((data) => {
-    const allCostumes = data.products;
+    let allCostumes = data.products;
 
-    // change titre page (onglet)
-    documentName.innerText = "Déguisements";
+    // applique les filtres de l'URL
+    const searchParams = new URLSearchParams(window.location.search);
+    const subCategoryFilter = searchParams.get("subcategory");
 
+    if (subCategoryFilter) {
+      allCostumes = allCostumes.filter(
+        (product) =>
+          product.sub_category &&
+          product.sub_category.id_subcategory.toString() === subCategoryFilter
+      );
+    }
+
+    console.log(allCostumes);
     // pagination
     pageProducts(allCostumes, currentPage);
     pageNumberButtons(allCostumes);
@@ -62,18 +75,27 @@ if (window.location.pathname === "/boutique-en-ligne/vue/costumes.php") {
       createCheckbox(
         element.id_subcategory,
         element.name_subcategory,
-        filterSubCat
+        filterSubCat,
+        "subcategory"
       );
     });
-    // allTags.forEach((element) => {
-    //   createCheckbox(element.id_tag, element.name_tag, filterTag);
-    // });
+
+    // coche les filtres si présents dans l'URL
+    const searchParams = new URLSearchParams(window.location.search);
+    const activeSubCategory = searchParams.get("subcategory");
+
+    if (activeSubCategory) {
+      const checkboxToSelect = filterSubCat.querySelector(
+        `input[type="checkbox"][value="${activeSubCategory}"]`
+      );
+      if (checkboxToSelect) checkboxToSelect.checked = true;
+    }
   });
 }
 
 //------------------------------- //
 // creer input checkbox
-const createCheckbox = (id, name, box) => {
+const createCheckbox = (id, name, box, filter) => {
   const divCheck = document.createElement("div");
   divCheck.classList.add("check-box");
   const input = document.createElement("input");
@@ -90,8 +112,11 @@ const createCheckbox = (id, name, box) => {
 
   input.addEventListener("change", function (e) {
     const checkboxList = box.querySelectorAll('input[type="checkbox"]');
+    let activeFilter;
+
     if (this.checked) {
-      console.log(e.target.value);
+      activeFilter = this.value;
+      console.log(this.value);
       checkboxList.forEach((box) => {
         if (box !== this) {
           box.checked = false;
@@ -100,6 +125,51 @@ const createCheckbox = (id, name, box) => {
     } else {
       console.log("not checked");
     }
+    updateUrlAndFilter(filter, activeFilter);
+  });
+};
+
+//------------------------------- //
+// met à jour l'URL avec le filtre + recharge les produits
+const updateUrlAndFilter = (filterType, activeFilter) => {
+  const currentUrl = new URL(window.location.href);
+
+  if (activeFilter) {
+    currentUrl.searchParams.set(filterType, activeFilter);
+  } else {
+    currentUrl.searchParams.delete(filterType);
+  }
+
+  // met à jour l'URL dans la barre d'adresse sans recharger la page
+  window.history.pushState({ path: currentUrl.href }, "", currentUrl.href);
+
+  fetchProduct("costumes").then((data) => {
+    let filteredProduct = data.products;
+    const searchParams = new URLSearchParams(window.location.search);
+
+    // recup les produits avec le filtre appliquer
+    const subCategoryFilter = searchParams.get("subcategory");
+
+    if (subCategoryFilter) {
+      filteredProduct = filteredProduct.filter(
+        (product) =>
+          product.sub_category &&
+          product.sub_category.id_subcategory.toString() === subCategoryFilter
+      );
+    }
+
+    // retour à la page 1
+    currentPage = 1;
+    location.hash = `#${currentPage}`;
+
+    pageProducts(filteredProduct, currentPage);
+
+    // recréation de la boite numéro de page
+    const existPagesBox = sectionRightCol.querySelector(".pages-box");
+    if (existPagesBox) {
+      existPagesBox.remove();
+    }
+    pageNumberButtons(filteredProduct);
   });
 };
 
