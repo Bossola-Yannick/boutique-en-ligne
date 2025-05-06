@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,8 +35,17 @@
                 <li class="link-item"><a href="#">Déguisements</a></li>
                 <li class="link-item"><a href="#">Accessoires</a></li>
                 <li class="link-item"><a href="#">Promotion</a></li>
-                <li class="link-item"><a href="../vue/connectionVue.php">Connexion</a></li>
-                <li class="link-item"><a href="../vue/registrationVue.php">Inscription</a></li>
+                <?php if (!$_SESSION) : ?>
+                    <li class="link-item"><a href="../vue/connectionVue.php">Connexion</a></li>
+                    <li class="link-item"><a href="../vue/registrationVue.php">Inscription</a></li>
+                <?php else : ?>
+                    <?php if ($_SESSION["userRole"] === "admin"): ?>
+                        <li class="link-item"><a href="../vue/adminVue.php">Gestion Boutique</a></li>
+                        <li class="logout"><button>Déconnexion</button></li>
+                    <?php elseif ($_SESSION["userRole"] === "user"): ?>
+                        <li class="link-item"><a href="../vue/profilVue.php">Profil</a></li>
+                    <?php endif ?>
+                <?php endif ?>
             </ul>
         </div>
         <div class="cart-box">

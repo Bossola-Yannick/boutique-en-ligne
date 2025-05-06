@@ -40,3 +40,7 @@
 #codePostalError {
   padding: 0.2rem;
 }
+.message-connection {
+  padding: 0.5rem;
+  border-radius: 1rem;
+}

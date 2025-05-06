@@ -34,7 +34,7 @@ class User extends ConnexionBdd
 
     // Methode inscription
 
-    public function userSignUp($userMail, $userPass)
+    public function userSignUp($userMail, $userPass, $firstName, $lastName, $adress, $postalCode, $city, $role)
     {
         $checkStmt = "SELECT id 
         FROM user
@@ -43,17 +43,21 @@ class User extends ConnexionBdd
         $checkStmt->execute([
             ':userMail' => $userMail
         ]);
-
         if ($checkStmt->fetch()) {
-            $_SESSION['message']  = "Ce pseudo est déjà utilisé !";
+            $_SESSION['message']  = "Cet adresse mail est déjà utilisé, veuillez vous connecter !";
         } else {
 
-            $signUpStmt = "INSERT INTO user (email, password, role) VALUES (:email, :password, :role)";
+            $signUpStmt = "INSERT INTO user (email, password,first_name, last_name, adress,postal_code, city, role) VALUES (:email, :password, :firstName, :lastName, :adress,:postalCode, :city, :role)";
             $signUpStmt = $this->bdd->prepare($signUpStmt);
             $hashedPassword = password_hash($userPass, PASSWORD_DEFAULT);
             $signUpStmt->execute([
                 ':email' => $userMail,
                 ':password' => $hashedPassword,
+                ':firstname' => $firstName,
+                ':lastname' => $lastName,
+                ':adress' => $adress,
+                ':postalCode' => $postalCode,
+                ':city' => $city,
                 ':role' => 'user'
             ]);
 

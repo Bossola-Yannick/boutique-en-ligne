@@ -77,7 +77,7 @@ $("#form-connection").submit(function (e) {
     } else {
       login(email, password);
     }
-  } else $("#connection-message").text("Connexion Echoué !").css({ color: "red", background: "white" });
+  }
 });
 
 const login = async (email, password) => {
@@ -98,7 +98,10 @@ const login = async (email, password) => {
     const userConnect = JSON.parse(data);
     console.log(userConnect);
     if (userConnect.message === "Email ou mot de passe incorrect!") {
-      $("#connection-message").text("Email ou Mot de passe incorrect !");
+      $("#connection-message")
+        .text("Email ou Mot de passe incorrect !")
+        .css({ color: "red", background: "white" })
+        .addClass("message-connection");
     } else {
       sessionStorage.setItem("userConnectId", userConnect.userId);
       sessionStorage.setItem("userConnectRole", userConnect.userRole);
@@ -147,6 +150,13 @@ $(".button-registration").on("click", function (e) {
     $("#codePostalError").css("visibility", "hidden");
     console.log(nom, prenom, email, adresse, codeP, password, confirmPassword);
   }
+});
+
+//* DECONNEXION
+$(".logout").on("click", function (e) {
+  e.preventDefault();
+  sessionStorage.clear();
+  fetch("./controller/logout.php");
 });
 
 // regex pour email: ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,10}$
