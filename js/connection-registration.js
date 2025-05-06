@@ -73,7 +73,7 @@ $("#form-connection").submit(function (e) {
     if (!password || !email) {
       $("#connection-message")
         .text("Mot de passe non renseigné !")
-        .css({ color: "red", background: "white" });
+        .addClass("message-error");
     } else {
       login(email, password);
     }
@@ -100,8 +100,7 @@ const login = async (email, password) => {
     if (userConnect.message === "Email ou mot de passe incorrect!") {
       $("#connection-message")
         .text("Email ou Mot de passe incorrect !")
-        .css({ color: "red", background: "white" })
-        .addClass("message-connection");
+        .addClass("message-error");
     } else {
       sessionStorage.setItem("userConnectId", userConnect.userId);
       sessionStorage.setItem("userConnectRole", userConnect.userRole);
@@ -111,7 +110,7 @@ const login = async (email, password) => {
     console.error("Erreur lors de la connexion :", error);
     $("#connection-message")
       .text("Erreur serveur, veuillez réessayer plus tard.")
-      .css({ color: "red", background: "white" });
+      .addClass("message-error");
   }
 };
 
@@ -119,38 +118,83 @@ const login = async (email, password) => {
 $(".button-registration").on("click", function (e) {
   e.preventDefault();
   // récupération des valeurs du formulaire et traitement
-  let nom = $("#nom").val().trim();
-  let prenom = $("#prenom").val().trim();
+  let firstname = $("#nom").val().trim();
+  let lastname = $("#prenom").val().trim();
   let email = $("#email").val().trim();
-  let adresse = $("#adresse").val().trim();
+  let adress = $("#adresse").val().trim();
   let codeP = $("#codeP").val().trim();
   let password = $("#password").val().trim();
   let confirmPassword = $("#confirmPassword").val().trim();
+  let city = $("#city").val().trim();
   if (
-    !nom ||
-    !prenom ||
+    !firstname ||
+    !lastname ||
     !email ||
-    !adresse ||
+    !adress ||
     !codeP ||
     !password ||
-    !confirmPassword
+    !confirmPassword ||
+    !city
   ) {
     $("#status-registration")
       .text("Veuillez remplir tous les champs CORRECTEMENT!")
-      .css({ color: "red", backgrounColor: "rgba(255, 255, 255, 0.644)" });
+      .addClass("message-error");
     return;
   }
   if (passwordIdentique) {
-    $("#status-registration")
-      .text("Inscription Validée !")
-      .css({ color: "green" });
-    $("#emailError").css("visibility", "hidden");
-    $("#passwordError").css("visibility", "hidden");
-    $("#identiquePasswordError").css("visibility", "hidden");
-    $("#codePostalError").css("visibility", "hidden");
-    console.log(nom, prenom, email, adresse, codeP, password, confirmPassword);
+    registration(firstname, lastname, email, adress, codeP, password, city);
   }
 });
+
+// fonction pour l'inscription
+const registration = async (
+  firstname,
+  lastname,
+  email,
+  adress,
+  codeP,
+  password,
+  city
+) => {
+  try {
+    const response = await fetch("../controller/InscriptionController.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+        firstname: firstname,
+        lastname: lastname,
+        adress: adress,
+        postalCode: codeP,
+        city: city,
+      }),
+    });
+
+    // Log de la réponse brute
+    const rawResponse = await response.text();
+    console.log("Réponse brute du serveur :", rawResponse);
+
+    // Vérifiez si la réponse est un JSON valide
+    const data = JSON.parse(rawResponse);
+    console.log("Réponse du serveur :", data);
+
+    if (data.success) {
+      document.location.href = "./connectionVue.php";
+    } else {
+      $("#status-registration")
+        .text(data.message || "Erreur lors de l'inscription.")
+        .addClass("message-error");
+    }
+  } catch (error) {
+    console.error("Erreur lors de l'inscription :", error);
+    $("#status-registration")
+      .text("Erreur serveur, veuillez réessayer plus tard.")
+      .addClass("message-error");
+  }
+};
 
 //* DECONNEXION
 $(".logout").on("click", function (e) {

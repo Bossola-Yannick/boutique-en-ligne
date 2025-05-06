@@ -34,11 +34,11 @@ class User extends ConnexionBdd
 
     // Methode inscription
 
-    public function userSignUp($userMail, $userPass, $firstName, $lastName, $adress, $postalCode, $city, $role)
+    public function userSignUp($userMail, $userPass, $firstName, $lastName, $adress, $postalCode, $city)
     {
-        $checkStmt = "SELECT id 
+        $checkStmt = "SELECT id_user 
         FROM user
-        WHERE login = :userMail";
+        WHERE email = :userMail";
         $checkStmt = $this->bdd->prepare($checkStmt);
         $checkStmt->execute([
             ':userMail' => $userMail
@@ -46,8 +46,7 @@ class User extends ConnexionBdd
         if ($checkStmt->fetch()) {
             $_SESSION['message']  = "Cet adresse mail est déjà utilisé, veuillez vous connecter !";
         } else {
-
-            $signUpStmt = "INSERT INTO user (email, password,first_name, last_name, adress,postal_code, city, role) VALUES (:email, :password, :firstName, :lastName, :adress,:postalCode, :city, :role)";
+            $signUpStmt = "INSERT INTO user (email, password,first_name, last_name, adress,postal_code, city, role) VALUES (:email, :password, :firstname, :lastname, :adress, :postalCode, :city, :role)";
             $signUpStmt = $this->bdd->prepare($signUpStmt);
             $hashedPassword = password_hash($userPass, PASSWORD_DEFAULT);
             $signUpStmt->execute([
@@ -60,13 +59,8 @@ class User extends ConnexionBdd
                 ':city' => $city,
                 ':role' => 'user'
             ]);
-
             $signUpStmt = $signUpStmt->fetch(PDO::FETCH_ASSOC);
-
             $_SESSION['message']  = "Inscription réussie !";
-
-            header("location:connexion.php");
-            exit;
         }
     }
 
@@ -92,7 +86,7 @@ class User extends ConnexionBdd
     // Methode pour récuperer toutes les infos d'un utilisateur par ID
     public function get_allById($userId): array
     {
-        $getAllStmt = "SELECT user.id, user.login, user.password, user.role
+        $getAllStmt = "SELECT user.id_user, user.eamil, user.password, user.role
         FROM user
         WHERE user.id = :userId";
         $getAllStmt = $this->bdd->prepare($getAllStmt);
@@ -103,33 +97,33 @@ class User extends ConnexionBdd
         return $getAllStmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Méthode pour update user login
-    public function updateUserLogin($userMail, $newLogin): void
-    {
-        $checkStmt = "SELECT user.login 
-        FROM user
-        WHERE login = :newLogin";
-        $checkStmt = $this->bdd->prepare($checkStmt);
-        $checkStmt->execute([
-            ':newLogin' => $newLogin
-        ]);
+    // // Méthode pour update user login
+    // public function updateUserLogin($userMail, $newLogin): void
+    // {
+    //     $checkStmt = "SELECT user.login 
+    //     FROM user
+    //     WHERE login = :newLogin";
+    //     $checkStmt = $this->bdd->prepare($checkStmt);
+    //     $checkStmt->execute([
+    //         ':newLogin' => $newLogin
+    //     ]);
 
-        if ($checkStmt->fetch()) {
-            $_SESSION['message']  = "Ce pseudo est déjà utilisé !";
-        } else {
+    //     if ($checkStmt->fetch()) {
+    //         $_SESSION['message']  = "Ce pseudo est déjà utilisé !";
+    //     } else {
 
-            $newLoginStmt = "UPDATE user SET login = :newLogin
-            WHERE login = :userLogin";
-            $newLoginStmt = $this->bdd->prepare($newLoginStmt);
-            $newLoginStmt->execute([
-                ':userLogin' => $userMail,
-                ':newLogin' => $newLogin
-            ]);
+    //         $newLoginStmt = "UPDATE user SET login = :newLogin
+    //         WHERE login = :userLogin";
+    //         $newLoginStmt = $this->bdd->prepare($newLoginStmt);
+    //         $newLoginStmt->execute([
+    //             ':userLogin' => $userMail,
+    //             ':newLogin' => $newLogin
+    //         ]);
 
-            $_SESSION['message'] = "Pseudo modifié";
-            $_SESSION['userLogin'] = $newLogin;
-        }
-    }
+    //         $_SESSION['message'] = "Pseudo modifié";
+    //         $_SESSION['userLogin'] = $newLogin;
+    //     }
+    // }
 
     // Méthode pour vérifier et update le mot de passe
     public function updateUserPassword($userId, $currentPass, $newPass)
