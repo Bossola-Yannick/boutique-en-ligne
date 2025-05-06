@@ -1,5 +1,6 @@
 <?php
 include '../components/header.php';
+include '../components/search.php';
 ?>
 <section class="registration">
     <form action="" id="form-registration">

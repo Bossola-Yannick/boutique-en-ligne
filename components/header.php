@@ -8,6 +8,7 @@
     <script
         src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"
         defer></script>
+
     <script src="../js/connection-registration.js" defer></script>
     <script src="../js/search.js" defer></script>
     <link rel="stylesheet" href="../styles/reset.css" />
@@ -22,7 +23,7 @@
 <body>
     <header class="header">
         <div class="logo-box">
-            <a href="">
+            <a href="../index.php">
                 <img src="../assets/images/icones/logo-detour.png" alt="logo pimp my poule">
             </a>
         </div>
@@ -31,8 +32,8 @@
                 <li class="link-item"><a href="#">Déguisements</a></li>
                 <li class="link-item"><a href="#">Accessoires</a></li>
                 <li class="link-item"><a href="#">Promotion</a></li>
-                <li class="link-item"><a href="../vue/connection.php">Connexion</a></li>
-                <li class="link-item"><a href="../vue/registration.php">Inscription</a></li>
+                <li class="link-item"><a href="../vue/connectionVue.php">Connexion</a></li>
+                <li class="link-item"><a href="../vue/registrationVue.php">Inscription</a></li>
             </ul>
         </div>
         <div class="cart-box">
