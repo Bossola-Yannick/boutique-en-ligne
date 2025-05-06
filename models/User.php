@@ -5,47 +5,51 @@ class Utilisateur extends ConnexionBdd
 {
 
     private $id;
-    private $pseudo;
+    private $email;
     private $password;
-    private $score;
+    private $firstName;
+    private $lastName;
+    private $adress;
+    private $postalCode;
+    private $city;
+    private $role;
 
 
     public function __construct()
     {
         parent::__construct($this->bdd);
         $this->id;
-        $this->pseudo;
+        $this->email;
         $this->password;
-        $this->score;
+        $this->firstName;
+        $this->lastName;
+        $this->adress;
+        $this->postalCode;
+        $this->city;
+        $this->role;
     }
 
     public function connexion()
     {
-
         if (isset($_POST['submit'])) {
-            if (!empty($_POST['pseudo']) && !empty($_POST['password'])) {
-                $pseudo = htmlentities($_POST['pseudo']);
+            if (!empty($_POST['email']) && !empty($_POST['password'])) {
+                $email = htmlentities($_POST['email']);
                 $password = $_POST['password'];
-                $req = $this->bdd->prepare("SELECT * FROM utilisateur WHERE pseudo = :pseudo");
-                $req->execute(["pseudo" => $pseudo]);
+                $req = $this->bdd->prepare("SELECT * FROM utilisateur WHERE email = :email");
+                $req->execute(["email" => $email]);
                 $user = $req->fetch(PDO::FETCH_ASSOC);
 
-                if (!$user) { // Vérifie si l'utilisateur existe
-                    $_SESSION['message']  = "Pseudo ou Mot de passe incorrect !";
-                } elseif ($user['score'] <= 0) {
-                    $_SESSION['message']  = "Vous ne pouvez plus vous connecter car vous êtes mort";
+                if (!$user) {
+                    $_SESSION['message']  = "email ou Mot de passe incorrect !";
                 } else {
-
-
                     if (password_verify($password, $user['password']) ||  $password == $user['password']) {
-
                         session_start();
                         $_SESSION['user'] = $user['id'];
                         $_SESSION['score'] = $user['score'];
                         header("location: ../index.php");
-                        exit(); // Ajout d'un exit() après la redirection
+                        exit();
                     } else {
-                        $_SESSION['message']  = "Pseudo ou Mot de passe incorrect !";
+                        $_SESSION['message']  = "email ou Mot de passe incorrect !";
                     }
                 }
             } else {
@@ -57,7 +61,6 @@ class Utilisateur extends ConnexionBdd
 
     public function inscription()
     {
-
         if (isset($_POST['submit'])) {
             if (!empty($_POST['pseudo']) && !empty($_POST['password'])) {
                 $pseudo = htmlentities($_POST['pseudo']);
