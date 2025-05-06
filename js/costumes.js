@@ -1,6 +1,7 @@
 const header = document.querySelector("header");
 const sectionRightCol = document.getElementById("right-col");
 const listAllCostumesBox = document.querySelector(".list-all-costumes");
+const filterSubCat = document.querySelector(".filter-by-subcategory");
 
 let currentPage;
 let pageHash = location.hash.split("#")[1];
@@ -9,50 +10,90 @@ if (pageHash) {
 } else {
   currentPage = 1;
 }
-
 const productsPerPage = 12;
 
+// récupere info produit demandé via action
+const fetchProduct = async (action) => {
+  try {
+    const response = await fetch(
+      `../controller/ProductController.php?action=${action}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(`Erreur dans fetchProduct pour l'action "${action}":`, error);
+    throw error;
+  }
+};
+
 if (window.location.pathname === "/boutique-en-ligne/vue/costumes.php") {
+  //------------------------------- //
   // déguisements
-  fetch(`../controller/ProductController.php?action=costumes`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      const allCostumes = data.products;
-      // console.log(allCostumes);
+  fetchProduct("costumes").then((data) => {
+    const allCostumes = data.products;
 
-      // change titre page (onglet)
-      documentName.innerText = "Déguisements";
+    // change titre page (onglet)
+    documentName.innerText = "Déguisements";
 
-      // pagination
-      pageProducts(allCostumes, currentPage);
-      pageNumberButtons(allCostumes);
-    })
+    // pagination
+    pageProducts(allCostumes, currentPage);
+    pageNumberButtons(allCostumes);
+  });
 
-    .catch((error) => console.error("Erreur fetch :", error));
-
+  //------------------------------- //
   // filters
-  fetch(`../controller/ProductController.php?action=filter`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      const allSubCat = data.sub_category;
-      const allTags = data.tags;
-      console.log(allSubCat);
-      console.log(allTags);
-    })
+  fetchProduct("filter").then((data) => {
+    const allSubCat = data.sub_category;
+    const allTags = data.tags;
+    console.log(allSubCat);
+    console.log(allTags);
 
-    .catch((error) => console.error("Erreur fetch :", error));
+    allSubCat.forEach((element) => {
+      createCheckbox(
+        element.id_subcategory,
+        element.name_subcategory,
+        filterSubCat
+      );
+    });
+  });
 }
 
+//------------------------------- //
+// creer input checkbox
+const createCheckbox = (id, name, box) => {
+  const divCheck = document.createElement("div");
+  divCheck.classList.add("check-box");
+  const input = document.createElement("input");
+  input.setAttribute("type", "checkbox");
+  input.setAttribute("name", name);
+  input.setAttribute("value", id);
+  const labelFor = document.createElement("label");
+  labelFor.setAttribute("for", name);
+  labelFor.innerText = name;
+
+  divCheck.appendChild(input);
+  divCheck.appendChild(labelFor);
+  box.appendChild(divCheck);
+
+  input.addEventListener("change", function () {
+    if (this.checked) {
+      console.log("checked");
+    } else {
+      console.log("not checked");
+    }
+  });
+};
+
+//------------------------------- //
 // affichage de 12 produits par page
 const pageProducts = (products, page) => {
   listAllCostumesBox.innerHTML = "";
@@ -74,6 +115,7 @@ const pageProducts = (products, page) => {
   });
 };
 
+//------------------------------- //
 // pagination boutons
 const pageNumberButtons = (products) => {
   const pagesBox = document.createElement("div");
