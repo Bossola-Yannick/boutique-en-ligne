@@ -3,6 +3,7 @@ const sectionRightCol = document.getElementById("right-col");
 const listAllCostumesBox = document.querySelector(".list-all-costumes");
 const filterSubCat = document.querySelector(".filter-by-subcategory");
 const filterTag = document.querySelector(".filter-by-tag");
+const filterDefault = document.querySelector(".filter-default");
 
 let currentPage;
 let pageHash = location.hash.split("#")[1];
@@ -48,6 +49,7 @@ if (window.location.pathname === "/boutique-en-ligne/vue/costumes.php") {
     // applique les filtres de l'URL
     const searchParams = new URLSearchParams(window.location.search);
     const subCategoryFilter = searchParams.get("subcategory");
+    const defaultFilter = searchParams.get("default");
 
     if (subCategoryFilter) {
       allCostumes = allCostumes.filter(
@@ -56,8 +58,22 @@ if (window.location.pathname === "/boutique-en-ligne/vue/costumes.php") {
           product.sub_category.id_subcategory.toString() === subCategoryFilter
       );
     }
+    if (defaultFilter) {
+      if (defaultFilter === "0") {
+        allCostumes = allCostumes.sort((a, b) => {
+          const priceA = getWhichPrice(a);
+          const priceB = getWhichPrice(b);
+          return priceA - priceB;
+        });
+      } else if (defaultFilter === "1") {
+        allCostumes = allCostumes.sort((a, b) => {
+          const priceA = getWhichPrice(a);
+          const priceB = getWhichPrice(b);
+          return priceB - priceA;
+        });
+      }
+    }
 
-    console.log(allCostumes);
     // pagination
     pageProducts(allCostumes, currentPage);
     pageNumberButtons(allCostumes);
@@ -68,8 +84,11 @@ if (window.location.pathname === "/boutique-en-ligne/vue/costumes.php") {
   fetchProduct("filter").then((data) => {
     const allSubCat = data.sub_category;
     const allTags = data.tags;
-    console.log(allSubCat);
-    console.log(allTags);
+    const defaultFilter = [
+      "Prix: moins cher au plus cher",
+      "Prix: plus cher au moins cher",
+      "Note",
+    ];
 
     allSubCat.forEach((element) => {
       createCheckbox(
@@ -80,13 +99,24 @@ if (window.location.pathname === "/boutique-en-ligne/vue/costumes.php") {
       );
     });
 
-    // coche les filtres si présents dans l'URL
+    for (let i = 0; i < defaultFilter.length; i++) {
+      createCheckbox(i, defaultFilter[i], filterDefault, "default");
+    }
+
+    // coche les filtres si présents dans l'URL en cas de refresh
     const searchParams = new URLSearchParams(window.location.search);
     const activeSubCategory = searchParams.get("subcategory");
+    const activeDefault = searchParams.get("default");
 
     if (activeSubCategory) {
       const checkboxToSelect = filterSubCat.querySelector(
         `input[type="checkbox"][value="${activeSubCategory}"]`
+      );
+      if (checkboxToSelect) checkboxToSelect.checked = true;
+    }
+    if (activeDefault) {
+      const checkboxToSelect = filterDefault.querySelector(
+        `input[type="checkbox"][value="${activeDefault}"]`
       );
       if (checkboxToSelect) checkboxToSelect.checked = true;
     }
@@ -110,7 +140,7 @@ const createCheckbox = (id, name, box, filter) => {
   divCheck.appendChild(labelFor);
   box.appendChild(divCheck);
 
-  input.addEventListener("change", function (e) {
+  input.addEventListener("change", function () {
     const checkboxList = box.querySelectorAll('input[type="checkbox"]');
     let activeFilter;
 
@@ -144,32 +174,48 @@ const updateUrlAndFilter = (filterType, activeFilter) => {
   window.history.pushState({ path: currentUrl.href }, "", currentUrl.href);
 
   fetchProduct("costumes").then((data) => {
-    let filteredProduct = data.products;
+    let products = data.products;
     const searchParams = new URLSearchParams(window.location.search);
 
     // recup les produits avec le filtre appliquer
     const subCategoryFilter = searchParams.get("subcategory");
+    const defaultFilter = searchParams.get("default");
 
     if (subCategoryFilter) {
-      filteredProduct = filteredProduct.filter(
+      products = products.filter(
         (product) =>
           product.sub_category &&
           product.sub_category.id_subcategory.toString() === subCategoryFilter
       );
+    }
+    if (defaultFilter) {
+      if (defaultFilter === "0") {
+        products.sort((a, b) => {
+          const priceA = getWhichPrice(a);
+          const priceB = getWhichPrice(b);
+          return priceA - priceB;
+        });
+      } else if (defaultFilter === "1") {
+        products.sort((a, b) => {
+          const priceA = getWhichPrice(a);
+          const priceB = getWhichPrice(b);
+          return priceB - priceA;
+        });
+      }
     }
 
     // retour à la page 1
     currentPage = 1;
     location.hash = `#${currentPage}`;
 
-    pageProducts(filteredProduct, currentPage);
+    pageProducts(products, currentPage);
 
     // recréation de la boite numéro de page
     const existPagesBox = sectionRightCol.querySelector(".pages-box");
     if (existPagesBox) {
       existPagesBox.remove();
     }
-    pageNumberButtons(filteredProduct);
+    pageNumberButtons(products);
   });
 };
 
@@ -266,4 +312,15 @@ const pageNumberButtons = (products) => {
   });
   pagesBox.appendChild(nextButton);
   sectionRightCol.appendChild(pagesBox);
+};
+
+// defini si prix discount ou prix classique
+const getWhichPrice = (products) => {
+  let discountPrice = parseFloat(products.price_discount);
+  let price = parseFloat(products.price_ttc);
+  if (discountPrice < price) {
+    return discountPrice;
+  } else {
+    return price;
+  }
 };

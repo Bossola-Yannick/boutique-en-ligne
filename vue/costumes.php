@@ -11,17 +11,9 @@ $_SESSION['user_role'] = "user";
 
 <div class="product-list-box">
     <section class="left-col-filter">
-        <!-- <div class="filter-default">
+        <div class="filter-default">
             <p>Trier par:</p>
-            <div class=check-box>
-                <input type="checkbox" name="filter-price" />
-                <label for="filter-price">Prix</label>
-            </div>
-            <div class=check-box>
-                <input type="checkbox" name="filter-rating" />
-                <label for="filter-rating">Note</label>
-            </div>
-        </div> -->
+        </div>
         <div class="filter-by-subcategory">
             <p>Categories:</p>
         </div>
