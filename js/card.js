@@ -8,6 +8,7 @@ const createCard = (
   name_product,
   price_ttc,
   price_discount,
+  rating,
   boxToAppend
 ) => {
   const card = document.createElement("div");
@@ -36,7 +37,13 @@ const createCard = (
   const infoDiv = document.createElement("div");
   infoDiv.classList.add("card-infos-box");
   infoDiv.innerHTML = `
-          <h3>${name_product}</h3>
+            <div class="card-title">
+              <h3>${name_product}</h3>
+              <div class="card-rating">
+                <p class="left-mar bold">${rating} / 5</p>
+                <img src="../assets/images/icones/icon-rating.png"/>
+              </div>
+            </div>
           <div class="card-infos">
             <div class="card-price-box">
               <div class="card-default-box">

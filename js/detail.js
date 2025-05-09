@@ -99,6 +99,7 @@ if (window.location.pathname === "/boutique-en-ligne/vue/detail.php") {
       let showCard;
       window.innerWidth < 1440 ? (showCard = ratio) : (showCard = 5);
 
+      console.log(filterRecommand);
       // créer la carte pour chaque recommandation
       filterRecommand.slice(0, showCard).forEach((reco) => {
         createCard(
@@ -108,6 +109,7 @@ if (window.location.pathname === "/boutique-en-ligne/vue/detail.php") {
           reco.name_product,
           reco.price_ttc,
           reco.price_discount,
+          reco.rating_product,
           recommandBox
         );
       });

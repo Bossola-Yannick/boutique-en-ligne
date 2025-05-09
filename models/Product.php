@@ -39,7 +39,8 @@ class Product extends ConnexionBdd
     {
         $query = "SELECT
         tag.id_tag, tag.name_tag, 
-        product.id_product, product.name_product, product.price_ttc, product.price_discount, product.image_link, product.category
+        product.id_product, product.name_product, product.price_ttc, product.price_discount, product.image_link, 
+        product.category, product.rating_product
         FROM tag
         JOIN product_tag ON product_tag.id_tag = tag.id_tag
         JOIN product ON product_tag.id_product = product.id_product

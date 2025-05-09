@@ -146,14 +146,11 @@ const createCheckbox = (id, name, box, filter) => {
 
     if (this.checked) {
       activeFilter = this.value;
-      console.log(this.value);
       checkboxList.forEach((box) => {
         if (box !== this) {
           box.checked = false;
         }
       });
-    } else {
-      console.log("not checked");
     }
     updateUrlAndFilter(filter, activeFilter);
   });
@@ -236,6 +233,7 @@ const pageProducts = (products, page) => {
       product.name_product,
       product.price_ttc,
       product.price_discount,
+      product.rating_product,
       listAllCostumesBox
     );
   });

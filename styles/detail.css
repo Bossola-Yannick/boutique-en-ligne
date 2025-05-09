@@ -116,6 +116,26 @@
     border-radius: 50px 50px 0 0;
     /* height: 100%; */
 }
+.card-title {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+.card-rating {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+.card-title h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color:black;
+}
+.card-rating img {
+    width: 1rem;
+}
 .card-infos-box {
     width: 100%;
     height: fit-content;
@@ -125,13 +145,8 @@
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    gap: 1.2rem;
+    gap: 0.8rem;
     flex: 1;
-}
-.card-infos-box h3 {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color:black;
 }
 .card-infos {
     width: 100%;
