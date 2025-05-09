@@ -120,6 +120,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.2rem;
+    color:black;
 }
 .card-rating {
     width: 100%;
@@ -130,8 +131,7 @@
 }
 .card-title h3 {
     font-size: 1.5rem;
-    font-weight: bold;
-    color:black;
+    font-weight: bold; 
 }
 .card-rating img {
     width: 1rem;

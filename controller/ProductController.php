@@ -88,7 +88,7 @@ switch ($action) {
 
     case 'costumes':
 
-        $costumes = $product->getAllCostume();
+        $costumes = $product->getAllProduct("déguisement");
 
         $allCostumes = [
             "products" => [],
@@ -111,7 +111,7 @@ switch ($action) {
                     "image_link" => $info['image_link'],
                     "category" => $info['category'],
                     "rating_product" => $info['rating_product'],
-                    "name_tag" => [],
+                    "tag" => [],
                     "sub_category" => [
                         "id_subcategory" => $info['id_subcategory'],
                         "name_subcategory" => $info['name_subcategory']
@@ -120,6 +120,124 @@ switch ($action) {
             }
 
             // ajout les tags au produit
+            if (!empty($info['id_tag']) && !empty($info['name_tag'])) {
+                // vérifie que le tag s'ajoute qu'une fois
+                $tagExists = false;
+                foreach ($productsById[$id]['tag'] as $existingTag) {
+                    if ($existingTag['id_tag'] === $info['id_tag']) {
+                        $tagExists = true;
+                        break;
+                    }
+                }
+                if (!$tagExists) {
+                    $productsById[$id]['tag'][] = [
+                        "id_tag" => $info['id_tag'],
+                        "name_tag" => $info['name_tag']
+                    ];
+                }
+            }
+        }
+
+        // ajoute le produit au tableau principal
+        $allCostumes["products"] = array_values($productsById);
+
+
+        echo json_encode($allCostumes);
+        break;
+
+    case 'accessories':
+
+        $accessories = $product->getAllProduct("accessoire");
+
+        $allAccessories = [
+            "products" => [],
+        ];
+
+        $productsById = [];
+
+        foreach ($accessories as $info) {
+            $id = $info['id_product'];
+
+            // recupere un accessoires 
+            if (!isset($productsById[$id])) {
+                $productsById[$id] = [
+                    "id_product" => $info['id_product'],
+                    "name_product" => $info['name_product'],
+                    "description" => $info['description'],
+                    "stock" => $info['stock'],
+                    "price_ttc" => $info['price_ttc'],
+                    "price_discount" => $info['price_discount'],
+                    "image_link" => $info['image_link'],
+                    "category" => $info['category'],
+                    "rating_product" => $info['rating_product'],
+                    "tag" => [],
+                    "sub_category" => [
+                        "id_subcategory" => $info['id_subcategory'],
+                        "name_subcategory" => $info['name_subcategory']
+                    ]
+                ];
+            }
+
+            // ajout les tags à l'accessoires
+            if (!empty($info['id_tag']) && !empty($info['name_tag'])) {
+                // vérifie que le tag s'ajoute qu'une fois
+                $tagExists = false;
+                foreach ($productsById[$id]['tag'] as $existingTag) {
+                    if ($existingTag['id_tag'] === $info['id_tag']) {
+                        $tagExists = true;
+                        break;
+                    }
+                }
+                if (!$tagExists) {
+                    $productsById[$id]['tag'][] = [
+                        "id_tag" => $info['id_tag'],
+                        "name_tag" => $info['name_tag']
+                    ];
+                }
+            }
+        }
+
+        // ajoute le produit au tableau principal
+        $allAccessories["products"] = array_values($productsById);
+
+
+        echo json_encode($allAccessories);
+        break;
+
+    case 'promo':
+
+        $promo = $product->getAllPromo();
+
+        $allPromo = [
+            "products" => [],
+        ];
+
+        $productsById = [];
+
+        foreach ($promo as $info) {
+            $id = $info['id_product'];
+
+            // recupere un accessoires 
+            if (!isset($productsById[$id])) {
+                $productsById[$id] = [
+                    "id_product" => $info['id_product'],
+                    "name_product" => $info['name_product'],
+                    "description" => $info['description'],
+                    "stock" => $info['stock'],
+                    "price_ttc" => $info['price_ttc'],
+                    "price_discount" => $info['price_discount'],
+                    "image_link" => $info['image_link'],
+                    "category" => $info['category'],
+                    "rating_product" => $info['rating_product'],
+                    "name_tag" => [],
+                    "sub_category" => [
+                        "id_subcategory" => $info['id_subcategory'],
+                        "name_subcategory" => $info['name_subcategory']
+                    ]
+                ];
+            }
+
+            // ajout les tags à l'accessoires
             if (!empty($info['id_tag']) && !empty($info['name_tag'])) {
                 // vérifie que le tag s'ajoute qu'une fois
                 $tagExists = false;
@@ -139,10 +257,10 @@ switch ($action) {
         }
 
         // ajoute le produit au tableau principal
-        $allCostumes["products"] = array_values($productsById);
+        $allPromo["products"] = array_values($productsById);
 
 
-        echo json_encode($allCostumes);
+        echo json_encode($allPromo);
         break;
 
     case 'filter':

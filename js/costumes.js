@@ -1,6 +1,8 @@
 const header = document.querySelector("header");
+const footer = document.querySelector("footer");
 const sectionRightCol = document.getElementById("right-col");
-const listAllCostumesBox = document.querySelector(".list-all-costumes");
+const sectionLeftCol = document.getElementById("left-col");
+const listallProductBox = document.querySelector(".list-all-costumes");
 const filterSubCat = document.querySelector(".filter-by-subcategory");
 const filterTag = document.querySelector(".filter-by-tag");
 const filterDefault = document.querySelector(".filter-default");
@@ -37,46 +39,96 @@ const fetchProduct = async (action) => {
   }
 };
 
+// gestion des différentes pages (déguisements, accessoires, promotions)
+let activePage;
 if (window.location.pathname === "/boutique-en-ligne/vue/costumes.php") {
-  // change titre page (onglet)
+  activePage = "costumes";
   documentName.innerText = "Déguisements";
+} else if (
+  window.location.pathname === "/boutique-en-ligne/vue/accessories.php"
+) {
+  activePage = "accessories";
+  documentName.innerText = "Accessoires";
+} else if (window.location.pathname === "/boutique-en-ligne/vue/promo.php") {
+  activePage = "promo";
+  documentName.innerText = "Promotions";
+  sectionLeftCol.style.backgroundColor = "var(--discount-color)";
+  header.style.backgroundColor = "var(--discount-color)";
+  footer.style.backgroundColor = "var(--discount-color)";
+}
 
+if (
+  window.location.pathname === "/boutique-en-ligne/vue/costumes.php" ||
+  window.location.pathname === "/boutique-en-ligne/vue/accessories.php" ||
+  window.location.pathname === "/boutique-en-ligne/vue/promo.php"
+) {
   //------------------------------- //
   // déguisements
-  fetchProduct("costumes").then((data) => {
-    let allCostumes = data.products;
+  fetchProduct(activePage).then((data) => {
+    let allProduct = data.products;
 
     // applique les filtres de l'URL
     const searchParams = new URLSearchParams(window.location.search);
     const subCategoryFilter = searchParams.get("subcategory");
+    const tagFilter = searchParams.get("tags");
     const defaultFilter = searchParams.get("default");
 
-    if (subCategoryFilter) {
-      allCostumes = allCostumes.filter(
-        (product) =>
-          product.sub_category &&
-          product.sub_category.id_subcategory.toString() === subCategoryFilter
-      );
-    }
     if (defaultFilter) {
       if (defaultFilter === "0") {
-        allCostumes = allCostumes.sort((a, b) => {
+        allProduct = allProduct.sort((a, b) => {
           const priceA = getWhichPrice(a);
           const priceB = getWhichPrice(b);
           return priceA - priceB;
         });
       } else if (defaultFilter === "1") {
-        allCostumes = allCostumes.sort((a, b) => {
+        allProduct = allProduct.sort((a, b) => {
           const priceA = getWhichPrice(a);
           const priceB = getWhichPrice(b);
           return priceB - priceA;
         });
+      } else if (defaultFilter === "2") {
+        allProduct = allProduct.sort((a, b) => {
+          const ratingA = a.rating_product;
+          const ratingB = b.rating_product;
+          return ratingB - ratingA;
+        });
       }
     }
 
-    // pagination
-    pageProducts(allCostumes, currentPage);
-    pageNumberButtons(allCostumes);
+    if (
+      window.location.pathname === "/boutique-en-ligne/vue/costumes.php" ||
+      window.location.pathname === "/boutique-en-ligne/vue/promo.php"
+    ) {
+      if (subCategoryFilter) {
+        allProduct = allProduct.filter(
+          (product) =>
+            product.sub_category &&
+            product.sub_category.id_subcategory.toString() === subCategoryFilter
+        );
+      }
+    }
+
+    if (window.location.pathname === "/boutique-en-ligne/vue/accessories.php") {
+      if (tagFilter) {
+        allProduct = allProduct.filter((product) =>
+          product.tag.some(
+            (tag) => tag.id_tag != null && tag.id_tag.toString() === tagFilter
+          )
+        );
+      }
+    }
+
+    if (allProduct.length > 0) {
+      // pagination
+      pageProducts(allProduct, currentPage);
+      pageNumberButtons(allProduct);
+    } else {
+      const noProduct = document.createElement("div");
+      noProduct.innerHTML = `
+      <p class="bold">Oops, on dirait bien qu'aucun produit ne correspond à votre recherche.</p>
+      `;
+      listallProductBox.appendChild(noProduct);
+    }
   });
 
   //------------------------------- //
@@ -90,35 +142,66 @@ if (window.location.pathname === "/boutique-en-ligne/vue/costumes.php") {
       "Note",
     ];
 
-    allSubCat.forEach((element) => {
-      createCheckbox(
-        element.id_subcategory,
-        element.name_subcategory,
-        filterSubCat,
-        "subcategory"
-      );
-    });
-
+    // checkbox default
     for (let i = 0; i < defaultFilter.length; i++) {
       createCheckbox(i, defaultFilter[i], filterDefault, "default");
+    }
+    // checkbox sous-catégorie
+    if (
+      window.location.pathname === "/boutique-en-ligne/vue/costumes.php" ||
+      window.location.pathname === "/boutique-en-ligne/vue/promo.php"
+    ) {
+      allSubCat.forEach((element) => {
+        createCheckbox(
+          element.id_subcategory,
+          element.name_subcategory,
+          filterSubCat,
+          "subcategory"
+        );
+      });
+    }
+
+    if (window.location.pathname === "/boutique-en-ligne/vue/accessories.php") {
+      // checkbox tags
+      allTags.forEach((element) => {
+        createCheckbox(element.id_tag, element.name_tag, filterTag, "tags");
+      });
     }
 
     // coche les filtres si présents dans l'URL en cas de refresh
     const searchParams = new URLSearchParams(window.location.search);
     const activeSubCategory = searchParams.get("subcategory");
+    const activeTag = searchParams.get("tags");
     const activeDefault = searchParams.get("default");
 
-    if (activeSubCategory) {
-      const checkboxToSelect = filterSubCat.querySelector(
-        `input[type="checkbox"][value="${activeSubCategory}"]`
-      );
-      if (checkboxToSelect) checkboxToSelect.checked = true;
-    }
+    // filtre "par defaut"
     if (activeDefault) {
       const checkboxToSelect = filterDefault.querySelector(
         `input[type="checkbox"][value="${activeDefault}"]`
       );
       if (checkboxToSelect) checkboxToSelect.checked = true;
+    }
+    // filtre sous categorie
+    if (
+      window.location.pathname === "/boutique-en-ligne/vue/costumes.php" ||
+      window.location.pathname === "/boutique-en-ligne/vue/promo.php"
+    ) {
+      if (activeSubCategory) {
+        const checkboxToSelect = filterSubCat.querySelector(
+          `input[type="checkbox"][value="${activeSubCategory}"]`
+        );
+        if (checkboxToSelect) checkboxToSelect.checked = true;
+      }
+    }
+
+    if (window.location.pathname === "/boutique-en-ligne/vue/accessories.php") {
+      // filtre tag
+      if (activeTag) {
+        const checkboxToSelect = filterTag.querySelector(
+          `input[type="checkbox"][value="${activeTag}"]`
+        );
+        if (checkboxToSelect) checkboxToSelect.checked = true;
+      }
     }
   });
 }
@@ -170,21 +253,15 @@ const updateUrlAndFilter = (filterType, activeFilter) => {
   // met à jour l'URL dans la barre d'adresse sans recharger la page
   window.history.pushState({ path: currentUrl.href }, "", currentUrl.href);
 
-  fetchProduct("costumes").then((data) => {
+  fetchProduct(activePage).then((data) => {
     let products = data.products;
     const searchParams = new URLSearchParams(window.location.search);
 
     // recup les produits avec le filtre appliquer
     const subCategoryFilter = searchParams.get("subcategory");
+    const tagFilter = searchParams.get("tags");
     const defaultFilter = searchParams.get("default");
 
-    if (subCategoryFilter) {
-      products = products.filter(
-        (product) =>
-          product.sub_category &&
-          product.sub_category.id_subcategory.toString() === subCategoryFilter
-      );
-    }
     if (defaultFilter) {
       if (defaultFilter === "0") {
         products.sort((a, b) => {
@@ -198,6 +275,35 @@ const updateUrlAndFilter = (filterType, activeFilter) => {
           const priceB = getWhichPrice(b);
           return priceB - priceA;
         });
+      } else if (defaultFilter === "2") {
+        products.sort((a, b) => {
+          const ratingA = a.rating_product;
+          const ratingB = b.rating_product;
+          return ratingB - ratingA;
+        });
+      }
+    }
+
+    if (
+      window.location.pathname === "/boutique-en-ligne/vue/costumes.php" ||
+      window.location.pathname === "/boutique-en-ligne/vue/promo.php"
+    ) {
+      if (subCategoryFilter) {
+        products = products.filter(
+          (product) =>
+            product.sub_category &&
+            product.sub_category.id_subcategory.toString() === subCategoryFilter
+        );
+      }
+    }
+
+    if (window.location.pathname === "/boutique-en-ligne/vue/accessories.php") {
+      if (tagFilter) {
+        products = products.filter((product) =>
+          product.tag.some(
+            (tag) => tag.id_tag != null && tag.id_tag.toString() === tagFilter
+          )
+        );
       }
     }
 
@@ -219,24 +325,32 @@ const updateUrlAndFilter = (filterType, activeFilter) => {
 //------------------------------- //
 // affichage de 12 produits par page
 const pageProducts = (products, page) => {
-  listAllCostumesBox.innerHTML = "";
+  listallProductBox.innerHTML = "";
 
   const startIndex = (page - 1) * productsPerPage;
   const endIndex = startIndex + productsPerPage;
 
-  const paginatedProducts = products.slice(startIndex, endIndex);
-  paginatedProducts.forEach((product) => {
-    createCard(
-      product.category,
-      product.image_link,
-      product.id_product,
-      product.name_product,
-      product.price_ttc,
-      product.price_discount,
-      product.rating_product,
-      listAllCostumesBox
-    );
-  });
+  if (products.length > 0) {
+    const paginatedProducts = products.slice(startIndex, endIndex);
+    paginatedProducts.forEach((product) => {
+      createCard(
+        product.category,
+        product.image_link,
+        product.id_product,
+        product.name_product,
+        product.price_ttc,
+        product.price_discount,
+        product.rating_product,
+        listallProductBox
+      );
+    });
+  } else {
+    const noProduct = document.createElement("div");
+    noProduct.innerHTML = `
+        <p class="bold">Oops, on dirait bien qu'aucun produit ne correspond à votre recherche.</p>
+  `;
+    listallProductBox.appendChild(noProduct);
+  }
 };
 
 //------------------------------- //
@@ -246,70 +360,73 @@ const pageNumberButtons = (products) => {
   pagesBox.classList.add("pages-box");
 
   const totalPages = Math.ceil(products.length / productsPerPage);
+  console.log(totalPages);
 
-  // bouton précédent
-  const prevButton = document.createElement("a");
+  if (totalPages > 0) {
+    // bouton précédent
+    const prevButton = document.createElement("a");
 
-  prevButton.classList.add("previous-next");
-  prevButton.innerText = "←";
-  currentPage === 1
-    ? (prevButton.style.visibility = "hidden")
-    : (prevButton.style.visibility = "visible");
-  prevButton.addEventListener("click", () => {
-    if (currentPage > 1) {
-      currentPage--;
-      pagesBox.remove();
-      prevButton.setAttribute("href", `#${currentPage}`);
-      pageProducts(products, currentPage);
-      pageNumberButtons(products);
-      header.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  });
-  pagesBox.appendChild(prevButton);
-
-  // numéro pages
-  for (let page = 1; page <= totalPages; page++) {
-    const pageNumberP = document.createElement("a");
-    pageNumberP.classList.add("page-number");
-    pageNumberP.innerText = page;
-
-    if (page === currentPage) {
-      pageNumberP.classList.add("active-page");
-    } else {
-      pageNumberP.classList.remove("active-page");
-    }
-
-    pagesBox.appendChild(pageNumberP);
-
-    pageNumberP.addEventListener("click", () => {
-      currentPage = page;
-      pagesBox.remove();
-      pageNumberP.setAttribute("href", `#${currentPage}`);
-      pageProducts(products, currentPage);
-      pageNumberButtons(products);
-      header.scrollIntoView({ behavior: "smooth", block: "start" });
+    prevButton.classList.add("previous-next");
+    prevButton.innerText = "←";
+    currentPage === 1
+      ? (prevButton.style.visibility = "hidden")
+      : (prevButton.style.visibility = "visible");
+    prevButton.addEventListener("click", () => {
+      if (currentPage > 1) {
+        currentPage--;
+        pagesBox.remove();
+        prevButton.setAttribute("href", `#${currentPage}`);
+        pageProducts(products, currentPage);
+        pageNumberButtons(products);
+        header.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     });
-  }
+    pagesBox.appendChild(prevButton);
 
-  // bouton suivant
-  const nextButton = document.createElement("a");
-  nextButton.classList.add("previous-next");
-  nextButton.innerText = "→";
-  currentPage === totalPages
-    ? (nextButton.style.visibility = "hidden")
-    : (nextButton.style.visibility = "visible");
-  nextButton.addEventListener("click", () => {
-    if (currentPage >= 1) {
-      currentPage++;
-      pagesBox.remove();
-      nextButton.setAttribute("href", `#${currentPage}`);
-      pageProducts(products, currentPage);
-      pageNumberButtons(products);
-      header.scrollIntoView({ behavior: "smooth", block: "start" });
+    // numéro pages
+    for (let page = 1; page <= totalPages; page++) {
+      const pageNumberP = document.createElement("a");
+      pageNumberP.classList.add("page-number");
+      pageNumberP.innerText = page;
+
+      if (page === currentPage) {
+        pageNumberP.classList.add("active-page");
+      } else {
+        pageNumberP.classList.remove("active-page");
+      }
+
+      pagesBox.appendChild(pageNumberP);
+
+      pageNumberP.addEventListener("click", () => {
+        currentPage = page;
+        pagesBox.remove();
+        pageNumberP.setAttribute("href", `#${currentPage}`);
+        pageProducts(products, currentPage);
+        pageNumberButtons(products);
+        header.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
     }
-  });
-  pagesBox.appendChild(nextButton);
-  sectionRightCol.appendChild(pagesBox);
+
+    // bouton suivant
+    const nextButton = document.createElement("a");
+    nextButton.classList.add("previous-next");
+    nextButton.innerText = "→";
+    currentPage === totalPages
+      ? (nextButton.style.visibility = "hidden")
+      : (nextButton.style.visibility = "visible");
+    nextButton.addEventListener("click", () => {
+      if (currentPage >= 1) {
+        currentPage++;
+        pagesBox.remove();
+        nextButton.setAttribute("href", `#${currentPage}`);
+        pageProducts(products, currentPage);
+        pageNumberButtons(products);
+        header.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+    pagesBox.appendChild(nextButton);
+    sectionRightCol.appendChild(pagesBox);
+  }
 };
 
 // defini si prix discount ou prix classique

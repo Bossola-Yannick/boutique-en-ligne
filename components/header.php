@@ -44,8 +44,8 @@ session_start();
         <div class="link-box">
             <ul class="link-list">
                 <li class="link-item"><a href="../vue/costumes.php">Déguisements</a></li>
-                <li class="link-item"><a href="#">Accessoires</a></li>
-                <li class="link-item"><a href="#">Promotion</a></li>
+                <li class="link-item"><a href="../vue/accessories.php">Accessoires</a></li>
+                <li class="link-item"><a href="../vue/promo.php">Promotion</a></li>
                 <li class="link-item"><a href="../vue/connection.php">Connexion</a></li>
                 <li class="link-item"><a href="../vue/registration.php">Inscription</a></li>
             </ul>

@@ -69,7 +69,7 @@ class Product extends ConnexionBdd
     }
 
     // récup tous les produits
-    public function getAllCostume(): array
+    public function getAllProduct($cat): array
     {
         $query = "SELECT product.id_product, product.name_product, product.description, product.stock, 
         product.price_ttc, product.price_discount, product.image_link, product.category, product.rating_product,
@@ -82,8 +82,25 @@ class Product extends ConnexionBdd
         WHERE product.category = :category";
         $queryStmt = $this->bdd->prepare($query);
         $queryStmt->execute([
-            ":category" => "déguisement"
+            ":category" => $cat
         ]);
+        return $queryStmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // récup toutes les promos
+    public function getAllPromo(): array
+    {
+        $query = "SELECT product.id_product, product.name_product, product.description, product.stock, 
+        product.price_ttc, product.price_discount, product.image_link, product.category, product.rating_product,
+        tag.id_tag, tag.name_tag,
+        sub_category.id_subcategory, sub_category.name_subcategory
+        FROM product 
+        LEFT JOIN product_tag ON product_tag.id_product = product.id_product
+        LEFT JOIN tag ON tag.id_tag = product_tag.id_tag
+        JOIN sub_category ON product.id_subcategory = sub_category.id_subcategory
+        WHERE product.price_discount < product.price_ttc";
+        $queryStmt = $this->bdd->prepare($query);
+        $queryStmt->execute();
         return $queryStmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
