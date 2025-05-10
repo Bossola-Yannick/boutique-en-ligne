@@ -3,9 +3,11 @@ const footer = document.querySelector("footer");
 const sectionRightCol = document.getElementById("right-col");
 const sectionLeftCol = document.getElementById("left-col");
 const listallProductBox = document.querySelector(".list-all-costumes");
-const filterSubCat = document.querySelector(".filter-by-subcategory");
-const filterTag = document.querySelector(".filter-by-tag");
-const filterDefault = document.querySelector(".filter-default");
+const filterSubCatBox = document.querySelector(".filter-by-subcategory");
+const filterTagBox = document.querySelector(".filter-by-tag");
+const filterDefaultBox = document.querySelector(".filter-default");
+
+const noFitAll = window.matchMedia("(max-width:850px)");
 
 let currentPage;
 let pageHash = location.hash.split("#")[1];
@@ -137,74 +139,179 @@ if (
     const allSubCat = data.sub_category;
     const allTags = data.tags;
     const defaultFilter = [
-      "Prix: moins cher au plus cher",
-      "Prix: plus cher au moins cher",
-      "Note",
+      { id: "0", name: "Prix: moins cher au plus cher" },
+      { id: "1", name: "Prix: plus cher au moins cher" },
+      { id: "2", name: "Note" },
     ];
 
-    // checkbox default
-    for (let i = 0; i < defaultFilter.length; i++) {
-      createCheckbox(i, defaultFilter[i], filterDefault, "default");
-    }
-    // checkbox sous-catégorie
-    if (
-      window.location.pathname === "/boutique-en-ligne/vue/costumes.php" ||
-      window.location.pathname === "/boutique-en-ligne/vue/promo.php"
-    ) {
-      allSubCat.forEach((element) => {
-        createCheckbox(
-          element.id_subcategory,
-          element.name_subcategory,
-          filterSubCat,
-          "subcategory"
-        );
-      });
-    }
-
-    if (window.location.pathname === "/boutique-en-ligne/vue/accessories.php") {
-      // checkbox tags
-      allTags.forEach((element) => {
-        createCheckbox(element.id_tag, element.name_tag, filterTag, "tags");
-      });
-    }
-
-    // coche les filtres si présents dans l'URL en cas de refresh
+    // recherche les filtres présents dans l'URL en cas de refresh
     const searchParams = new URLSearchParams(window.location.search);
     const activeSubCategory = searchParams.get("subcategory");
     const activeTag = searchParams.get("tags");
     const activeDefault = searchParams.get("default");
 
-    // filtre "par defaut"
-    if (activeDefault) {
-      const checkboxToSelect = filterDefault.querySelector(
-        `input[type="checkbox"][value="${activeDefault}"]`
+    if (noFitAll.matches) {
+      // select pour les filtres par default
+      createSelectFilter(
+        defaultFilter,
+        filterDefaultBox,
+        "default",
+        "Trier par...",
+        "id",
+        "name",
+        activeDefault
       );
-      if (checkboxToSelect) checkboxToSelect.checked = true;
-    }
-    // filtre sous categorie
-    if (
-      window.location.pathname === "/boutique-en-ligne/vue/costumes.php" ||
-      window.location.pathname === "/boutique-en-ligne/vue/promo.php"
-    ) {
-      if (activeSubCategory) {
-        const checkboxToSelect = filterSubCat.querySelector(
-          `input[type="checkbox"][value="${activeSubCategory}"]`
+
+      // select pour filtre pour les sous-categories
+      if (
+        window.location.pathname === "/boutique-en-ligne/vue/costumes.php" ||
+        window.location.pathname === "/boutique-en-ligne/vue/promo.php"
+      ) {
+        if (allSubCat && allSubCat.length > 0) {
+          createSelectFilter(
+            allSubCat,
+            filterSubCatBox,
+            "subcategory",
+            "Sous-catégorie...",
+            "id_subcategory",
+            "name_subcategory",
+            activeSubCategory
+          );
+        } else {
+          filterSubCatBox.innerHTML = "";
+        }
+      }
+
+      // select pour filtre pour les tags
+      if (
+        window.location.pathname === "/boutique-en-ligne/vue/accessories.php"
+      ) {
+        if (allTags && allTags.length > 0) {
+          createSelectFilter(
+            allTags,
+            filterTagBox,
+            "tags",
+            "Tag...",
+            "id_tag",
+            "name_tag",
+            activeTag
+          );
+        } else {
+          filterTagBox.innerHTML = "";
+        }
+      }
+    } else {
+      // créer des checkbox
+      // checkbox default
+      defaultFilter.forEach((element) => {
+        createCheckbox(element.id, element.name, filterDefaultBox, "default");
+      });
+
+      // checkbox sous-catégorie
+      if (
+        window.location.pathname === "/boutique-en-ligne/vue/costumes.php" ||
+        window.location.pathname === "/boutique-en-ligne/vue/promo.php"
+      ) {
+        allSubCat.forEach((element) => {
+          createCheckbox(
+            element.id_subcategory,
+            element.name_subcategory,
+            filterSubCatBox,
+            "subcategory"
+          );
+        });
+      }
+
+      if (
+        window.location.pathname === "/boutique-en-ligne/vue/accessories.php"
+      ) {
+        // checkbox tags
+        allTags.forEach((element) => {
+          createCheckbox(
+            element.id_tag,
+            element.name_tag,
+            filterTagBox,
+            "tags"
+          );
+        });
+      }
+
+      // filtre "par defaut"
+      if (activeDefault) {
+        const checkboxToSelect = filterDefaultBox.querySelector(
+          `input[type="checkbox"][value="${activeDefault}"]`
         );
         if (checkboxToSelect) checkboxToSelect.checked = true;
       }
-    }
+      // filtre sous categorie
+      if (
+        window.location.pathname === "/boutique-en-ligne/vue/costumes.php" ||
+        window.location.pathname === "/boutique-en-ligne/vue/promo.php"
+      ) {
+        if (activeSubCategory) {
+          const checkboxToSelect = filterSubCatBox.querySelector(
+            `input[type="checkbox"][value="${activeSubCategory}"]`
+          );
+          if (checkboxToSelect) checkboxToSelect.checked = true;
+        }
+      }
 
-    if (window.location.pathname === "/boutique-en-ligne/vue/accessories.php") {
-      // filtre tag
-      if (activeTag) {
-        const checkboxToSelect = filterTag.querySelector(
-          `input[type="checkbox"][value="${activeTag}"]`
-        );
-        if (checkboxToSelect) checkboxToSelect.checked = true;
+      if (
+        window.location.pathname === "/boutique-en-ligne/vue/accessories.php"
+      ) {
+        // filtre tag
+        if (activeTag) {
+          const checkboxToSelect = filterTagBox.querySelector(
+            `input[type="checkbox"][value="${activeTag}"]`
+          );
+          if (checkboxToSelect) checkboxToSelect.checked = true;
+        }
       }
     }
   });
 }
+
+// creer select bouton pour responsive
+const createSelectFilter = (
+  filterList,
+  box,
+  filterType,
+  filterName,
+  id,
+  name,
+  activeValue
+) => {
+  box.innerHTML = "";
+
+  const select = document.createElement("select");
+  select.classList.add("filter-select");
+  select.setAttribute("aria-label", filterName);
+
+  const optionLabel = document.createElement("option");
+  optionLabel.value = "";
+  optionLabel.textContent = filterName;
+  if (!activeValue) {
+    optionLabel.selected = true;
+  }
+  select.appendChild(optionLabel);
+
+  filterList.forEach((optionData) => {
+    const option = document.createElement("option");
+    option.value = optionData[id];
+    option.textContent = optionData[name];
+    if (activeValue && option.value === activeValue) {
+      option.selected = true;
+      if (optionLabel.selected) optionLabel.selected = false;
+    }
+    select.appendChild(option);
+  });
+
+  select.addEventListener("change", function () {
+    const selectedValue = this.value;
+    updateUrlAndFilter(filterType, selectedValue);
+  });
+  box.appendChild(select);
+};
 
 //------------------------------- //
 // creer input checkbox
