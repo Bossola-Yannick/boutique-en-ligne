@@ -173,14 +173,6 @@ const registration = async (
       }),
     });
 
-    // Log de la réponse brute
-    const rawResponse = await response.text();
-    console.log("Réponse brute du serveur :", rawResponse);
-
-    // Vérifiez si la réponse est un JSON valide
-    const data = JSON.parse(rawResponse);
-    console.log("Réponse du serveur :", data);
-
     if (data.success) {
       document.location.href = "./connectionVue.php";
     } else {
@@ -201,6 +193,8 @@ $(".logout").on("click", function (e) {
   e.preventDefault();
   sessionStorage.clear();
   fetch("./controller/logout.php");
+  // redirection index.php
+  window.location.href = "http://localhost/boutique-en-ligne/index.php";
 });
 
 // regex pour email: ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,10}$

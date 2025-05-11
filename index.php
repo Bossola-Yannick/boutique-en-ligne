@@ -41,6 +41,7 @@ require 'config.php';
             <li class="logout"><button>Déconnexion</button></li>
           <?php elseif ($_SESSION["userRole"] === "user"): ?>
             <li class="link-item"><a href="./vue/profilVue.php">Profil</a></li>
+            <li class="logout"><button>Déconnexion</button></li>
           <?php endif ?>
         <?php else : ?>
           <li class="link-item"><a href="./vue/connectionVue.php">Connexion</a></li>

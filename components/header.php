@@ -11,7 +11,6 @@ session_start();
     <script
         src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"
         defer></script>
-
     <script src="../js/connection-registration.js" defer></script>
     <script src="../js/search.js" defer></script>
     <link rel="stylesheet" href="../styles/reset.css" />
@@ -41,6 +40,7 @@ session_start();
                         <li class="logout"><button>Déconnexion</button></li>
                     <?php elseif ($_SESSION["userRole"] === "user"): ?>
                         <li class="link-item"><a href="../vue/profilVue.php">Profil</a></li>
+                        <li class="logout"><button>Déconnexion</button></li>
                     <?php endif ?>
                 <?php else : ?>
                     <li class="link-item"><a href="../vue/connectionVue.php">Connexion</a></li>

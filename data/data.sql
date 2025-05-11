@@ -41,6 +41,7 @@ CREATE TABLE product (
     image_link VARCHAR(100),
     category VARCHAR(100) NOT NULL,
     id_subcategory INT NOT NULL,
+    rating_product INT,
     FOREIGN Key (id_subcategory) REFERENCES sub_category(id_subcategory)
 ) ENGINE=InnoDB;
 
@@ -63,7 +64,7 @@ CREATE TABLE cart(
 -- Création de la table commentaire
 CREATE TABLE comment (
     id_comment INT AUTO_INCREMENT PRIMARY KEY,
-    rating INT,
+    rating_comment INT,
     comment TEXT NOT NULL,
     date_comment DATE NOT NULL,
     admin_reply TEXT,

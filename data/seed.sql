@@ -1,6 +1,9 @@
 INSERT INTO user (last_name, first_name, email, password, adress, postal_code, city, role) VALUES
-('yannick', 'bossola', 'yannick@example.io', 'example', 'rue hozier', 13000, 'Marseille', 'admin'),
-('james', 'sanchez', 'james@example.io', 'example', 'rue hozier', 13000, 'Marseille', 'admin');
+('bossola', 'yannick', 'yannick@example.io', 'example', 'rue hozier', 13000, 'Marseille', 'admin'),
+('sanchez', 'james', 'james@example.io', 'example', 'rue hozier', 13000, 'Marseille', 'admin'),
+('abc', 'test', 'test@example.io', 'example', 'rue hozier', 13000, 'Marseille', 'user'),
+('def', 'test2', 'test2@example.io', 'example', 'rue hozier', 13000, 'Marseille', 'user'),
+('dgh', 'test3', 'test3@example.io', 'example', 'rue hozier', 13000, 'Marseille', 'user');
 
 INSERT INTO sub_category (id_subcategory, name_subcategory) VALUES
 (1, 'Fantastique & Légendaire'),
@@ -132,143 +135,166 @@ INSERT INTO product (name_product, description, stock, price_ht, price_ttc, pric
 ('Sabre laser de Jedi', 'Maîtrisez la Force avec ce sabre laser. Préparez-vous à défendre l’Empire des graines avec votre lumière verte.', 30, 27.92, 33.50, 33.50, 'sabre-laser-jedi.png', 'accessoire', 1),
 ("Sac d'hotesse de l'air", 'Un sac élégant pour vos escapades célestes. Pratique pour ranger vos graines tout en restant chic à 30 000 pieds.', 20, 22.50, 27.00, 27.00, 'sac-hotesse.png', 'accessoire', 3);
 
+INSERT INTO product_tag (id_product, id_tag) VALUES
+(1, 1),   -- Abeille - ID: 1 -> Tag: Halloween / Sorcière, Magique / Féerique
+(1, 2),
+(2, 2),   -- Alien - ID: 2 -> Tag: Magique / Féerique, Science-fiction / Futuriste
+(2, 10),
+(3, 23),   -- Ananas - ID: 3 -> Tag: Tropical / Fruit, Gastronomie / Cuisine
+(3, 21),
+(4, 27),   -- Années 70 - ID: 4 -> Tag: Rétro / Vintage, Festif
+(4, 18),
+(5, 10),   -- Astronaute - ID: 5 -> Tag: Science-fiction / Futuriste, Aventure / Héros
+(5, 5),
+(6, 23),   -- Banane - ID: 6 -> Tag: Tropical / Fruit, Gastronomie / Cuisine
+(6, 21),
+(7, 21),   -- Bière - ID: 7 -> Tag: Gastronomie / Cuisine, Festif
+(7, 18),
+(8, 14),   -- Bonne soeur - ID: 8 -> Tag: Historique / Antique, Élégance
+(8, 19),
+(9, 7),   -- Cactus - ID: 9 -> Tag: Nature / Jardin / Fleur, Sauvage / Animal
+(9, 13),
+(10, 3), -- Chevalier - ID: 10 -> Tag: Chevalier / Héroïque, Fantasy / Médiéval
+(10, 6),
+(11, 11), -- Chucky - ID: 11 -> Tag: Comique / Humour, Créature / Monstre
+(11, 4),
+(12, 11), -- Clown - ID: 12 -> Tag: Comique / Humour, Aventure / Héros
+(12, 5),
+(13, 13), -- Coquelicot - ID: 13 -> Tag: Nature / Jardin / Fleur, Plante / Nature
+(13, 7),
+(14, 9), -- Cowboy - ID: 14 -> Tag: Far West / Cowboy, Aventure / Héros
+(14, 24),
+(15, 21), -- Cuisinier - ID: 15 -> Tag: Gastronomie / Cuisine, Comique / Humour
+(15, 11),
+(16, 4), -- Dinosaure - ID: 16 -> Tag: Créature / Monstre, Aventure / Héros
+(16, 5),
+(17, 1), -- Dracula - ID: 17 -> Tag: Halloween / Sorcière, Mystique
+(17, 16),
+(18, 6), -- Dragon - ID: 18 -> Tag: Fantasy / Médiéval, Créature / Monstre
+(18, 4),
+(19, 25), -- Écolière japonaise - ID: 19 -> Tag: Japon / Traditionnel, Espiègle / Joyeux
+(19, 15),
+(20, 2), -- Fée - ID: 20 -> Tag: Magique / Féerique, Mystique
+(20, 16),
+(21, 14), -- Gladiateur - ID: 21 -> Tag: Historique / Antique, Majesté
+(21, 20),
+(22, 19), -- Hôtesse de l'air - ID: 22 -> Tag: Élégance, Mode
+(22, 26),
+(23, 12), -- Infirmière - ID: 23 -> Tag: Militaire / Camouflage, Élégance
+(23, 19),
+(24, 10), -- Jedi - ID: 24 -> Tag: Science-fiction / Futuriste, Aventure / Héros
+(24, 5),
+(25, 11), -- Chanteur Jul - ID: 25 -> Tag: Comique / Humour
+(26, 6), -- Licorne - ID: 26 -> Tag: Fantasy / Médiéval, Magique / Féerique
+(26, 2),
+(27, 3), -- Link - ID: 27 -> Tag: Fantasy / Médiéval, Chevalier / Héroïque
+(27, 6),
+(28, 22), -- Lion - ID: 28 -> Tag: Sauvage / Animal, Mystique
+(28, 16),
+(29, 17), -- Lutin de Noël - ID: 29 -> Tag: Noël, Festif
+(29, 18),
+(30, 1), -- Mercredi Addams - ID: 30 -> Tag: Halloween / Sorcière, Espiègle / Joyeux
+(30, 27),
+(31, 27), -- Nain de jardin - ID: 31 -> Tag: Rétro / Vintage, Nature / Jardin / Fleur
+(31, 7),
+(32, 25), -- Ninja - ID: 32 -> Tag: Japon / Traditionnel, Guerrier
+(32, 8),
+(33, 21), -- Oeuf - ID: 33 -> Tag: Gastronomie / Cuisine, Festif
+(33, 11),
+(34, 22), -- Pieuvre - ID: 34 -> Tag: Sauvage / Animal, Mystique
+(34, 16),
+(35, 27), -- Pinup - ID: 35 -> Tag: Glamour / Mode, Rétro / Vintage
+(35, 26),
+(36, 5), -- Pirate - ID: 36 -> Tag: Aventure / Héros, Western / Aventure
+(36, 24),
+(37, 12), -- Policier - ID: 37 -> Tag: Militaire / Camouflage, Aventure / Héros
+(37, 5),
+(38, 12), -- Pompier - ID: 38 -> Tag: Militaire / Camouflage, Comique / Humour
+(38, 5),
+(39, 5), -- Poulet rôti - ID: 39 -> Tag: Gastronomie / Cuisine, Festif
+(39, 21),
+(40, 19), -- Princesse - ID: 40 -> Tag: Élégance, Fantasy / Médiéval
+(40, 6),
+(41, 14), -- Prisonnier - ID: 41 -> Tag: Historique / Antique, Militaire / Camouflage
+(41, 12),
+(42, 25), -- Samouraï - ID: 42 -> Tag: Japon / Traditionnel, Guerrier
+(42, 8),
+(43, 12), -- Soldat militaire - ID: 43 -> Tag: Militaire / Camouflage, Majesté
+(43, 5),
+(44, 1), -- Sorcière - ID: 44 -> Tag: Halloween / Sorcière, Magique / Féerique
+(44, 2),
+(45, 11), -- Spiderman - ID: 45 -> Tag: Comique / Humour, Héroïque
+(45, 5),
+(46, 21), -- Sushi - ID: 46 -> Tag: Gastronomie / Cuisine, Japon / Traditionnel
+(46, 25),
+(47, 8), -- Viking - ID: 47 -> Tag: Viking / Guerrier, Fantasy / Médiéval
+(47, 6),
+(48, 10), -- Xénomorphe - ID: 48 -> Tag: Science-fiction / Futuriste, Créature / Monstre
+(48, 4),
+(49, 2), -- Baguette de Fée - ID: 49 -> Tag: Magique / Féerique, Élégance
+(49, 19),
+(49, 16),
+(50, 3), -- Casque de Chevalier - ID: 50 -> Tag: Chevalier / Héroïque, Fantasy / Médiéval
+(50, 6),
+(51, 5), -- Casque Militaire - ID: 51 -> Tag: Militaire / Camouflage, Héroïque
+(51, 12),
+(52, 8), -- Casque de Viking - ID: 52 -> Tag: Viking / Guerrier, Fantasy / Médiéval
+(52, 6),
+(53, 27), -- Champignon de Nain - ID: 53 -> Tag: Rétro / Vintage, Nature / Jardin / Fleur
+(53, 7),
+(54, 13), -- Chapeau coquelicot - ID: 54 -> Tag: Nature / Jardin / Fleur, Plante / Nature
+(54, 7),
+(55, 9), -- Chapeau de Cowboy - ID: 55 -> Tag: Far West / Cowboy, Aventure / Héros
+(55, 24),
+(56, 21), -- Chapeau de Cuisinier - ID: 56 -> Tag: Gastronomie / Cuisine, Comique / Humour
+(56, 11),
+(57, 2), -- Chapeau de Fée - ID: 57 -> Tag: Magique / Féerique, Mystique
+(57, 16),
+(58, 19), -- Chapeau d'hotesse de l'air - ID: 58 -> Tag: Élégance, Mode
+(58, 26),
+(59, 19), -- Chapeau d'Infirmière - ID: 59 -> Tag: Militaire / Camouflage, Élégance
+(59, 12),
+(60, 3), -- Chapeau de Link - ID: 60 -> Tag: Fantasy / Médiéval, Chevalier / Héroïque
+(60, 6),
+(61, 17), -- Chapeau de Lutin - ID: 61 -> Tag: Noël, Espiègle / Joyeux
+(61, 18),
+(62, 27), -- Chapeau de Nain - ID: 62 -> Tag: Rétro / Vintage, Nature / Jardin / Fleur
+(62, 7),
+(63, 11), -- Chapeau et nez de Clown - ID: 63 -> Tag: Comique / Humour, Aventure / Héros
+(63, 5),
+(64, 7), -- Chapeau de pailles - ID: 64 -> Tag: Nature / Jardin / Fleur, Festif
+(64, 18),
+(65, 27), -- Chapeau de Pinup - ID: 65 -> Tag: Glamour / Mode, Rétro / Vintage
+(65, 26),
+(66, 5), -- Chapeau de Pirate - ID: 66 -> Tag: Aventure / Héros, Western / Aventure
+(66, 24),
+(67, 5), -- Chapeau de Policier - ID: 67 -> Tag: Militaire / Camouflage, Héroïque
+(67, 12),
+(68, 12), -- Chapeau de Pompier - ID: 68 -> Tag: Militaire / Camouflage, Comique / Humour
+(68, 5),
+(69, 25), -- Chapeau de Samouraï - ID: 69 -> Tag: Japon / Traditionnel, Guerrier
+(69, 8),
+(70, 1), -- Chapeau de Sorcière - ID: 70 -> Tag: Halloween / Sorcière, Magique / Féerique
+(70, 2),
+(71, 7), -- Chaussures Pots de fleurs - ID: 71 -> Tag: Nature / Jardin / Fleur, Plante / Nature
+(71, 13),
+(72, 21), -- Couteau de Cuisine - ID: 72 -> Tag: Gastronomie / Cuisine, Comique / Humour
+(72, 11),
+(73, 21), -- Cuillère de Cuisinier - ID: 73 -> Tag: Gastronomie / Cuisine, Comique / Humour
+(73, 11),
+(74, 3), -- Epee de Link - ID: 74 -> Tag: Fantasy / Médiéval, Chevalier / Héroïque
+(74, 6),
+(75, 5), -- Fusil de Militaire - ID: 75 -> Tag: Militaire / Camouflage, Aventure / Héros
+(75, 12);
 
-INSERT INTO product_tag (id_product, id_tag) VALUES 
-(1, 3), -- Link : Chevalier / Héroïque
-(1, 6), -- Link : Fantasy / Médiéval
-(1, 5), -- Link : Aventure / Héros
-(2, 2), -- Licorne : Magique / Féerique
-(2, 4), -- Licorne : Créature / Monstre
-(2, 5), -- Licorne : Aventure / Héros
-(3, 2), -- Sorcière : Magique / Féerique
-(3, 16), -- Sorcière : Mystique
-(3, 1), -- Sorcière : Halloween
-(4, 7), -- Nain de jardin : Nature / Jardin / Fleur
-(4, 13), -- Nain de jardin : Plante / Nature
-(4, 11), -- Nain de jardin : Comique / Humour
-(5, 10), -- Jedi : Science-fiction / Futuriste
-(5, 3), -- Jedi : Chevalier / Héroïque
-(5, 5), -- Jedi : Aventure / Héros
-(6, 4), -- Chucky : Créature / Monstre
-(6, 1), -- Chucky : Halloween
-(6, 11), -- Chucky : Comique / Humour
-(7, 4), -- Dragon : Créature / Monstre
-(7, 6), -- Dragon : Fantasy / Médiéval
-(7, 5), -- Dragon : Aventure / Héros
-(8, 17), -- Lutin de Noël : Noël
-(8, 18), -- Lutin de Noël : Festif
-(8, 15), -- Lutin de Noël : Espiègle / Joyeux
-(9, 6), -- Princesse : Fantasy / Médiéval
-(9, 3), -- Princesse : Chevalier / Héroïque
-(9, 20), -- Princesse : Majesté
-(10, 6), -- Chevalier : Fantasy / Médiéval
-(10, 3), -- Chevalier : Chevalier / Héroïque
-(10, 5), -- Chevalier : Aventure / Héros
-(11, 25), -- Samouraï : Japon / Traditionnel
-(11, 8), -- Samouraï : Viking / Guerrier
-(11, 5), -- Samouraï : Aventure / Héros
-(12, 8), -- Viking : Viking / Guerrier
-(12, 14), -- Viking : Historique / Antique
-(12, 5), -- Viking : Aventure / Héros
-(13, 14), -- Gladiateur : Historique / Antique
-(13, 8), -- Gladiateur : Viking / Guerrier
-(13, 5), -- Gladiateur : Aventure / Héros
-(14, 12), -- Pompier : Militaire / Camouflage
-(14, 5), -- Pompier : Aventure / Héros
-(14, 11), -- Pompier : Comique / Humour
-(15, 5), -- Policier : Aventure / Héros
-(15, 12), -- Policier : Sécurité / Autorité
-(16, 21), -- Infirmière : Gastronomie / Cuisine
-(16, 5), -- Infirmière : Aventure / Héros
-(16, 12), -- Infirmière : Militaire / Camouflage
-(17, 21), -- Cuisinier : Gastronomie / Cuisine
-(17, 5), -- Cuisinier : Aventure / Héros
-(18, 21), -- Soldat militaire : Gastronomie / Cuisine
-(18, 12), -- Soldat militaire : Militaire / Camouflage
-(19, 12), -- Bonne sœur : Militaire / Camouflage
-(19, 16), -- Bonne sœur : Mystique
-(20, 15), -- Prisonnier : Comique / Humour
-(20, 5), -- Prisonnier : Aventure / Héros
-(21, 11), -- Banane : Comique / Humour
-(21, 23), -- Banane : Tropical / Fruit
-(22, 21), -- Poulet rôti : Gastronomie / Cuisine
-(22, 11), -- Poulet rôti : Comique / Humour
-(23, 6), -- Clown : Fantasy / Médiéval
-(23, 11), -- Clown : Comique / Humour
-(24, 11), -- Chanteur Jul : Comique / Humour
-(24, 27), -- Chanteur Jul : Rétro / Vintage
-(25, 10), -- Alien : Science-fiction / Futuriste
-(25, 4), -- Alien : Créature / Monstre
-(25, 5), -- Alien : Aventure / Héros
-(26, 9), -- Cowboy : Far West / Cowboy
-(26, 24), -- Cowboy : Western / Aventure
-(27, 25), -- Ninja : Japon / Traditionnel
-(27, 8), -- Ninja : Viking / Guerrier
-(28, 4), -- Mercredi Addams : Créature / Monstre
-(28, 16), -- Mercredi Addams : Mystique
-(29, 4), -- Xénomorphe : Créature / Monstre
-(29, 10), -- Xénomorphe : Science-fiction / Futuriste
-(30, 5), -- Spiderman : Aventure / Héros
-(30, 4), -- Spiderman : Créature / Monstre
-(31, 27), -- Années 70 : Rétro / Vintage
-(31, 11), -- Années 70 : Comique / Humour
-(32, 25), -- Écolière japonaise : Japon / Traditionnel
-(32, 5), -- Écolière japonaise : Aventure / Héros
-(33, 9), -- Pirate : Far West / Cowboy
-(33, 24), -- Pirate : Western / Aventure
-(34, 10), -- Astronaute : Science-fiction / Futuriste
-(34, 5), -- Astronaute : Aventure / Héros
-(35, 4), -- Dinosaure : Créature / Monstre
-(35, 5), -- Dinosaure : Aventure / Héros
-(36, 22), -- Lion : Sauvage / Animal
-(37, 13), -- Pieuvre : Plante / Nature
-(38, 22), -- Abeille : Sauvage / Animal
-(39, 23), -- Oeuf : Tropical / Fruit
-(40, 11), -- Bière : Comique / Humour
-(40, 23), -- Bière : Tropical / Fruit
-(41, 23), -- Ananas : Tropical / Fruit
-(42, 13), -- Cactus : Plante / Nature
-(43, 21), -- Sushi : Gastronomie / Cuisine
-(43, 10), -- Sushi : Science-fiction / Futuriste
-(44, 13), -- Coquelicot : Plante / Nature
-(45, 4), -- Dracula : Créature / Monstre
-(45, 1), -- Dracula : Halloween
-(46, 2), -- Fée : Magique / Féerique
-(46, 5), -- Fée : Aventure / Héros
-(47, 2), -- Baguette de Fée : Magique / Féerique
-(47, 16), -- Baguette de Fée : Mystique
-(48, 6), -- Casque de Chevalier : Fantasy / Médiéval
-(48, 3), -- Casque de Chevalier : Chevalier / Héroïque
-(49, 12), -- Casque Militaire : Sécurité / Autorité
-(50, 8), -- Casque de Viking : Viking / Guerrier
-(51, 13), -- Champignon de Nain : Plante / Nature
-(52, 7), -- Chapeau Coquelicot : Nature / Jardin / Fleur
-(53, 9), -- Chapeau de Cowboy : Far West / Cowboy
-(54, 21), -- Chapeau de Cuisinier : Gastronomie / Cuisine
-(55, 5), -- Chapeau de Fée : Aventure / Héros
-(56, 26), -- Chapeau d'Hôtesse de l'air : Glamour / Mode
-(57, 12), -- Chapeau d'Infirmière : Militaire / Camouflage
-(58, 5), -- Chapeau de Link : Aventure / Héros
-(59, 17), -- Chapeau de Lutin : Noël
-(60, 11), -- Chapeau de Nain : Comique / Humour
-(61, 21), -- Chapeau de Paille : Gastronomie / Cuisine
-(62, 27), -- Chapeau de Pinup : Rétro / Vintage
-(63, 24), -- Chapeau de Pirate : Western / Aventure
-(64, 12), -- Chapeau de Policier : Militaire / Camouflage
-(65, 5), -- Chapeau de Pompier : Aventure / Héros
-(66, 25), -- Chapeau de Samouraï : Japon / Traditionnel
-(67, 16), -- Chapeau de Sorcière : Mystique
-(68, 7), -- Chaussures Pots de fleurs : Nature / Jardin / Fleur
-(69, 21), -- Couteau de Cuisine : Gastronomie / Cuisine
-(70, 21), -- Cuillère de Cuisinier : Gastronomie / Cuisine
-(71, 3), -- Épée de Link : Chevalier / Héroïque
-(72, 12), -- Fusil de Militaire : Militaire / Camouflage
-(73, 8), -- Hache de Viking : Viking / Guerrier
-(74, 27), -- Shuriken de Ninja : Rétro / Vintage
-(75, 12), -- Perruque Blonde : Militaire / Camouflage
-(76, 21), -- Perruque et Lunettes Années 70 : Gastronomie / Cuisine
-(77, 15), -- Perruque Rousse : Espiègle / Joyeux
-(78, 12), -- Revolver de Cowboy : Militaire / Camouflage
-(79, 3), -- Sabre laser de Jedi : Chevalier / Héroïque
-(80, 17); -- Sac d'Hôtesse de l'air : Noël
+INSERT INTO comment (rating_comment, comment, date_comment, admin_reply, id_product, id_user)
+VALUES 
+(5, 'Très bon produit, je recommande !', '2025-04-15', NULL, 20, 1),
 
+(4, 'Livraison rapide, mais l’emballage était abîmé.', '2025-04-18', 'Merci pour votre retour, nous allons améliorer ce point.', 20, 3),
+
+(3, 'Le produit ne correspond pas tout à fait à la description.', '2025-04-20', NULL, 20, 4),
+
+(5, 'Excellente qualité, rien à redire.', '2025-04-22', NULL, 20, 5),
+
+(2, 'Produit défectueux à la réception.', '2025-04-25', 'Nous sommes désolés pour cela. Veuillez contacter notre service client.', 20, 2);
