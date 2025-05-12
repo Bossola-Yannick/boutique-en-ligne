@@ -66,7 +66,7 @@ CREATE TABLE comment (
     id_comment INT AUTO_INCREMENT PRIMARY KEY,
     rating_comment INT,
     comment TEXT NOT NULL,
-    date_comment DATE NOT NULL,
+    date_comment DATETIME NOT NULL,
     admin_reply TEXT,
     id_product INT,
     id_user INT,
@@ -107,6 +107,6 @@ CREATE TABLE product_cart (
     quantity INT NOT NULL,
     unit_price DECIMAL(10,2) NOT NULL,
     FOREIGN KEY (id_product) REFERENCES product(id_product),
-    FOREIGN KEY (id_cart) REFERENCES cart(id_cart)
+    FOREIGN KEY (id_cart) REFERENCES cart(id_cart) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
