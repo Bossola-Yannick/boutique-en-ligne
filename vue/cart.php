@@ -4,10 +4,11 @@ include '../components/header.php';
 
 ?>
 
-<div>
+<section id="cart" class="cart-box">
+    <h2>Mon panier</h2>
+    <div class="cart-display"></div>
 
-
-</div>
+</section>
 
 
 <?php include '../components/footer.php'; ?>

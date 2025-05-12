@@ -23,6 +23,7 @@ session_start();
     <script src="../js/search.js" defer></script>
     <script src="../js/card.js" defer></script>
     <script src="../js/costumes.js" defer></script>
+    <script src="../js/cart.js" defer></script>
     <link rel="stylesheet" href="../styles/reset.css" />
     <link rel="stylesheet" href="../styles/style.css" />
     <link rel="stylesheet" href="../styles/header-banner-search-footer.css" />
