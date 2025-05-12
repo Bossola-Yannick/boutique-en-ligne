@@ -4,10 +4,6 @@ include '../components/header.php';
 include '../components/search.php';
 include '../components/banner.php';
 
-$_SESSION['user_id'] = 2;
-$_SESSION['user_name'] = "james";
-$_SESSION['user_role'] = "user";
-
 ?>
 
 <div class="product-list-box">
