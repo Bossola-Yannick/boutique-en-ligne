@@ -9,8 +9,26 @@ include '../components/banner.php';
   <!-- Gestions des Article -->
   <section class="admin-product">
     <h2 class="admin-subtitle">Produits</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Article</th>
+          <th>Description</th>
+          <th>Photo</th>
+          <th>Type</th>
+          <th>Catégories</th>
+          <th>tag</th>
+          <th>Stock</th>
+          <th>Prix Unitaire HT</th>
+          <th>% Prommotion</th>
+          <th>TVA</th>
+          <th>Prix TTC</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
   </section>
-  <!-- Gestions des Sous-Catégiries "table sub-category -->
+  <!-- Gestions des Sous-Catégories "table sub-category -->
   <section class="admin-accessories">
     <h2 class="admin-subtitle">Catégories</h2>
   </section>
