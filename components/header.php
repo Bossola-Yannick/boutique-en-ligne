@@ -62,7 +62,7 @@ session_start();
             </ul>
         </div>
         <div class="cart-box">
-            <a href="">
+            <a href="../vue/cart.php">
                 <img src="../assets/images/icones/cart.png" alt="">
                 <p class="cart-number-items"></p>
             </a>

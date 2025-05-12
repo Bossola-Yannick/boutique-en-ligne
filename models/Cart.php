@@ -91,6 +91,7 @@ class Cart extends ConnexionBdd
         }
     }
 
+    // recupère le nombre d'article dans le panier via l'id user
     public function getItemsNumber($id_user): int
     {
         $query = "SELECT SUM(quantity) 
@@ -103,5 +104,22 @@ class Cart extends ConnexionBdd
         ]);
         $totalQuantity = $queryStmt->fetchColumn();
         return $totalQuantity === null ? 0 : $totalQuantity;
+    }
+
+    // récupère le panier d'un utilisateur via l'id du panier
+    public function getCartItems($id_cart): array
+    {
+        $query = "SELECT cart.id_cart, cart.id_user,
+		product_cart.id_product, product_cart.quantity, product_cart.unit_price,
+        product.name_product, product.stock, product.image_link
+        FROM cart
+        JOIN product_cart ON product_cart.id_cart = cart.id_cart
+        JOIN product ON product_cart.id_product = product.id_product
+        WHERE cart.id_cart = :id_cart";
+        $queryStmt = $this->bdd->prepare($query);
+        $queryStmt->execute([
+            ":id_cart" => $id_cart
+        ]);
+        return $queryStmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
