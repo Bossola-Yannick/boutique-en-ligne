@@ -10,7 +10,7 @@
 #form-connection,
 #form-registration {
   width: 45%;
-  height: 80%;
+  height: auto;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -30,6 +30,19 @@
 .subtitle-registration {
   color: var(--active-color);
   /* font-family: var(--title-font); */
-  font-size: 1.5rem;
+  font-size: 2rem;
   padding-block: 0.7rem;
+}
+#status-registration,
+#emailError,
+#passwordError,
+#identiquePasswordError,
+#codePostalError {
+  padding: 0.2rem;
+}
+.message-error {
+  color: red;
+  background-color: white;
+  padding: 0.5rem;
+  border-radius: 1rem;
 }

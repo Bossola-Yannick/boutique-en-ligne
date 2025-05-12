@@ -20,6 +20,7 @@ session_start();
     <!-- <script src="../js/connexion-inscription.js" defer></script> -->
     <script src="../js/notification.js" defer></script>
     <script src="../js/detail.js" defer></script>
+    <script src="../js/connection-registration.js" defer></script>
     <script src="../js/search.js" defer></script>
     <script src="../js/card.js" defer></script>
     <script src="../js/costumes.js" defer></script>
@@ -37,17 +38,27 @@ session_start();
 <body>
     <header class="header">
         <div class="logo-box">
-            <a href="">
+            <a href="../index.php">
                 <img src="../assets/images/icones/logo-detour.png" alt="logo pimp my poule">
             </a>
         </div>
         <div class="link-box">
             <ul class="link-list">
+
                 <li class="link-item"><a href="../vue/costumes.php">Déguisements</a></li>
                 <li class="link-item"><a href="../vue/accessories.php">Accessoires</a></li>
                 <li class="link-item"><a href="../vue/promo.php">Promotion</a></li>
-                <li class="link-item"><a href="../vue/connection.php">Connexion</a></li>
-                <li class="link-item"><a href="../vue/registration.php">Inscription</a></li>
+                <?php if (isset($_SESSION['userId'])) : ?>
+                    <?php if ($_SESSION["userRole"] === "admin"): ?>
+                        <li class="link-item"><a href="../vue/adminVue.php">Gestion Boutique</a></li>
+                        <li class="logout"><button>Déconnexion</button></li>
+                    <?php elseif ($_SESSION["userRole"] === "user"): ?>
+                        <li class="link-item"><a href="../vue/profilVue.php">Profil</a></li>
+                    <?php endif ?>
+                <?php else : ?>
+                    <li class="link-item"><a href="../vue/connectionVue.php">Connexion</a></li>
+                    <li class="link-item"><a href="../vue/registrationVue.php">Inscription</a></li>
+                <?php endif ?>
             </ul>
         </div>
         <div class="cart-box">
