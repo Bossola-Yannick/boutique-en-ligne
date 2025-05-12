@@ -15,7 +15,6 @@ session_start();
     <script>
         const userId = <?php echo json_encode($_SESSION['user_id'] ?? null, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT); ?>;
         const userRole = <?php echo json_encode($_SESSION['user_role'] ?? null, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT); ?>;
-    </script>
     <!-- fin recup -->
     <!-- <script src="../js/connexion-inscription.js" defer></script> -->
     <script src="../js/notification.js" defer></script>
@@ -54,6 +53,7 @@ session_start();
                         <li class="logout"><button>Déconnexion</button></li>
                     <?php elseif ($_SESSION["userRole"] === "user"): ?>
                         <li class="link-item"><a href="../vue/profilVue.php">Profil</a></li>
+                        <li class="logout"><button>Déconnexion</button></li>
                     <?php endif ?>
                 <?php else : ?>
                     <li class="link-item"><a href="../vue/connectionVue.php">Connexion</a></li>

@@ -341,6 +341,7 @@ INSERT INTO product_tag (id_product, id_tag) VALUES
 (83, 26),
 (83, 30);
 
+
 INSERT INTO comment (rating_comment, comment, date_comment, admin_reply, id_product, id_user)
 VALUES 
 (5, 'Très bon produit, je recommande !', '2025-04-15', NULL, 20, 1),
