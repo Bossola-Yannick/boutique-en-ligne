@@ -1,0 +1,21 @@
+.admin-subtitle {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+}
+/* Tables des déguisements et accessoires */
+.table-item {
+  text-align: center;
+  max-width: 10%;
+  padding-block: 1rem;
+  font-weight: bold;
+}
+td,
+th {
+  border: 1px solid black;
+  padding: 0.2rem;
+}
+.table-product td:nth-child(even),
+.table-product th:nth-child(even) {
+  background-color: #ebebeb;
+}

@@ -71,7 +71,7 @@ class Product extends ConnexionBdd
     // récup tous les produits
     public function getAllProduct($cat): array
     {
-        $query = "SELECT product.id_product, product.name_product, product.description, product.stock, 
+        $query = "SELECT product.id_product, product.name_product, product.description, product.stock, product.price_ht,
         product.price_ttc, product.price_discount, product.image_link, product.category, product.rating_product,
         tag.id_tag, tag.name_tag,
         sub_category.id_subcategory, sub_category.name_subcategory

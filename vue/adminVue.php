@@ -2,10 +2,12 @@
 include '../components/header.php';
 ?>
 <?php
+include '../components/search.php';
+?>
+<?php
 include '../components/banner.php';
 ?>
 <section class="admin-section">
-  <h1 class="admin-title">Pimp My Poule</h1>
   <!-- Gestions des Article -->
   <section class="admin-product">
     <h2 class="admin-subtitle">Produits</h2>
@@ -17,11 +19,9 @@ include '../components/banner.php';
           <th class="table-column-title">Photo</th>
           <th class="table-column-title">Type</th>
           <th class="table-column-title">Catégories</th>
-          <th class="table-column-title">tag</th>
           <th class="table-column-title">Stock</th>
           <th class="table-column-title">Prix Unitaire HT</th>
           <th class="table-column-title">% Prommotion</th>
-          <th class="table-column-title">TVA</th>
           <th class="table-column-title">Prix TTC</th>
         </tr>
       </thead>
