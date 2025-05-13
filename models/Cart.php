@@ -111,7 +111,7 @@ class Cart extends ConnexionBdd
     {
         $query = "SELECT cart.id_cart, cart.id_user,
 		product_cart.id_product, product_cart.quantity, product_cart.unit_price,
-        product.name_product, product.stock, product.image_link
+        product.name_product, product.stock, product.image_link, product.category
         FROM cart
         JOIN product_cart ON product_cart.id_cart = cart.id_cart
         JOIN product ON product_cart.id_product = product.id_product
