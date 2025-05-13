@@ -1,5 +1,4 @@
 <?php
-
 require_once '../models/Product.php';
 
 $action = isset($_GET['action']) ? $_GET['action'] : '';
