@@ -16,11 +16,11 @@ if (isset($_POST['add-to-cart'])) {
     $price = filter_input(INPUT_POST, 'price_product', FILTER_VALIDATE_FLOAT);
 
     // vérifie si l'utilisateur est connecté
-    if (!isset($_SESSION["user_id"])) {
+    if (!isset($_SESSION["userId"])) {
         $response['success'] = false;
         $response['message'] = 'Utilisateur non connecté.';
     } else {
-        $id_user = $_SESSION["user_id"];
+        $id_user = $_SESSION["userId"];
         $quantity = 1;
 
         if ($id_user && $id_product && $price !== false && $price >= 0) {

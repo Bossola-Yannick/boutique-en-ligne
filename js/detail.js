@@ -1,8 +1,8 @@
-if (!sessionStorage.getItem("user_id")) {
-  sessionStorage.setItem("user_id", userId);
+if (!sessionStorage.getItem("userConnectId")) {
+  sessionStorage.setItem("userConnectId", userId);
 }
-if (!sessionStorage.getItem("user_role")) {
-  sessionStorage.setItem("user_role", userRole);
+if (!sessionStorage.getItem("userConnectRole")) {
+  sessionStorage.setItem("userConnectRole", userRole);
 }
 
 const URLproductId = new URLSearchParams(window.location.search);

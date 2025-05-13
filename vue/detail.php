@@ -3,10 +3,6 @@
 include '../components/header.php';
 include '../components/search.php';
 
-$_SESSION['user_id'] = 2;
-$_SESSION['user_name'] = "james";
-$_SESSION['user_role'] = "user";
-
 ?>
 
 <section id="product-box">
@@ -19,11 +15,11 @@ $_SESSION['user_role'] = "user";
 <hr class="separation">
 <section class="comments-box">
     <h2>Vos Avis:</h2>
-    <?php if (!isset($_SESSION['user_name'])): ?>
+    <?php if (!isset($_SESSION['userId'])): ?>
         <p class="msg-login-com">Veuillez-vous <a class="bold" href="connection.php">connecter</a> pour laisser un commentaire</p>
-    <?php elseif (isset($_SESSION['user_name']) && $_SESSION['user_role'] === "admin"): ?>
-        <p class="msg-login-com">Connecté en tant que : <span class="bold"><?= htmlspecialchars($_SESSION['user_role']) ?><span></p>
-    <?php elseif ($_SESSION['user_role'] !== "admin"): ?>
+    <?php elseif (isset($_SESSION['userId']) && $_SESSION['userRole'] === "admin"): ?>
+        <p class="msg-login-com">Connecté en tant que : <span class="bold"><?= htmlspecialchars($_SESSION['userRole']) ?><span></p>
+    <?php elseif ($_SESSION['userRole'] !== "admin"): ?>
         <div class="comment-form-box">
             <p>Connecté en tant que : <span class="bold"><?= htmlspecialchars($_SESSION['user_name']) ?><span></p>
 
