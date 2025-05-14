@@ -1,6 +1,5 @@
-const costumes = "costumes";
-const accessorys = "accessories";
 const filters = "filter";
+const actions = ["costumes", "accessories"];
 
 const getAll = async (action) => {
   try {
@@ -24,9 +23,10 @@ const getAll = async (action) => {
   }
 };
 
-getAll(costumes).then((data) => {
-  let allCostumes = data.products;
-  for (const costume of allCostumes) {
+actions.forEach(async (action) => {
+  const data = await getAll(action);
+  let allProduct = data.products;
+  for (const costume of allProduct) {
     let row = $("<tr></tr>").addClass("tabble-item-row");
     let name = $("<td></td>")
       .text(costume["name_product"])
@@ -43,22 +43,21 @@ getAll(costumes).then((data) => {
     let priceHt = $("<td></td>")
       .text(costume["price_ht"] + "€")
       .addClass("table-item");
-    let priceDiscount = $("<td></td>")
-      .text(costume["price_discount"] + "€")
-      .addClass("table-item");
+    let promoPercent = $("<td></td>").addClass("table-item");
     if (costume["price_discount"] === costume["price_ttc"]) {
-      priceDiscount.text("0%");
+      promoPercent.text("0%");
     } else {
       let promo = (costume["price_discount"] * 100) / costume["price_ttc"];
       let percentDiscount = Math.floor(100 - promo);
-      priceDiscount.text(percentDiscount + " %");
+      promoPercent.text(percentDiscount + " %");
     }
     let priceTtc = $("<td></td>")
       .text(costume["price_ttc"] + "€")
       .addClass("table-item");
-    if (costume["price_discount"] !== costume["price_ttc"]) {
-      priceTtc.text(costume["price_discount"] + "€");
-    }
+    let priceDiscount = $("<td></td>").addClass("table-item");
+    if (costume["price_discount"] === costume["price_ttc"]) {
+      priceDiscount.text(costume["price_ttc"]);
+    } else priceDiscount.text(costume["price_discount"]);
     row.append(name);
     row.append(description);
     row.append(imageLink);
@@ -66,66 +65,14 @@ getAll(costumes).then((data) => {
     row.append(category);
     row.append(stock);
     row.append(priceHt);
-    row.append(priceDiscount);
     row.append(priceTtc);
-    $(".table-product-body").append(row);
-    // console.log(costume);
-  }
-  console.log("Costumes :", data);
-});
-
-getAll(accessorys).then((data) => {
-  let allAccessorys = data.products;
-  for (const accessory of allAccessorys) {
-    let row = $("<tr></tr>").addClass("tabble-item-row");
-    let name = $("<td></td>")
-      .text(accessory["name_product"])
-      .addClass("table-item");
-    let description = $("<td></td>")
-      .text(accessory["description"])
-      .addClass("table-item");
-    let imageLink = $("<td></td>")
-      .text(accessory["image_link"])
-      .addClass("table-item");
-    let type = $("<td></td>")
-      .text(accessory["category"])
-      .addClass("table-item");
-    let category = $("<td></td>").text("TAGS").addClass("table-item");
-    let stock = $("<td></td>").text(accessory["stock"]).addClass("table-item");
-    let priceHt = $("<td></td>")
-      .text(accessory["price_ht"] + "€")
-      .addClass("table-item");
-    let priceDiscount = $("<td></td>")
-      .text(accessory["price_discount"] + "€")
-      .addClass("table-item");
-    if (accessory["price_discount"] === accessory["price_ttc"]) {
-      priceDiscount.text("0%");
-    } else {
-      let promo = (accessory["price_discount"] * 100) / accessory["price_ttc"];
-      let percentDiscount = Math.floor(100 - promo);
-      priceDiscount.text(percentDiscount + " %");
-    }
-    let priceTtc = $("<td></td>")
-      .text(accessory["price_ttc"] + "€")
-      .addClass("table-item");
-    if (accessory["price_discount"] !== accessory["price_ttc"]) {
-      priceTtc.text(accessory["price_discount"] + "€");
-    }
-    row.append(name);
-    row.append(description);
-    row.append(imageLink);
-    row.append(type);
-    row.append(category);
-    row.append(stock);
-    row.append(priceHt);
+    row.append(promoPercent);
     row.append(priceDiscount);
-    row.append(priceTtc);
     $(".table-product-body").append(row);
-    // console.log(costume);
   }
-  console.log("Accessoires :", data);
+  // console.log("Products :", data);
 });
 
 getAll(filters).then((data) => {
-  console.log("Filtres :", data);
+  // console.log("Filtres :", data);
 });

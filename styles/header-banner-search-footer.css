@@ -33,6 +33,15 @@
   color: var(--text-color);
   font-size: 1.7rem;
 }
+.link-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.logout div {
+  background-color: var(--discount-color);
+  text-decoration: none;
+}
 /* -- PANIER -- */
 .cart-box {
   width: 10%;

@@ -192,7 +192,9 @@ const registration = async (
 $(".logout").on("click", function (e) {
   e.preventDefault();
   sessionStorage.clear();
-  fetch("./controller/logout.php");
+  if (window.location.href === "http://localhost/boutique-en-ligne/index.php") {
+    fetch("./controller/logout.php");
+  } else fetch("../controller/logout.php");
   // redirection index.php
   window.location.href = "http://localhost/boutique-en-ligne/index.php";
 });

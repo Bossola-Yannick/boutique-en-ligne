@@ -1,10 +1,6 @@
 <?php
 include '../components/header.php';
-?>
-<?php
 include '../components/search.php';
-?>
-<?php
 include '../components/banner.php';
 ?>
 <section class="admin-section">
@@ -21,8 +17,9 @@ include '../components/banner.php';
           <th class="table-column-title">Catégories</th>
           <th class="table-column-title">Stock</th>
           <th class="table-column-title">Prix Unitaire HT</th>
-          <th class="table-column-title">% Prommotion</th>
           <th class="table-column-title">Prix TTC</th>
+          <th class="table-column-title">% Prommotion</th>
+          <th class="table-column-title">Prix Final</th>
         </tr>
       </thead>
       <tbody class="table-product-body">

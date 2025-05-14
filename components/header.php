@@ -56,10 +56,14 @@ session_start();
                 <?php if (isset($_SESSION['userId'])) : ?>
                     <?php if ($_SESSION["userRole"] === "admin"): ?>
                         <li class="link-item"><a href="../vue/adminVue.php">Gestion Boutique</a></li>
-                        <li class="logout"><button>Déconnexion</button></li>
+                        <li class="logout">
+                            <div class="button">Déconnexion</div>
+                        </li>
                     <?php elseif ($_SESSION["userRole"] === "user"): ?>
                         <li class="link-item"><a href="../vue/profilVue.php">Profil</a></li>
-                        <li class="logout"><button>Déconnexion</button></li>
+                        <li class="logout">
+                            <div class="button">Déconnexion</div>
+                        </li>
                     <?php endif ?>
                 <?php else : ?>
                     <li class="link-item"><a href="../vue/connectionVue.php">Connexion</a></li>
