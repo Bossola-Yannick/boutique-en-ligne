@@ -73,6 +73,7 @@ actions.forEach(async (action) => {
   // console.log("Products :", data);
 });
 
+//! A Faire BONUS
 getAll(filters).then((data) => {
   // console.log("Filtres :", data);
 });
