@@ -1,4 +1,6 @@
 const actions = ["costumes", "promo"];
+const boxCostume = $(".box-product");
+const boxPromo = $(".box-promo");
 
 const getAll = async (action) => {
   try {
@@ -22,41 +24,31 @@ const getAll = async (action) => {
   }
 };
 
-const getSelectProduct = async () => {
-  const data = await getAll("costumes");
+const getSelectProduct = async (boxCard, type) => {
+  const data = await getAll(type);
   let product = data.products;
-  let boxCard = $(".box-product");
-  for (let i = 0; i < 5; i++) {
+  const maxNum = product.length;
+  const randomSelect = [];
+  // génération de nombre aléatoire pour selection homePage
+  while (randomSelect.length < Math.min(5, maxNum)) {
+    let num = Math.floor(Math.random() * maxNum);
+    if (!randomSelect.includes(num)) {
+      randomSelect.push(num);
+    }
+  }
+  // génération des cartes
+  for (const num of randomSelect) {
     createCard(
-      product[i].category,
-      product[i].image_link,
-      product[i].id_product,
-      product[i].name_product,
-      product[i].price_ttc,
-      product[i].price_discount,
-      product[i].rating_product,
+      product[num].category,
+      product[num].image_link,
+      product[num].id_product,
+      product[num].name_product,
+      product[num].price_ttc,
+      product[num].price_discount,
+      product[num].rating_product,
       boxCard[0]
     );
   }
-  console.log(product);
 };
-const getSelectPromo = async () => {
-  const data = await getAll("promo");
-  let product = data.products;
-  let boxCard = $(".box-promo");
-  for (let i = 0; i < 5; i++) {
-    createCard(
-      product[i].category,
-      product[i].image_link,
-      product[i].id_product,
-      product[i].name_product,
-      product[i].price_ttc,
-      product[i].price_discount,
-      product[i].rating_product,
-      boxCard[0]
-    );
-  }
-  console.log(product);
-};
-getSelectProduct();
-getSelectPromo();
+getSelectProduct(boxCostume, "costumes");
+getSelectProduct(boxPromo, "promo");
