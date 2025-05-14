@@ -3,12 +3,14 @@ const displayDiv = document.getElementById("display-result");
 
 searchInput.addEventListener("input", function () {
   const name = searchInput.value.trim();
-
+  const prefixLink = getPrefixLink();
   if (name === "") {
     displayDiv.innerHTML = "";
   } else {
     fetch(
-      `../controller/SearchController.php?search=${encodeURIComponent(name)}`,
+      `${prefixLink}controller/SearchController.php?search=${encodeURIComponent(
+        name
+      )}`,
       {
         method: "GET",
         headers: {
@@ -24,14 +26,15 @@ searchInput.addEventListener("input", function () {
             element.id_product,
             element.name_product,
             element.image_link,
-            element.category
+            element.category,
+            prefixLink
           );
         });
         let resultSearch = Array.from(displayDiv.children);
         resultSearch.forEach((element) => {
           element.addEventListener("click", () => {
             let detailId = element.getAttribute("value");
-            window.location.href = `../vue/detail.php?product=${detailId}`;
+            window.location.href = `${prefixLink}vue/detail.php?product=${detailId}`;
           });
         });
       })
@@ -41,7 +44,13 @@ searchInput.addEventListener("input", function () {
   }
 });
 
-const searchResult = (id_product, name_product, image_link, category) => {
+const searchResult = (
+  id_product,
+  name_product,
+  image_link,
+  category,
+  prefixLink
+) => {
   const result = document.createElement("li");
   result.classList.add("search-result");
   result.setAttribute("value", id_product);
@@ -49,9 +58,15 @@ const searchResult = (id_product, name_product, image_link, category) => {
   const resultImg = document.createElement("img");
   resultImg.classList.add("img-product");
   if (category === "déguisement") {
-    resultImg.setAttribute("src", `../assets/images/cosplay/${image_link}`);
+    resultImg.setAttribute(
+      "src",
+      `${prefixLink}assets/images/cosplay/${image_link}`
+    );
   } else {
-    resultImg.setAttribute("src", `../assets/images/accessories/${image_link}`);
+    resultImg.setAttribute(
+      "src",
+      `${prefixLink}assets/images/accessories/${image_link}`
+    );
   }
 
   result.appendChild(resultImg);
