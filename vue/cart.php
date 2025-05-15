@@ -15,6 +15,9 @@ include '../components/header.php';
                 <p class="delete-col"></p>
             </div>
             <ul class="cart-display"></ul>
+            <div class="cart-total">
+                Total : <span class="cart-total-price">0.00 €</span>
+            </div>
         </div>
         <button type="submit" class="create-order">Passer la commande</button>
     </section>

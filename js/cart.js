@@ -64,7 +64,7 @@ if (window.location.pathname === "/boutique-en-ligne/vue/cart.php") {
         // colonne 4
         const productDelete = document.createElement("div");
         productDelete.classList.add("cart-col", "delete-col");
-        productDelete.innerHTML = `<button class="delete-line-cart">Supprimer</button>`;
+        productDelete.innerHTML = `<button class="delete-item-cart" value="${product.id_product}">Supprimer</button>`;
 
         cartItem.appendChild(productImgTitle);
         cartItem.appendChild(productQuantity);
@@ -72,6 +72,8 @@ if (window.location.pathname === "/boutique-en-ligne/vue/cart.php") {
         cartItem.appendChild(productDelete);
         cartDisplay.appendChild(cartItem);
       });
+
+      updateCartTotal(products);
 
       // bouton ajout quantité
       const buttonAddQuantity = document.querySelectorAll(".add-quantity-cart");
@@ -144,10 +146,47 @@ if (window.location.pathname === "/boutique-en-ligne/vue/cart.php") {
           }
         });
       });
+
+      const deleteButton = document.querySelectorAll(".delete-item-cart");
+      deleteButton.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          const productId = e.target.value;
+          const cartItem = e.target.closest(".cart-item-box");
+          fetch(`../controller/CartController.php?action=delete_item`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              product_id: productId,
+            }),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("La réponse du réseau n'était pas correcte");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              console.log("Produit supprimé avec succès:", data);
+              if (data.success && cartItem) {
+                cartItem.remove();
+                const updatedProducts = data.products;
+                updateCartTotal(updatedProducts);
+              }
+            })
+            .catch((error) => {
+              console.error(
+                "Erreur lors de la mise à jour de la quantité sur le serveur:",
+                error
+              );
+            });
+        });
+      });
     });
 }
 
-// Fonction pour mettre à jour la quantité sur le serveur
+// fonction pour mettre à jour la quantité sur le serveur
 function updateQuantityOnServer(
   productId,
   quantity,
@@ -174,7 +213,7 @@ function updateQuantityOnServer(
     })
     .then((data) => {
       console.log("Quantité mise à jour avec succès sur le serveur:", data);
-      // Ici, vous pourriez vouloir mettre à jour le total général du panier, etc.
+      updateCartTotal(data.products);
     })
     .catch((error) => {
       console.error(
@@ -182,7 +221,7 @@ function updateQuantityOnServer(
         error
       );
 
-      // Annuler la modification en cas d'erreur
+      // annule la modification en cas d'erreur
       if (inputQtyElement && priceColElement) {
         inputQtyElement.value = oldQuantity;
         const oldTotalPrice = oldQuantity * unitPrice;
@@ -192,4 +231,16 @@ function updateQuantityOnServer(
         alert("Erreur lors de la mise à jour de la quantité.");
       }
     });
+}
+
+// fonction pour calculer et afficher le total du panier
+function updateCartTotal(products) {
+  let total = 0;
+  products.forEach((product) => {
+    total += product.unit_price * product.quantity;
+  });
+  const cartTotalElement = document.querySelector(".cart-total-price");
+  if (cartTotalElement) {
+    cartTotalElement.textContent = `${total.toFixed(2)} €`;
+  }
 }

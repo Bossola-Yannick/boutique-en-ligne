@@ -122,4 +122,15 @@ class Cart extends ConnexionBdd
         ]);
         return $queryStmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    // supprime un produit du panier
+    public function deleteItem($id_product, $id_cart)
+    {
+        $query = "DELETE FROM product_cart WHERE id_cart = :id_cart AND id_product = :id_product";
+        $queryStmt = $this->bdd->prepare($query);
+        return $queryStmt->execute([
+            ':id_cart' => $id_cart,
+            ':id_product' => $id_product
+        ]);
+    }
 }

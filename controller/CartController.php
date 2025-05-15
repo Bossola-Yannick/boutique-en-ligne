@@ -3,7 +3,7 @@ session_start();
 
 header('Content-Type: application/json');
 
-$response = ['success' => false, 'message' => 'Erreur serveur initiale.', 'cart_items' => 0];
+$response = ['success' => false, 'message' => 'Erreur serveur initiale.', 'cart_items' => 0, 'products' => []];
 
 require_once '../models/Cart.php';
 
@@ -25,21 +25,25 @@ if (isset($_POST['add-to-cart'])) {
             $cart = new Cart();
             $cartUser = $cart->addProductToCart($id_user, $id_product, $price, $quantity);
             $cartItems = $cart->getItemsNumber($id_user);
+            $cartProducts = $cart->getCartItems($cart->getCartIdByUser($id_user));
 
             if ($cartUser) {
                 $response['success'] = true;
                 $response['message'] = 'Produit ajouté au panier !';
                 $response['cart_items'] = $cartItems;
+                $response['products'] = $cartProducts;
             } else {
                 $response['success'] = false;
                 $response['message'] = "Erreur lors de l'ajout du produit au panier.";
-                $response['cart_items'] = $cart->getItemsNumber($id_user);
+                $response['cart_items'] = $cartItems;
+                $response['products'] = [];
             }
         } else {
             $response['success'] = false;
             $response['message'] = "Erreur - données invalides";
             if (isset($id_user)) {
                 $response['cart_items'] = $cart->getItemsNumber($id_user);
+                $response['products'] = [];
             }
         }
     }
@@ -103,15 +107,18 @@ if (isset($_GET['action']) && $_GET['action'] === 'update_quantity') {
                         $response['success'] = true;
                         $response['message'] = 'Quantité mise à jour avec succès.';
                         $response['cart_items'] = $cart->getItemsNumber($id_user);
+                        $response['products'] = $cart->getCartItems($id_cart);
                     } else {
                         $response['success'] = false;
                         $response['message'] = 'Erreur lors de la mise à jour de la quantité.';
                         $response['cart_items'] = $cart->getItemsNumber($id_user);
+                        $response['products'] = [];
                     }
                 } else {
                     $response['success'] = false;
                     $response['message'] = 'Panier non trouvé pour cet utilisateur.';
                     $response['cart_items'] = 0;
+                    $response['products'] = [];
                 }
             } else {
                 $response['success'] = false;
@@ -119,6 +126,59 @@ if (isset($_GET['action']) && $_GET['action'] === 'update_quantity') {
                 if (isset($id_user)) {
                     $cart = new Cart();
                     $response['cart_items'] = $cart->getItemsNumber($id_user);
+                    $response['products'] = [];
+                }
+            }
+        }
+    } else {
+        $response['success'] = false;
+        $response['message'] = 'Méthode de requête non autorisée.';
+    }
+}
+
+if (isset($_GET['action']) && $_GET['action'] === 'delete_item') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (!isset($_SESSION["userId"])) {
+            $response['success'] = false;
+            $response['message'] = 'Utilisateur non connecté.';
+        } else {
+            $id_user = $_SESSION["userId"];
+            // Récupérer les données JSON de la requête
+            $json_data = file_get_contents('php://input');
+            $data = json_decode($json_data, true);
+
+            $id_product = isset($data['product_id']) ? filter_var($data['product_id'], FILTER_VALIDATE_INT) : null;
+
+            if ($id_product) {
+                $cart = new Cart();
+                $id_cart = $cart->getCartIdByUser($id_user);
+
+                if ($id_cart) {
+
+                    if ($cart->deleteItem($id_product, $id_cart)) {
+                        $response['success'] = true;
+                        $response['message'] = 'Produit supprimé avec succès.';
+                        $response['cart_items'] = $cart->getItemsNumber($id_user);
+                        $response['products'] = $cart->getCartItems($id_cart);
+                    } else {
+                        $response['success'] = false;
+                        $response['message'] = 'Erreur lors de la mise à jour de la quantité.';
+                        $response['cart_items'] = $cart->getItemsNumber($id_user);
+                        $response['products'] = [];
+                    }
+                } else {
+                    $response['success'] = false;
+                    $response['message'] = 'Panier non trouvé pour cet utilisateur.';
+                    $response['cart_items'] = 0;
+                    $response['products'] = [];
+                }
+            } else {
+                $response['success'] = false;
+                $response['message'] = 'Données invalides pour la mise à jour de la quantité.';
+                if (isset($id_user)) {
+                    $cart = new Cart();
+                    $response['cart_items'] = $cart->getItemsNumber($id_user);
+                    $response['products'] = [];
                 }
             }
         }
