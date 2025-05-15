@@ -189,13 +189,21 @@ const registration = async (
 };
 
 //* DECONNEXION
-$(".logout").on("click", function (e) {
+$(".logout").on("click", async function (e) {
   e.preventDefault();
   sessionStorage.clear();
-  if (window.location.href === "http://localhost/boutique-en-ligne/index.php") {
-    fetch("./controller/logout.php");
-  } else fetch("../controller/logout.php");
-  // redirection index.php
+  // chemin différent celon la page où l'on se trouve
+  const logoutUrl =
+    window.location.href === "http://localhost/boutique-en-ligne/index.php"
+      ? "./controller/logout.php"
+      : "../controller/logout.php";
+  try {
+    await fetch(logoutUrl);
+  } catch (error) {
+    console.error("Erreur lors de la déconnexion :", error);
+  }
+
+  // Redirection après déconnexion
   window.location.href = "http://localhost/boutique-en-ligne/index.php";
 });
 
