@@ -1,5 +1,30 @@
 const cartDisplay = document.querySelector(".cart-display");
 
+let fetchLink;
+if (window.location.pathname === "/boutique-en-ligne/index.php") {
+  fetchLink = "./controller/CartController.php?action=get_cart_items";
+} else {
+  fetchLink = "../controller/CartController.php?action=get_cart_items";
+}
+document.addEventListener("DOMContentLoaded", function () {
+  const userId = sessionStorage.getItem("userConnectId");
+  if (userId) {
+    fetch(fetchLink, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && typeof data.cart_items !== "undefined") {
+          document.querySelector(".cart-number-items").textContent =
+            data.cart_items;
+        }
+      });
+  } else {
+    document.querySelector(".cart-number-items").textContent = "0";
+  }
+});
+
 if (window.location.pathname === "/boutique-en-ligne/vue/cart.php") {
   documentName.innerText = "Mon panier";
   fetch(`../controller/CartController.php?action=get_cart_items`, {
@@ -172,6 +197,8 @@ if (window.location.pathname === "/boutique-en-ligne/vue/cart.php") {
                 cartItem.remove();
                 const updatedProducts = data.products;
                 updateCartTotal(updatedProducts);
+                document.querySelector(".cart-number-items").textContent =
+                  data.cart_items;
               }
             })
             .catch((error) => {
@@ -212,6 +239,8 @@ function updateQuantityOnServer(
     })
     .then((data) => {
       updateCartTotal(data.products);
+      document.querySelector(".cart-number-items").textContent =
+        data.cart_items;
     })
     .catch((error) => {
       console.error(
@@ -304,7 +333,6 @@ if (buttonOrder) {
             if (data.success) {
               form.innerHTML =
                 '<div class="success-message">✅ Paiement réussi ! Merci pour votre commande.</div>';
-              // Optionnel : vider l'affichage du panier ici
               document.querySelector(".cart-display").innerHTML = "";
               updateCartTotal([]);
               buttonOrder.disabled = true;

@@ -18,19 +18,22 @@ require 'config.php';
     const userId = <?php echo json_encode($_SESSION['user_id'] ?? null, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT); ?>;
     const userRole = <?php echo json_encode($_SESSION['user_role'] ?? null, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT); ?>;
   </script>
-  <!--fin recup-->
+  <!-- fin recup -->
+  <script src="./js/connection-registration.js" defer></script>
   <script src="./js/notification.js" defer></script>
   <script src="./js/detail.js" defer></script>
-  <script src="./js/connection-registration.js" defer></script>
   <script src="./js/search.js" defer></script>
   <script src="./js/card.js" defer></script>
   <script src="./js/costumes.js" defer></script>
+  <script src="./js/cart.js" defer></script>
+  <script src="https://js.stripe.com/v3/"></script>
   <link rel="stylesheet" href="./styles/reset.css" />
   <link rel="stylesheet" href="./styles/style.css" />
   <link rel="stylesheet" href="./styles/header-banner-search-footer.css" />
   <link rel="stylesheet" href="./styles/connection-registration.css">
   <link rel="stylesheet" href="./styles/detail.css">
   <link rel="stylesheet" href="./styles/costumes-accessories-promo-pages.css">
+  <link rel="stylesheet" href="./styles/cart.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
