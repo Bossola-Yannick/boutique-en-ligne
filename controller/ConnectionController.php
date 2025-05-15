@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = new User();
         $user->userConnexion($userMail, $userPass);
         if (isset($_SESSION['userId'])) {
-            echo json_encode(['success' => true, 'message' => 'Connexion réussie', 'userId' => $_SESSION['userId'], 'userRole' => $_SESSION['userRole']]);
+            echo json_encode(['success' => true, 'message' => 'Connexion réussie', 'userId' => $_SESSION['userId'], 'userRole' => $_SESSION['userRole'], 'userName' => $_SESSION['userName']]);
             die;
         } else {
             echo json_encode(['success' => false, 'message' => $_SESSION['message'] ?? 'Erreur inconnue']);

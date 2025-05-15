@@ -21,7 +21,7 @@ include '../components/search.php';
         <p class="msg-login-com">Connecté en tant que : <span class="bold"><?= htmlspecialchars($_SESSION['userRole']) ?><span></p>
     <?php elseif ($_SESSION['userRole'] !== "admin"): ?>
         <div class="comment-form-box">
-            <p>Connecté en tant que : <span class="bold"><?= htmlspecialchars($_SESSION['user_name']) ?><span></p>
+            <p>Connecté en tant que : <span class="bold"><?= htmlspecialchars($_SESSION['userName']) ?><span></p>
 
             <?php if (isset($_SESSION["comment-error"])): ?>
                 <p class="bold red"><?= $_SESSION["comment-error"] ?></p>
