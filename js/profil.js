@@ -18,6 +18,19 @@ const getAllInfo = async () => {
 };
 const getProfilInfo = async () => {
   const data = await getAllInfo();
-  console.log(data[0]);
+  const userInfo = data[0];
+  $(".item-mail").text(userInfo.email);
+  $(".item-password").text("*******");
+  $(".item-firstname").text(" " + userInfo.first_name);
+  $(".item-lastname").text(" " + userInfo.last_name);
+  $(".item-adress").text(" " + userInfo.adress);
+  $(".item-postalcode").text(" " + userInfo.postal_code);
+  $(".item-city").text(" " + userInfo.city);
+  console.log(userInfo);
 };
-getProfilInfo();
+if (
+  window.location.href ===
+  "http://localhost/boutique-en-ligne/vue/profilVue.php"
+) {
+  getProfilInfo();
+}

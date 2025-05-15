@@ -172,7 +172,7 @@ const registration = async (
         city: city,
       }),
     });
-
+    const data = await response.json();
     if (data.success) {
       document.location.href = "./connectionVue.php";
     } else {
