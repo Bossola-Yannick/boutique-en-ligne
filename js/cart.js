@@ -39,21 +39,26 @@ if (window.location.pathname === "/boutique-en-ligne/vue/cart.php") {
         productImgTitle.appendChild(imgProd);
         productImgTitle.appendChild(titleProd);
 
+        productImgTitle.addEventListener("click", () => {
+          window.location.href = `../vue/detail.php?product=${product.id_product}`;
+        });
+
         // colonne 2
         const productQuantity = document.createElement("div");
         productQuantity.classList.add("cart-col", "quantity-col");
         productQuantity.innerHTML = ` 
         <button class="decrease-quantity-cart">-</button>
-        <input type="number" value="${product.quantity}" min="1"> 
+        <input type="number" class="input-quantity" value="${product.quantity}" min="1" readonly> 
         <button class="add-quantity-cart">+</button>
         `;
 
         // colonne 3
         const productPrice = document.createElement("div");
         productPrice.classList.add("cart-col", "price-col");
-        productPrice.innerHTML = `<p>${
+        productPrice.dataset.unitPrice = product.unit_price;
+        productPrice.innerHTML = `<p>${(
           product.unit_price * product.quantity
-        }</p>`;
+        ).toFixed(2)} €</p>`;
 
         // colonne 4
         const productDelete = document.createElement("div");
@@ -65,6 +70,30 @@ if (window.location.pathname === "/boutique-en-ligne/vue/cart.php") {
         cartItem.appendChild(productPrice);
         cartItem.appendChild(productDelete);
         cartDisplay.appendChild(cartItem);
+      });
+
+      const buttonAddQuantity = document.querySelectorAll(".add-quantity-cart");
+      buttonAddQuantity.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          const inputQty = e.target.previousElementSibling;
+          if (inputQty && inputQty.classList.contains("input-quantity")) {
+            let currentValue = parseInt(inputQty.value);
+            currentValue++;
+            inputQty.value = currentValue;
+
+            // met a jour le prix du produit
+            const cartItem = e.target.closest(".cart-item-box");
+            if (cartItem) {
+              const priceCol = cartItem.querySelector(".price-col");
+              const unitPrice = parseFloat(priceCol.dataset.unitPrice);
+              const newTotalPrice = currentValue * unitPrice;
+              priceCol.querySelector(
+                "p"
+              ).textContent = `${newTotalPrice.toFixed(2)} €`;
+            }
+            // TODO: send data to the server
+          }
+        });
       });
     });
 }

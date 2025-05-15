@@ -48,11 +48,12 @@ input[type=number]::-webkit-outer-spin-button {
 .cart-col {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
 .product-col {
   flex: 2;
+  cursor: pointer;
 }
 
 .quantity-col,
