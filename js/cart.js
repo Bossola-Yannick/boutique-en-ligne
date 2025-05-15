@@ -168,7 +168,6 @@ if (window.location.pathname === "/boutique-en-ligne/vue/cart.php") {
               return response.json();
             })
             .then((data) => {
-              console.log("Produit supprimé avec succès:", data);
               if (data.success && cartItem) {
                 cartItem.remove();
                 const updatedProducts = data.products;
@@ -212,7 +211,6 @@ function updateQuantityOnServer(
       return response.json();
     })
     .then((data) => {
-      console.log("Quantité mise à jour avec succès sur le serveur:", data);
       updateCartTotal(data.products);
     })
     .catch((error) => {

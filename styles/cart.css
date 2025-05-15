@@ -10,13 +10,21 @@ input[type=number]::-webkit-outer-spin-button {
     text-align: center;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
 }
 .cart-container h2 {
     padding: 1rem;
     font-family: var(--title-font);
     font-size: 3.2rem;
     letter-spacing: 3px;
+}
+
+.cart-full-display {
+  width: 100%;
+  padding-bottom: 2.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .cart-titles {
@@ -76,4 +84,16 @@ input[type=number]::-webkit-outer-spin-button {
 .quantity-col input {
   width: 3rem;
   text-align: center;
+}
+
+.cart-total {
+  font-size: 1.2rem;
+}
+
+.total-and-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 3rem;
 }
