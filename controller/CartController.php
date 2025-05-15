@@ -79,5 +79,54 @@ if (isset($_GET['action']) && $_GET['action'] === 'get_cart_items') {
     }
 }
 
+if (isset($_GET['action']) && $_GET['action'] === 'update_quantity') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (!isset($_SESSION["userId"])) {
+            $response['success'] = false;
+            $response['message'] = 'Utilisateur non connecté.';
+        } else {
+            $id_user = $_SESSION["userId"];
+            // Récupérer les données JSON de la requête
+            $json_data = file_get_contents('php://input');
+            $data = json_decode($json_data, true);
+
+            $id_product = isset($data['product_id']) ? filter_var($data['product_id'], FILTER_VALIDATE_INT) : null;
+            $quantity = isset($data['quantity']) ? filter_var($data['quantity'], FILTER_VALIDATE_INT) : null;
+
+            if ($id_product && $quantity !== null && $quantity >= 1) {
+                $cart = new Cart();
+                $id_cart = $cart->getCartIdByUser($id_user);
+
+                if ($id_cart) {
+                    // La méthode addQuantity dans Cart.php met à jour la quantité existante
+                    if ($cart->changeQuantity($quantity, $id_cart, $id_product)) {
+                        $response['success'] = true;
+                        $response['message'] = 'Quantité mise à jour avec succès.';
+                        $response['cart_items'] = $cart->getItemsNumber($id_user);
+                    } else {
+                        $response['success'] = false;
+                        $response['message'] = 'Erreur lors de la mise à jour de la quantité.';
+                        $response['cart_items'] = $cart->getItemsNumber($id_user);
+                    }
+                } else {
+                    $response['success'] = false;
+                    $response['message'] = 'Panier non trouvé pour cet utilisateur.';
+                    $response['cart_items'] = 0;
+                }
+            } else {
+                $response['success'] = false;
+                $response['message'] = 'Données invalides pour la mise à jour de la quantité.';
+                if (isset($id_user)) {
+                    $cart = new Cart();
+                    $response['cart_items'] = $cart->getItemsNumber($id_user);
+                }
+            }
+        }
+    } else {
+        $response['success'] = false;
+        $response['message'] = 'Méthode de requête non autorisée.';
+    }
+}
+
 echo json_encode($response);
 exit;

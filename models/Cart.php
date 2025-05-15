@@ -40,7 +40,7 @@ class Cart extends ConnexionBdd
     }
 
     // change la quantité du produit
-    public function addQuantity($newQuantity, $cartId, $id_product)
+    public function changeQuantity($newQuantity, $cartId, $id_product)
     {
         $query = "UPDATE product_cart SET quantity = :quantity WHERE id_cart = :id_cart AND id_product = :id_product";
         $queryStmt = $this->bdd->prepare($query);
@@ -84,7 +84,7 @@ class Cart extends ConnexionBdd
         if ($existingQuantity !== false) {
             // met à jour la quantité
             $newQuantity = $existingQuantity + $quantity;
-            return $this->addQuantity($newQuantity, $cartId, $id_product);
+            return $this->changeQuantity($newQuantity, $cartId, $id_product);
         } else {
             // sinon ajoute comme un nouvel article
             return $this->addToCart($cartId, $id_product, $quantity, $price);

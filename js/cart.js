@@ -16,6 +16,7 @@ if (window.location.pathname === "/boutique-en-ligne/vue/cart.php") {
       products.forEach((product) => {
         const cartItem = document.createElement("li");
         cartItem.classList.add("cart-item-box");
+        cartItem.dataset.productId = product.id_product;
 
         // colonne 1
         const productImgTitle = document.createElement("div");
@@ -72,28 +73,123 @@ if (window.location.pathname === "/boutique-en-ligne/vue/cart.php") {
         cartDisplay.appendChild(cartItem);
       });
 
+      // bouton ajout quantité
       const buttonAddQuantity = document.querySelectorAll(".add-quantity-cart");
       buttonAddQuantity.forEach((btn) => {
         btn.addEventListener("click", (e) => {
           const inputQty = e.target.previousElementSibling;
           if (inputQty && inputQty.classList.contains("input-quantity")) {
-            let currentValue = parseInt(inputQty.value);
-            currentValue++;
-            inputQty.value = currentValue;
+            let oldQuantity = parseInt(inputQty.value);
+            let newQuantity = oldQuantity + 1;
+            inputQty.value = newQuantity;
 
-            // met a jour le prix du produit
             const cartItem = e.target.closest(".cart-item-box");
             if (cartItem) {
+              const productId = cartItem.dataset.productId;
               const priceCol = cartItem.querySelector(".price-col");
               const unitPrice = parseFloat(priceCol.dataset.unitPrice);
-              const newTotalPrice = currentValue * unitPrice;
+              const newTotalPrice = newQuantity * unitPrice;
               priceCol.querySelector(
                 "p"
               ).textContent = `${newTotalPrice.toFixed(2)} €`;
+
+              updateQuantityOnServer(
+                productId,
+                newQuantity,
+                inputQty,
+                priceCol,
+                oldQuantity,
+                unitPrice
+              );
             }
-            // TODO: send data to the server
           }
         });
       });
+
+      // bouton reduit quantité
+      const buttonDecreaseQuantity = document.querySelectorAll(
+        ".decrease-quantity-cart"
+      );
+      buttonDecreaseQuantity.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          const inputQty = e.target.nextElementSibling;
+          if (inputQty && inputQty.classList.contains("input-quantity")) {
+            let oldQuantity = parseInt(inputQty.value);
+            if (oldQuantity > 1) {
+              let newQuantity = oldQuantity - 1;
+              inputQty.value = newQuantity;
+
+              const cartItem = e.target.closest(".cart-item-box");
+              if (cartItem) {
+                const productId = cartItem.dataset.productId;
+                const priceCol = cartItem.querySelector(".price-col");
+                const unitPrice = parseFloat(priceCol.dataset.unitPrice);
+                const newTotalPrice = newQuantity * unitPrice;
+                priceCol.querySelector(
+                  "p"
+                ).textContent = `${newTotalPrice.toFixed(2)} €`;
+
+                updateQuantityOnServer(
+                  productId,
+                  newQuantity,
+                  inputQty,
+                  priceCol,
+                  oldQuantity,
+                  unitPrice
+                );
+              }
+            } else {
+              console.log("La quantité ne peut pas être inférieure à 1.");
+            }
+          }
+        });
+      });
+    });
+}
+
+// Fonction pour mettre à jour la quantité sur le serveur
+function updateQuantityOnServer(
+  productId,
+  quantity,
+  inputQtyElement,
+  priceColElement,
+  oldQuantity,
+  unitPrice
+) {
+  fetch(`../controller/CartController.php?action=update_quantity`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      product_id: productId,
+      quantity: quantity,
+    }),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("La réponse du réseau n'était pas correcte");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Quantité mise à jour avec succès sur le serveur:", data);
+      // Ici, vous pourriez vouloir mettre à jour le total général du panier, etc.
+    })
+    .catch((error) => {
+      console.error(
+        "Erreur lors de la mise à jour de la quantité sur le serveur:",
+        error
+      );
+
+      // Annuler la modification en cas d'erreur
+      if (inputQtyElement && priceColElement) {
+        inputQtyElement.value = oldQuantity;
+        const oldTotalPrice = oldQuantity * unitPrice;
+        priceColElement.querySelector(
+          "p"
+        ).textContent = `${oldTotalPrice.toFixed(2)} €`;
+        alert("Erreur lors de la mise à jour de la quantité.");
+      }
     });
 }
