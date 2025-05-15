@@ -21,7 +21,20 @@ include '../components/header.php';
                 </div>
                 <button type="submit" class="create-order">Passer la commande</button>
             </div>
-
+            <!-- Modal Stripe -->
+            <div id="stripe-modal" class="modal hidden">
+                <div class="modal-content">
+                    <span class="close-modal">&times;</span>
+                    <form id="payment-form">
+                        <div id="payment-element"></div>
+                        <button id="submit">
+                            <div class="spinner hidden" id="spinner"></div>
+                            <span id="button-text">Payer maintenant</span>
+                        </button>
+                        <div id="payment-message" class="hidden"></div>
+                    </form>
+                </div>
+            </div>
         </div>
     </section>
 <?php else: ?>

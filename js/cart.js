@@ -242,3 +242,73 @@ function updateCartTotal(products) {
     cartTotalElement.textContent = `${total.toFixed(2)} €`;
   }
 }
+
+// Initialisation de Stripe : composer require stripe/stripe
+const buttonOrder = document.querySelector(".create-order");
+const modal = document.getElementById("stripe-modal");
+const closeModal = document.querySelector(".close-modal");
+const form = document.getElementById("payment-form");
+
+let stripe, elements, paymentElement;
+
+buttonOrder.addEventListener("click", async (e) => {
+  e.preventDefault();
+  modal.classList.add("show");
+
+  // Reset le contenu du formulaire à chaque ouverture
+  form.innerHTML = `
+    <div id="payment-element"></div>
+    <button id="submit">
+      <div class="spinner hidden" id="spinner"></div>
+      <span id="button-text">Payer maintenant</span>
+    </button>
+    <div id="payment-message" class="hidden"></div>
+  `;
+
+  // Récupère le clientSecret depuis le serveur
+  const cartTotalElement = document.querySelector(".cart-total-price");
+  const total = cartTotalElement.textContent.replace(" €", "");
+  const response = await fetch("../controller/CreatePayment.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ total: total }),
+  });
+  const { clientSecret } = await response.json();
+
+  // Initialise Stripe et Elements avec le clientSecret
+  stripe = Stripe(window.STRIPE_PUBLIC_KEY);
+  elements = stripe.elements({ clientSecret });
+  paymentElement = elements.create("payment");
+  paymentElement.mount("#payment-element");
+
+  // Ajoute le listener sur le nouveau form
+  form.onsubmit = async (event) => {
+    event.preventDefault();
+    const { error, paymentIntent } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {},
+      redirect: "if_required",
+    });
+    const messageContainer = document.querySelector("#payment-message");
+    if (error) {
+      messageContainer.classList.remove("hidden");
+      messageContainer.textContent = error.message;
+    } else if (paymentIntent && paymentIntent.status === "succeeded") {
+      form.innerHTML =
+        '<div class="success-message">✅ Paiement réussi ! Merci pour votre commande.</div>';
+    }
+  };
+});
+
+// Fermer la modal
+closeModal.addEventListener("click", () => {
+  modal.classList.remove("show");
+  form.innerHTML = `
+    <div id="payment-element"></div>
+    <button id="submit">
+      <div class="spinner hidden" id="spinner"></div>
+      <span id="button-text">Payer maintenant</span>
+    </button>
+    <div id="payment-message" class="hidden"></div>
+  `;
+});

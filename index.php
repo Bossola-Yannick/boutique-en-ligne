@@ -14,6 +14,7 @@ require 'config.php';
     defer></script>
   <!-- recup du $_SESSION en js -->
   <script>
+    window.STRIPE_PUBLIC_KEY = "<?= $_ENV['STRIPE_PUBLIC_KEY'] ?>";
     const userId = <?php echo json_encode($_SESSION['user_id'] ?? null, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT); ?>;
     const userRole = <?php echo json_encode($_SESSION['user_role'] ?? null, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT); ?>;
   </script>

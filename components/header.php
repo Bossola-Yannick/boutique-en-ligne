@@ -1,5 +1,6 @@
 <?php
 session_start();
+require '../config.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,6 +14,7 @@ session_start();
         defer></script>
     <!-- recup du $_SESSION en js -->
     <script>
+        window.STRIPE_PUBLIC_KEY = "<?= $_ENV['STRIPE_PUBLIC_KEY'] ?>";
         const userId = <?php echo json_encode($_SESSION['user_id'] ?? null, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT); ?>;
         const userRole = <?php echo json_encode($_SESSION['user_role'] ?? null, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT); ?>;
     </script>
@@ -24,6 +26,7 @@ session_start();
     <script src="../js/card.js" defer></script>
     <script src="../js/costumes.js" defer></script>
     <script src="../js/cart.js" defer></script>
+    <script src="https://js.stripe.com/v3/"></script>
     <link rel="stylesheet" href="../styles/reset.css" />
     <link rel="stylesheet" href="../styles/style.css" />
     <link rel="stylesheet" href="../styles/header-banner-search-footer.css" />
