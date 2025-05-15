@@ -123,4 +123,14 @@ class Product extends ConnexionBdd
         $queryStmt->execute();
         return $queryStmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    // supprimer un produit
+    public function deleteProduct($idProduct)
+    {
+        $query = "DELETE FROM product WHERE product.id_product = :id ";
+        $queryStmt = $this->bdd->prepare($query);
+        $queryStmt->execute([
+            ":id" => $idProduct
+        ]);
+    }
 }

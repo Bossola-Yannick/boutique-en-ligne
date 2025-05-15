@@ -1,6 +1,12 @@
 const filters = "filter";
 const actions = ["costumes", "accessories"];
 
+if (
+  window.location.href === "http://localhost/boutique-en-ligne/vue/adminVue.php"
+) {
+  $("body").addClass("body-admin");
+}
+
 const getAll = async (action) => {
   try {
     const response = await fetch(
@@ -58,6 +64,10 @@ actions.forEach(async (action) => {
     if (costume["price_discount"] === costume["price_ttc"]) {
       priceDiscount.text(costume["price_ttc"]);
     } else priceDiscount.text(costume["price_discount"]);
+    let deleteItem = $("<td></td>")
+      .text("X")
+      .addClass("delete-item")
+      .attr("data-id", costume["id_product"]);
     row.append(name);
     row.append(description);
     row.append(imageLink);
@@ -68,9 +78,23 @@ actions.forEach(async (action) => {
     row.append(priceTtc);
     row.append(promoPercent);
     row.append(priceDiscount);
+    row.append(deleteItem);
     $(".table-product-body").append(row);
   }
-  // console.log("Products :", data);
+});
+
+//* supprimer un produit
+$(document).on("click", ".delete-item", async function () {
+  const id = $(this).data("id");
+  if (!id) return;
+  // try {
+  const response = await fetch(
+    `../controller/ProductController.php?action=delete&id=${id}`,
+    {
+      method: "GET",
+    }
+  );
+  location.reload(true);
 });
 
 //! A Faire BONUS
