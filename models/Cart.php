@@ -133,4 +133,12 @@ class Cart extends ConnexionBdd
             ':id_product' => $id_product
         ]);
     }
+
+    // supprime le panier
+    public function clearCart($id_cart)
+    {
+        $query = "DELETE FROM product_cart WHERE id_cart = :id_cart";
+        $stmt = $this->bdd->prepare($query);
+        return $stmt->execute([':id_cart' => $id_cart]);
+    }
 }

@@ -251,12 +251,13 @@ const form = document.getElementById("payment-form");
 
 let stripe, elements, paymentElement;
 
-buttonOrder.addEventListener("click", async (e) => {
-  e.preventDefault();
-  modal.classList.add("show");
+if (buttonOrder) {
+  buttonOrder.addEventListener("click", async (e) => {
+    e.preventDefault();
+    modal.classList.add("show");
 
-  // Reset le contenu du formulaire à chaque ouverture
-  form.innerHTML = `
+    // Reset le contenu du formulaire à chaque ouverture
+    form.innerHTML = `
     <div id="payment-element"></div>
     <button id="submit">
       <div class="spinner hidden" id="spinner"></div>
@@ -265,45 +266,61 @@ buttonOrder.addEventListener("click", async (e) => {
     <div id="payment-message" class="hidden"></div>
   `;
 
-  // Récupère le clientSecret depuis le serveur
-  const cartTotalElement = document.querySelector(".cart-total-price");
-  const total = cartTotalElement.textContent.replace(" €", "");
-  const response = await fetch("../controller/CreatePayment.php", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ total: total }),
-  });
-  const { clientSecret } = await response.json();
-
-  // Initialise Stripe et Elements avec le clientSecret
-  stripe = Stripe(window.STRIPE_PUBLIC_KEY);
-  elements = stripe.elements({ clientSecret });
-  paymentElement = elements.create("payment");
-  paymentElement.mount("#payment-element");
-
-  // Ajoute le listener sur le nouveau form
-  form.onsubmit = async (event) => {
-    event.preventDefault();
-    const { error, paymentIntent } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {},
-      redirect: "if_required",
+    // Récupère le clientSecret depuis le serveur
+    const cartTotalElement = document.querySelector(".cart-total-price");
+    const total = cartTotalElement.textContent.replace(" €", "");
+    const response = await fetch("../controller/CreatePayment.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ total: total }),
     });
-    const messageContainer = document.querySelector("#payment-message");
-    if (error) {
-      messageContainer.classList.remove("hidden");
-      messageContainer.textContent = error.message;
-    } else if (paymentIntent && paymentIntent.status === "succeeded") {
-      form.innerHTML =
-        '<div class="success-message">✅ Paiement réussi ! Merci pour votre commande.</div>';
-    }
-  };
-});
+    const { clientSecret } = await response.json();
 
-// Fermer la modal
-closeModal.addEventListener("click", () => {
-  modal.classList.remove("show");
-  form.innerHTML = `
+    // Initialise Stripe et Elements avec le clientSecret
+    stripe = Stripe(window.STRIPE_PUBLIC_KEY);
+    elements = stripe.elements({ clientSecret });
+    paymentElement = elements.create("payment");
+    paymentElement.mount("#payment-element");
+
+    // Ajoute le listener sur le nouveau form
+    form.onsubmit = async (event) => {
+      event.preventDefault();
+      const { error, paymentIntent } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {},
+        redirect: "if_required",
+      });
+      const messageContainer = document.querySelector("#payment-message");
+      if (error) {
+        messageContainer.classList.remove("hidden");
+        messageContainer.textContent = error.message;
+      } else if (paymentIntent && paymentIntent.status === "succeeded") {
+        fetch("../controller/OrderController.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.success) {
+              form.innerHTML =
+                '<div class="success-message">✅ Paiement réussi ! Merci pour votre commande.</div>';
+              // Optionnel : vider l'affichage du panier ici
+              document.querySelector(".cart-display").innerHTML = "";
+              updateCartTotal([]);
+              buttonOrder.disabled = true;
+            } else {
+              form.innerHTML =
+                '<div class="success-message" style="color:red;">Erreur lors de l\'enregistrement de la commande.</div>';
+            }
+          });
+      }
+    };
+  });
+
+  // Fermer la modal
+  closeModal.addEventListener("click", () => {
+    modal.classList.remove("show");
+    form.innerHTML = `
     <div id="payment-element"></div>
     <button id="submit">
       <div class="spinner hidden" id="spinner"></div>
@@ -311,4 +328,5 @@ closeModal.addEventListener("click", () => {
     </button>
     <div id="payment-message" class="hidden"></div>
   `;
-});
+  });
+}
