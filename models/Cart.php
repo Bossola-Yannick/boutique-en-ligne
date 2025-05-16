@@ -40,7 +40,7 @@ class Cart extends ConnexionBdd
     }
 
     // change la quantité du produit
-    public function addQuantity($newQuantity, $cartId, $id_product)
+    public function changeQuantity($newQuantity, $cartId, $id_product)
     {
         $query = "UPDATE product_cart SET quantity = :quantity WHERE id_cart = :id_cart AND id_product = :id_product";
         $queryStmt = $this->bdd->prepare($query);
@@ -84,13 +84,14 @@ class Cart extends ConnexionBdd
         if ($existingQuantity !== false) {
             // met à jour la quantité
             $newQuantity = $existingQuantity + $quantity;
-            return $this->addQuantity($newQuantity, $cartId, $id_product);
+            return $this->changeQuantity($newQuantity, $cartId, $id_product);
         } else {
             // sinon ajoute comme un nouvel article
             return $this->addToCart($cartId, $id_product, $quantity, $price);
         }
     }
 
+    // recupère le nombre d'article dans le panier via l'id user
     public function getItemsNumber($id_user): int
     {
         $query = "SELECT SUM(quantity) 
@@ -103,5 +104,41 @@ class Cart extends ConnexionBdd
         ]);
         $totalQuantity = $queryStmt->fetchColumn();
         return $totalQuantity === null ? 0 : $totalQuantity;
+    }
+
+    // récupère le panier d'un utilisateur via l'id du panier
+    public function getCartItems($id_cart): array
+    {
+        $query = "SELECT cart.id_cart, cart.id_user,
+		product_cart.id_product, product_cart.quantity, product_cart.unit_price,
+        product.name_product, product.stock, product.image_link, product.category
+        FROM cart
+        JOIN product_cart ON product_cart.id_cart = cart.id_cart
+        JOIN product ON product_cart.id_product = product.id_product
+        WHERE cart.id_cart = :id_cart";
+        $queryStmt = $this->bdd->prepare($query);
+        $queryStmt->execute([
+            ":id_cart" => $id_cart
+        ]);
+        return $queryStmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // supprime un produit du panier
+    public function deleteItem($id_product, $id_cart)
+    {
+        $query = "DELETE FROM product_cart WHERE id_cart = :id_cart AND id_product = :id_product";
+        $queryStmt = $this->bdd->prepare($query);
+        return $queryStmt->execute([
+            ':id_cart' => $id_cart,
+            ':id_product' => $id_product
+        ]);
+    }
+
+    // supprime le panier
+    public function clearCart($id_cart)
+    {
+        $query = "DELETE FROM product_cart WHERE id_cart = :id_cart";
+        $stmt = $this->bdd->prepare($query);
+        return $stmt->execute([':id_cart' => $id_cart]);
     }
 }

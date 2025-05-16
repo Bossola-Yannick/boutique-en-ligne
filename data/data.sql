@@ -48,7 +48,7 @@ CREATE TABLE product (
 -- Création de la table commande
 CREATE TABLE orders (
     id_order INT AUTO_INCREMENT PRIMARY KEY,
-    num_order INT NOT NULL UNIQUE,
+    num_order VARCHAR(25) NOT NULL UNIQUE,
     date_order DATE NOT NULL,
     id_user INT NOT NULL,
     FOREIGN KEY (id_user) REFERENCES user(id_user)

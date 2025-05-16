@@ -78,6 +78,7 @@ class User extends ConnexionBdd
         if ($userMail && (password_verify($userPass, $userMail['password']) ||  $userMail['password'])) {
             $_SESSION['userId'] = $userMail['id_user'];
             $_SESSION['userRole'] = $userMail['role'];
+            $_SESSION['userName'] = $userMail['first_name'];
         } else {
             $_SESSION['message']  = "Email ou mot de passe incorrect!";
         }

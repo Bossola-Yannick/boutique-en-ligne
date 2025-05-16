@@ -104,6 +104,25 @@ const login = async (email, password) => {
     } else {
       sessionStorage.setItem("userConnectId", userConnect.userId);
       sessionStorage.setItem("userConnectRole", userConnect.userRole);
+
+      // header nombre d'articles dans le panier
+      if (userConnect.userId) {
+        fetch("../controller/CartController.php?action=get_cart_items", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(document.querySelector(".cart-number-items"));
+            if (data.success && typeof data.cart_items !== "undefined") {
+              document.querySelector(".cart-number-items").textContent =
+                data.cart_items;
+            }
+          });
+      } else {
+        document.querySelector(".cart-number-items").textContent = "0";
+      }
+      // fin du nombre d'article dans le panier
       document.location.href = "../index.php";
     }
   } catch (error) {
