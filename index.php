@@ -20,6 +20,7 @@ require 'config.php';
   </script>
   <!-- fin recup -->
   <script src="./js/connection-registration.js" defer></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js" defer></script>
   <script src="./js/notification.js" defer></script>
   <script src="./js/detail.js" defer></script>
   <script src="./js/search.js" defer></script>
@@ -27,6 +28,8 @@ require 'config.php';
   <script src="./js/costumes.js" defer></script>
   <script src="./js/cart.js" defer></script>
   <script src="https://js.stripe.com/v3/"></script>
+  <script src="./js/home-page.js" defer></script>
+  <link rel="stylesheet" href="./styles/home-page.css" />
   <link rel="stylesheet" href="./styles/reset.css" />
   <link rel="stylesheet" href="./styles/style.css" />
   <link rel="stylesheet" href="./styles/header-banner-search-footer.css" />
@@ -54,10 +57,14 @@ require 'config.php';
         <?php if (isset($_SESSION['userId'])) : ?>
           <?php if ($_SESSION["userRole"] === "admin"): ?>
             <li class="link-item"><a href="./vue/adminVue.php">Gestion Boutique</a></li>
-            <li class="logout"><button>Déconnexion</button></li>
+            <li class="logout">
+              <div class="button">Déconnexion</div>
+            </li>
           <?php elseif ($_SESSION["userRole"] === "user"): ?>
             <li class="link-item"><a href="./vue/profilVue.php">Profil</a></li>
-            <li class="logout"><button>Déconnexion</button></li>
+            <li class="logout">
+              <div class="button">Déconnexion</div>
+            </li>
           <?php endif ?>
         <?php else : ?>
           <li class="link-item"><a href="./vue/connectionVue.php">Connexion</a></li>
@@ -80,9 +87,17 @@ require 'config.php';
   </div>
   <section class="banner">
     <img src="./assets/images/icones/banner-pano.png" alt="">
+    <h1 class="banner-title">Pimp My Poule</h1>
   </section>
   <main>
-    <h1>HELLO HOME PAGE</h1>
+    <section id="home-product">
+      <h2 class="home-subtitle">Notre Sélection</h2>
+      <div class="box-product"></div>
+    </section>
+    <section id="home-promo">
+      <h2 class="home-subtitle">Nos Promotions</h2>
+      <div class="box-promo"></div>
+    </section>
     <?php
     include './components/footer.php';
     ?>

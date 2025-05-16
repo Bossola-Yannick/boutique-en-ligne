@@ -1,5 +1,4 @@
 <?php
-
 require_once '../models/Product.php';
 
 $action = isset($_GET['action']) ? $_GET['action'] : '';
@@ -106,6 +105,7 @@ switch ($action) {
                     "name_product" => $info['name_product'],
                     "description" => $info['description'],
                     "stock" => $info['stock'],
+                    "price_ht" => $info['price_ht'],
                     "price_ttc" => $info['price_ttc'],
                     "price_discount" => $info['price_discount'],
                     "image_link" => $info['image_link'],
@@ -165,6 +165,7 @@ switch ($action) {
                     "name_product" => $info['name_product'],
                     "description" => $info['description'],
                     "stock" => $info['stock'],
+                    "price_ht" => $info['price_ht'],
                     "price_ttc" => $info['price_ttc'],
                     "price_discount" => $info['price_discount'],
                     "image_link" => $info['image_link'],

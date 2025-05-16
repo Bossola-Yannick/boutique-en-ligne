@@ -467,7 +467,7 @@ const pageNumberButtons = (products) => {
   pagesBox.classList.add("pages-box");
 
   const totalPages = Math.ceil(products.length / productsPerPage);
-  console.log(totalPages);
+  // console.log(totalPages);
 
   if (totalPages > 0) {
     // bouton précédent

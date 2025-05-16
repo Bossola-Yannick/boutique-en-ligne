@@ -13,11 +13,13 @@ require '../config.php';
         src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"
         defer></script>
     <!-- recup du $_SESSION en js -->
+
     <script>
         window.STRIPE_PUBLIC_KEY = "<?= $_ENV['STRIPE_PUBLIC_KEY'] ?>";
         const userId = <?php echo json_encode($_SESSION['user_id'] ?? null, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT); ?>;
         const userRole = <?php echo json_encode($_SESSION['user_role'] ?? null, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT); ?>;
     </script>
+
     <!-- fin recup -->
     <script src="../js/connection-registration.js" defer></script>
     <script src="../js/notification.js" defer></script>
@@ -27,6 +29,8 @@ require '../config.php';
     <script src="../js/costumes.js" defer></script>
     <script src="../js/cart.js" defer></script>
     <script src="https://js.stripe.com/v3/"></script>
+    <script src="../js/admin.js" defer></script>
+    <script src="../js/profil.js" defer></script>
     <link rel="stylesheet" href="../styles/reset.css" />
     <link rel="stylesheet" href="../styles/style.css" />
     <link rel="stylesheet" href="../styles/header-banner-search-footer.css" />
@@ -34,6 +38,8 @@ require '../config.php';
     <link rel="stylesheet" href="../styles/detail.css">
     <link rel="stylesheet" href="../styles/costumes-accessories-promo-pages.css">
     <link rel="stylesheet" href="../styles/cart.css">
+    <link rel="stylesheet" href="../styles/admin.css">
+    <link rel="stylesheet" href="../styles/profil.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
@@ -55,10 +61,14 @@ require '../config.php';
                 <?php if (isset($_SESSION['userId'])) : ?>
                     <?php if ($_SESSION["userRole"] === "admin"): ?>
                         <li class="link-item"><a href="../vue/adminVue.php">Gestion Boutique</a></li>
-                        <li class="logout"><button>Déconnexion</button></li>
+                        <li class="logout">
+                            <div class="button">Déconnexion</div>
+                        </li>
                     <?php elseif ($_SESSION["userRole"] === "user"): ?>
                         <li class="link-item"><a href="../vue/profilVue.php">Profil</a></li>
-                        <li class="logout"><button>Déconnexion</button></li>
+                        <li class="logout">
+                            <div class="button">Déconnexion</div>
+                        </li>
                     <?php endif ?>
                 <?php else : ?>
                     <li class="link-item"><a href="../vue/connectionVue.php">Connexion</a></li>

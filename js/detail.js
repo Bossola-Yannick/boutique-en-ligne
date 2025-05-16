@@ -1,9 +1,9 @@
-if (!sessionStorage.getItem("userConnectId")) {
-  sessionStorage.setItem("userConnectId", userId);
-}
-if (!sessionStorage.getItem("userConnectRole")) {
-  sessionStorage.setItem("userConnectRole", userRole);
-}
+// if (!sessionStorage.getItem("userConnectId")) {
+//   sessionStorage.setItem("userConnectId", userId);
+// }
+// if (!sessionStorage.getItem("userConnectRole")) {
+//   sessionStorage.setItem("userConnectRole", userRole);
+// }
 
 const URLproductId = new URLSearchParams(window.location.search);
 const productId = URLproductId.get("product");

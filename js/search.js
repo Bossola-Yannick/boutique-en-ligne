@@ -1,6 +1,7 @@
 const searchInput = document.getElementById("search");
 const displayDiv = document.getElementById("display-result");
 
+
 if (searchInput) {
   searchInput.addEventListener("input", function () {
     const name = searchInput.value.trim();
@@ -34,6 +35,7 @@ if (searchInput) {
               let detailId = element.getAttribute("value");
               window.location.href = `../vue/detail.php?product=${detailId}`;
             });
+
           });
         })
         .catch((error) => {
@@ -41,6 +43,7 @@ if (searchInput) {
         });
     }
   });
+
 
   const searchResult = (id_product, name_product, image_link, category) => {
     const result = document.createElement("li");

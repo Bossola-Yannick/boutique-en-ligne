@@ -85,17 +85,17 @@ class User extends ConnexionBdd
     }
 
     // Methode pour récuperer toutes les infos d'un utilisateur par ID
-    public function get_allById($userId): array
+    public function getAllById($userId): array
     {
-        $getAllStmt = "SELECT user.id_user, user.eamil, user.password, user.role
+        $getAllStmt = "SELECT user.id_user,user.last_name, user.first_name, user.email, user.password, user.adress, user.postal_code, user.city, user.role
         FROM user
-        WHERE user.id = :userId";
+        WHERE user.id_user = :userId";
         $getAllStmt = $this->bdd->prepare($getAllStmt);
         $getAllStmt->execute([
             ':userId' => $userId
         ]);
-
-        return $getAllStmt->fetchAll(PDO::FETCH_ASSOC);
+        $user = $getAllStmt->fetchAll(PDO::FETCH_ASSOC);
+        return $user ? $user : [];
     }
 
     // // Méthode pour update user login
