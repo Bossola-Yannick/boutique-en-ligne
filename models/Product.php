@@ -133,4 +133,42 @@ class Product extends ConnexionBdd
             ":id" => $idProduct
         ]);
     }
+
+    // ajout de produit
+    public function createProduct($name, $description, $stock, $priceHt, $priceTtc, $priceDiscount, $imageLink, $category, $subCategoryId, $rating)
+    {
+        $query = "INSERT INTO product(name_product, description, stock, price_ht, price_ttc, price_discount, image_link, category, id_subcategory, rating_product) VALUES (:name_product , :description,:stock,:price_ht,:price_ttc,:price_discount,:image_link,:category,:id_subcategory,:rating_product)";
+        $queryStmt = $this->bdd->prepare($query);
+        $queryStmt->execute([
+            ':name_product' => $name,
+            ':description' => $description,
+            ':stock' => $stock,
+            ':price_ht' => $priceHt,
+            ':price_ttc' => $priceTtc,
+            ':price_discount' => $priceDiscount,
+            ':image_link' => $imageLink,
+            ':category' => $category,
+            ':id_subcategory' => $subCategoryId,
+            ':rating_product' => $rating
+        ]);
+    }
+    // modification de produit
+    public function updateProduct($id, $name, $description, $stock, $priceHt, $priceTtc, $priceDiscount, $imageLink, $category, $subCategoryId, $rating)
+    {
+        $query = "UPDATE product SET name_product = :name_product, description= :description, stock= :stock , price_ht= :price_ht, price_ttc= :price_ttc , price_discount= :price_discount, image_link= :image_link , category= :category , id_subcategory= :id_subcategory, rating_product= :rating_product WHERE product.id_product = :id";
+        $queryStmt = $this->bdd->prepare($query);
+        $queryStmt->execute([
+            ':name_product' => $name,
+            ':description' => $description,
+            ':stock' => $stock,
+            ':price_ht' => $priceHt,
+            ':price_ttc' => $priceTtc,
+            ':price_discount' => $priceDiscount,
+            ':image_link' => $imageLink,
+            ':category' => $category,
+            ':id_subcategory' => $subCategoryId,
+            ':rating_product' => $rating,
+            ':id' => $id
+        ]);
+    }
 }

@@ -1,13 +1,6 @@
 const cartItemsNumber = document.querySelector(".cart-number-items");
 // récupère la page pour savoir quel lien mettre sur les image
-const getPrefixLink = () => {
-  // Si sur la page d'accueil
-  if (window.location.pathname === "/boutique-en-ligne/index.php") {
-    return "./";
-  }
-  // Pour les autres pages
-  return "../";
-};
+const prefixLink = "/boutique-en-ligne/index.php";
 // créer la card du produit
 const createCard = (
   category,
