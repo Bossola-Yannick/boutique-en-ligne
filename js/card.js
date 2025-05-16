@@ -1,6 +1,4 @@
 const cartItemsNumber = document.querySelector(".cart-number-items");
-// récupère la page pour savoir quel lien mettre sur les image
-const prefixLink = "/boutique-en-ligne/index.php";
 // créer la card du produit
 const createCard = (
   category,
@@ -12,7 +10,6 @@ const createCard = (
   rating,
   boxToAppend
 ) => {
-  const prefixLink = getPrefixLink();
   const card = document.createElement("div");
   card.classList.add("card-box");
   card.setAttribute("value", name_product);
@@ -21,7 +18,7 @@ const createCard = (
   imgDiscount.classList.add("card-img-discount");
   imgDiscount.setAttribute(
     "src",
-    `${prefixLink}assets/images/icones/discount.png`
+    `/boutique-en-ligne/assets/images/icones/discount.png`
   );
   card.appendChild(imgDiscount);
 
@@ -33,12 +30,12 @@ const createCard = (
   if (category === "déguisement") {
     cardImage.setAttribute(
       "src",
-      `${prefixLink}assets/images/cosplay/${image}`
+      `/boutique-en-ligne/assets/images/cosplay/${image}`
     );
   } else {
     cardImage.setAttribute(
       "src",
-      `${prefixLink}assets/images/accessories/${image}`
+      `/boutique-en-ligne/assets/images/accessories/${image}`
     );
   }
 
@@ -52,7 +49,7 @@ const createCard = (
               <h3>${name_product}</h3>
               <div class="card-rating">
                 <p class="left-mar bold">${rating} / 5</p>
-                <img src="${prefixLink}assets/images/icones/icon-rating.png"/>
+                <img src="/boutique-en-ligne/assets/images/icones/icon-rating.png"/>
               </div>
             </div>
           <div class="card-infos">
@@ -67,11 +64,11 @@ const createCard = (
                   <p class="card-price">${price_discount}€</p>
               </div>
             </div>
-            <form id="cart" class="cart" method="post" action="${prefixLink}controller/CartController.php">
+            <form id="cart" class="cart" method="post" action="/boutique-en-ligne/controller/CartController.php">
             <input type="hidden" name="price_product" id="price_product">
             <input type="hidden" name="product_id" value="${id_product}">
               <button type="submit" name="add-to-cart" class="card-button-add">
-                <img src="${prefixLink}assets/images/icones/add.png"/>
+                <img src="/boutique-en-ligne/assets/images/icones/add.png"/>
               </button>
             </form>
           </div>
@@ -102,7 +99,7 @@ const createCard = (
 
   // évènement au click, redirige vers detail du produit clické
   card.addEventListener("click", () => {
-    window.location.href = `${prefixLink}vue/detail.php?product=${encodeURIComponent(
+    window.location.href = `/boutique-en-ligne/vue/detail.php?product=${encodeURIComponent(
       id_product
     )}`;
   });
@@ -120,7 +117,7 @@ const createCard = (
       const formData = new FormData(cartForm);
       formData.append("add-to-cart", "true");
 
-      fetch(`${prefixLink}controller/CartController.php`, {
+      fetch(`/boutique-en-ligne/controller/CartController.php`, {
         method: "POST",
         body: formData,
       })
