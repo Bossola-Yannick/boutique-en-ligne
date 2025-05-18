@@ -86,7 +86,7 @@ CREATE TABLE product_tag (
     PRIMARY KEY (id_product, id_tag),
     id_product INT,
     id_tag INT, 
-    FOREIGN KEY (id_product) REFERENCES product(id_product),
+    FOREIGN KEY (id_product) REFERENCES product(id_product) ON DELETE CASCADE,
     FOREIGN KEY (id_tag) REFERENCES tag(id_tag)
 ) ENGINE=InnoDB;
 -- Création de la table produit - commande
@@ -96,7 +96,7 @@ CREATE TABLE product_orders (
     id_order INT,
     quantity INT NOT NULL,
     unit_price DECIMAL(10,2) NOT NULL,
-    FOREIGN KEY (id_product) REFERENCES product(id_product),
+    FOREIGN KEY (id_product) REFERENCES product(id_product) On DELETE CASCADE,
     FOREIGN KEY (id_order) REFERENCES orders(id_order)
 ) ENGINE=InnoDB;
 -- Création de la table product - panier
@@ -106,7 +106,7 @@ CREATE TABLE product_cart (
     id_cart INT,
     quantity INT NOT NULL,
     unit_price DECIMAL(10,2) NOT NULL,
-    FOREIGN KEY (id_product) REFERENCES product(id_product),
+    FOREIGN KEY (id_product) REFERENCES product(id_product) ON DELETE CASCADE,
     FOREIGN KEY (id_cart) REFERENCES cart(id_cart) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 

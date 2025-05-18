@@ -279,4 +279,25 @@ switch ($action) {
 
         echo json_encode($allFilter);
         break;
+
+    case 'delete':
+        $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+        try {
+            if ($id > 0) {
+                $delete = $product->deleteProduct($id);
+                header('Content-Type: application/json');
+                if ($delete) {
+                    echo json_encode(['success' => true]);
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'Suppression échouée.']);
+                }
+            } else {
+                header('Content-Type: application/json');
+                echo json_encode(['success' => false, 'message' => 'ID manquant.']);
+            }
+        } catch (Exception $e) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+        }
+        exit;
 }
