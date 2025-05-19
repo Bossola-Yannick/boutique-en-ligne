@@ -1,8 +1,23 @@
+.admin-page-title {
+  font-size: 6rem;
+  font-family: var(--title-font);
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: 2px;
+  color: var(--primary-color);
+  text-shadow: var(--active-color) 2px 2px 6px,
+    var(--active-color) -2px -2px 6px;
+}
+
 .admin-subtitle {
   text-align: center;
   font-size: 2rem;
   font-weight: bold;
   margin-block: 2rem;
+}
+.create-product {
+  width: 30%;
+  margin: 1rem auto;
 }
 /* Tables des déguisements et accessoires */
 .table-product {
@@ -29,8 +44,60 @@ th {
   font-size: 2rem;
   font-weight: 600;
   min-width: 2rem;
-  background-color: red;
+  background-color: red !important;
   align-content: center;
   text-align: center;
   cursor: pointer;
+}
+.update-item {
+  font-size: 2rem;
+  font-weight: 600;
+  min-width: 2rem;
+  align-content: center;
+  text-align: center;
+  cursor: pointer;
+  /* background-color: var(--primary-color); */
+  background-image: url("/boutique-en-ligne/assets/images/icones/modifier.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position-y: center;
+  color: var(--text-color);
+}
+
+/** MODAL */
+.overlay {
+  position: fixed;
+  top: 17rem;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+}
+.modal-create,
+.modal-update {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 95%;
+  display: none;
+}
+.modal-create input,
+.modal-update input,
+.modal-create select,
+.modal-update select {
+  padding: 0.5rem;
+  margin-inline: 0.3rem;
+}
+.modal-close {
+  margin: 1rem auto;
+  background-color: var(--discount-color);
+}
+.form-create {
+  align-items: center;
+}
+.form-valid {
+  background-color: green;
+  margin: 1rem auto;
 }

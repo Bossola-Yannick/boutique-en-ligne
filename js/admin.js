@@ -68,6 +68,10 @@ actions.forEach(async (action) => {
       .text("X")
       .addClass("delete-item")
       .attr("data-id", costume["id_product"]);
+    let updateItem = $("<td></td>")
+      // .text("/")
+      .addClass("update-item")
+      .attr("data-id", costume["id_product"]);
     row.append(name);
     row.append(description);
     row.append(imageLink);
@@ -78,6 +82,7 @@ actions.forEach(async (action) => {
     row.append(priceTtc);
     row.append(promoPercent);
     row.append(priceDiscount);
+    row.append(updateItem);
     row.append(deleteItem);
     $(".table-product-body").append(row);
   }
@@ -95,6 +100,24 @@ $(document).on("click", ".delete-item", async function () {
     }
   );
   location.reload(true);
+});
+
+//* AFFICHAGE ET FERMETURE DES MODALS
+// affichage modal de creation d'un produit
+$(document).on("click", ".create-product", function () {
+  $(".overlay").css("display", "block");
+  $(".modal-create").css("display", "block");
+});
+// affichage modal de mise à jour d'un produit
+$(document).on("click", ".update-item", function () {
+  $(".overlay").css("display", "block");
+  $(".modal-update").css("display", "block");
+});
+// fermeture des modals
+$(document).on("click", ".modal-close", function () {
+  $(".overlay").css("display", "none");
+  $(".modal-update").css("display", "none");
+  $(".modal-create").css("display", "none");
 });
 
 //! A Faire BONUS

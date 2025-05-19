@@ -300,4 +300,22 @@ switch ($action) {
             echo json_encode(['success' => false, 'message' => $e->getMessage()]);
         }
         exit;
+
+    case 'create':
+        try {
+            // $create = $product->createProduct();
+        } catch (Exception $e) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+        }
+        exit;
+
+    case 'update':
+        try {
+            // $update = $product->updateProduct();
+        } catch (Exception $e) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+        }
+        exit;
 }

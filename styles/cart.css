@@ -1,16 +1,15 @@
-
 .cart-container {
-    width: 100%;   
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 .cart-container h2 {
-    padding: 1rem;
-    font-family: var(--title-font);
-    font-size: 3.2rem;
-    letter-spacing: 3px;
+  padding: 1rem;
+  font-family: var(--title-font);
+  font-size: 3.2rem;
+  letter-spacing: 3px;
 }
 
 .cart-full-display {
@@ -93,18 +92,17 @@
   gap: 3rem;
 }
 
-
 /* stripe */
 .modal {
   display: none;
   position: fixed;
   z-index: 1000;
-  left: 0; 
-  top: 0; 
-  width: 100vw; 
+  left: 0;
+  top: 0;
+  width: 100vw;
   height: 100vh;
-  background: rgba(0,0,0,0.5);
-  justify-content: center; 
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
   align-items: center;
 }
 .modal.show {
@@ -119,7 +117,8 @@
 }
 .close-modal {
   position: absolute;
-  top: 1rem; right: 1rem;
+  top: 1rem;
+  right: 1rem;
   font-size: 2rem;
   cursor: pointer;
 }
@@ -131,6 +130,14 @@
   padding: 2rem 0;
 }
 
+/* ajout css panier vide */
+.empty-cart {
+  text-align: center;
+  font-size: 4rem;
+  font-family: var(--title-font);
+  color: var(--primary-color);
+  padding-top: 15rem;
+}
 
 @media screen and (max-width: 680px) {
   .cart-titles,

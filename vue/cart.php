@@ -39,7 +39,7 @@ include '../components/header.php';
     </section>
 <?php else: ?>
 
-    <p>Panier vide</p>
+    <p class="empty-cart">Panier vide</p>
 
 <?php endif ?>
 
