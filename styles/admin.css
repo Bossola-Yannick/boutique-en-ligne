@@ -56,7 +56,6 @@ th {
   align-content: center;
   text-align: center;
   cursor: pointer;
-  /* background-color: var(--primary-color); */
   background-image: url("/boutique-en-ligne/assets/images/icones/modifier.png");
   background-size: contain;
   background-repeat: no-repeat;
@@ -98,6 +97,7 @@ th {
   align-items: center;
 }
 .form-valid {
-  background-color: green;
+  background-color: var(--secondary-color);
   margin: 1rem auto;
+  color: black;
 }
