@@ -1,0 +1,17 @@
+.home-subtitle {
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-block: 4rem;
+}
+.box-product,
+.box-promo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+#home-product,
+#home-promo {
+  margin-block: 4rem;
+}

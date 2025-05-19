@@ -1,0 +1,48 @@
+.profil {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  background-color: var(--hover-color);
+  padding: 1.5rem;
+}
+.profil-title,
+.info-title {
+  font-size: 3rem;
+  color: var(--active-color);
+  font-family: var(--title-font);
+  letter-spacing: 3px;
+}
+.info-title {
+  font-size: 2rem;
+}
+.item-title {
+  text-align: center;
+  font-weight: 600;
+  padding-block: 0.5rem;
+}
+.item-info {
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-color);
+}
+.left-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.order-title {
+  text-align: center;
+  color: var(--primary-color);
+  font-size: 3rem;
+  font-weight: 600;
+  font-family: var(--title-font);
+  letter-spacing: 3px;
+  margin-block: 2rem;
+}
+.no-order {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--discount-color);
+}

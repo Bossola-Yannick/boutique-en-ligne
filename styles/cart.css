@@ -1,0 +1,158 @@
+.cart-container {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.cart-container h2 {
+  padding: 1rem;
+  font-family: var(--title-font);
+  font-size: 3.2rem;
+  letter-spacing: 3px;
+}
+
+.cart-full-display {
+  width: 100%;
+  padding-bottom: 2.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.cart-titles {
+  width: 70%;
+  margin: 0 auto;
+  padding: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+}
+
+.cart-display {
+  width: 70%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.cart-item-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.cart-col {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.product-col {
+  flex: 2;
+  cursor: pointer;
+}
+
+.quantity-col,
+.price-col,
+.delete-col {
+  flex: 1;
+  justify-content: center;
+}
+
+.cart-img-prod {
+  width: 3rem;
+  height: auto;
+  object-fit: contain;
+}
+
+.cart-name-product {
+  font-size: 1rem;
+}
+
+.quantity-col input {
+  width: 3rem;
+  text-align: center;
+}
+
+.cart-total {
+  font-size: 1.2rem;
+}
+
+.total-and-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 3rem;
+}
+
+/* stripe */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+.modal.show {
+  display: flex;
+}
+.modal-content {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 70%;
+  position: relative;
+}
+.close-modal {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.success-message {
+  text-align: center;
+  font-size: 1.3rem;
+  color: green;
+  padding: 2rem 0;
+}
+
+/* ajout css panier vide */
+.empty-cart {
+  text-align: center;
+  font-size: 4rem;
+  font-family: var(--title-font);
+  color: var(--primary-color);
+  padding-top: 15rem;
+}
+
+@media screen and (max-width: 680px) {
+  .cart-titles,
+  .cart-display {
+    width: 100%;
+    padding: 0 1rem;
+  }
+
+  .modal-content {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 460px) {
+  .cart-col {
+    gap: 0.3rem;
+  }
+}
