@@ -48,7 +48,7 @@ if (window.location.pathname === "/boutique-en-ligne/vue/cart.php") {
         productImgTitle.classList.add("cart-col", "product-col");
         const imgProd = document.createElement("img");
         imgProd.classList.add("cart-img-prod");
-        if (product.category === "déguisement") {
+        if (product.category === "deguisement") {
           imgProd.setAttribute(
             "src",
             `../assets/images/cosplay/${product.image_link}`

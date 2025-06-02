@@ -42,7 +42,7 @@ include '../components/search.php';
         <select name="type" id="category">
           <option value="">-- catégorie --</option>
           <option value="category">accessoire</option>
-          <option value="tag">déguisement</option>
+          <option value="tag">deguisement</option>
           //! mettre les option en JS
         </select>
         <select name="category" id="sub-category">
@@ -74,7 +74,7 @@ include '../components/search.php';
         <select name="type" id="category">
           <option value="">-- catégorie --</option>
           <option value="category">accessoire</option>
-          <option value="tag">déguisement</option>
+          <option value="tag">deguisement</option>
           //! mettre les option en JS
         </select>
         <select name="category" id="sub-category">

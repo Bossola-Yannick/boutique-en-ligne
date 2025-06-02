@@ -87,7 +87,7 @@ switch ($action) {
 
     case 'costumes':
 
-        $costumes = $product->getAllProduct("déguisement");
+        $costumes = $product->getAllProduct("deguisement");
 
         $allCostumes = [
             "products" => [],

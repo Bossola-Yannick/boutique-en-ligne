@@ -16,10 +16,7 @@ const createCard = (
 
   const imgDiscount = document.createElement("img");
   imgDiscount.classList.add("card-img-discount");
-  imgDiscount.setAttribute(
-    "src",
-    `/boutique-en-ligne/assets/images/icones/discount.png`
-  );
+  imgDiscount.setAttribute("src", `/assets/images/icones/discount.png`);
   card.appendChild(imgDiscount);
 
   const divImg = document.createElement("div");
@@ -27,16 +24,10 @@ const createCard = (
 
   const cardImage = document.createElement("img");
   cardImage.classList.add("card-img-product");
-  if (category === "déguisement") {
-    cardImage.setAttribute(
-      "src",
-      `/boutique-en-ligne/assets/images/cosplay/${image}`
-    );
+  if (category === "deguisement") {
+    cardImage.setAttribute("src", `/assets/images/cosplay/${image}`);
   } else {
-    cardImage.setAttribute(
-      "src",
-      `/boutique-en-ligne/assets/images/accessories/${image}`
-    );
+    cardImage.setAttribute("src", `/assets/images/accessories/${image}`);
   }
 
   divImg.appendChild(cardImage);
@@ -49,7 +40,7 @@ const createCard = (
               <h3>${name_product}</h3>
               <div class="card-rating">
                 <p class="left-mar bold">${rating} / 5</p>
-                <img src="/boutique-en-ligne/assets/images/icones/icon-rating.png"/>
+                <img src="/assets/images/icones/icon-rating.png"/>
               </div>
             </div>
           <div class="card-infos">
@@ -68,7 +59,7 @@ const createCard = (
             <input type="hidden" name="price_product" id="price_product">
             <input type="hidden" name="product_id" value="${id_product}">
               <button type="submit" name="add-to-cart" class="card-button-add">
-                <img src="/boutique-en-ligne/assets/images/icones/add.png"/>
+                <img src="/assets/images/icones/add.png"/>
               </button>
             </form>
           </div>

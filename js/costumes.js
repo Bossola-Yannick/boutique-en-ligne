@@ -43,15 +43,13 @@ const fetchProduct = async (action) => {
 
 // gestion des différentes pages (déguisements, accessoires, promotions)
 let activePage;
-if (window.location.pathname === "/boutique-en-ligne/vue/costumes.php") {
+if (window.location.pathname === "./vue/costumes.php") {
   activePage = "costumes";
   documentName.innerText = "Déguisements";
-} else if (
-  window.location.pathname === "/boutique-en-ligne/vue/accessories.php"
-) {
+} else if (window.location.pathname === "./vue/accessories.php") {
   activePage = "accessories";
   documentName.innerText = "Accessoires";
-} else if (window.location.pathname === "/boutique-en-ligne/vue/promo.php") {
+} else if (window.location.pathname === "./vue/promo.php") {
   activePage = "promo";
   documentName.innerText = "Promotions";
   sectionLeftCol.style.backgroundColor = "var(--discount-color)";
@@ -60,9 +58,9 @@ if (window.location.pathname === "/boutique-en-ligne/vue/costumes.php") {
 }
 
 if (
-  window.location.pathname === "/boutique-en-ligne/vue/costumes.php" ||
-  window.location.pathname === "/boutique-en-ligne/vue/accessories.php" ||
-  window.location.pathname === "/boutique-en-ligne/vue/promo.php"
+  window.location.pathname === "./vue/costumes.php" ||
+  window.location.pathname === "./vue/accessories.php" ||
+  window.location.pathname === "./vue/promo.php"
 ) {
   //------------------------------- //
   // déguisements
@@ -98,8 +96,8 @@ if (
     }
 
     if (
-      window.location.pathname === "/boutique-en-ligne/vue/costumes.php" ||
-      window.location.pathname === "/boutique-en-ligne/vue/promo.php"
+      window.location.pathname === "./vue/costumes.php" ||
+      window.location.pathname === "./vue/promo.php"
     ) {
       if (subCategoryFilter) {
         allProduct = allProduct.filter(
@@ -110,7 +108,7 @@ if (
       }
     }
 
-    if (window.location.pathname === "/boutique-en-ligne/vue/accessories.php") {
+    if (window.location.pathname === "./vue/accessories.php") {
       if (tagFilter) {
         allProduct = allProduct.filter((product) =>
           product.tag.some(
@@ -164,8 +162,8 @@ if (
 
       // select pour filtre pour les sous-categories
       if (
-        window.location.pathname === "/boutique-en-ligne/vue/costumes.php" ||
-        window.location.pathname === "/boutique-en-ligne/vue/promo.php"
+        window.location.pathname === "./vue/costumes.php" ||
+        window.location.pathname === "./vue/promo.php"
       ) {
         if (allSubCat && allSubCat.length > 0) {
           createSelectFilter(
@@ -183,9 +181,7 @@ if (
       }
 
       // select pour filtre pour les tags
-      if (
-        window.location.pathname === "/boutique-en-ligne/vue/accessories.php"
-      ) {
+      if (window.location.pathname === "./vue/accessories.php") {
         if (allTags && allTags.length > 0) {
           createSelectFilter(
             allTags,
@@ -209,8 +205,8 @@ if (
 
       // checkbox sous-catégorie
       if (
-        window.location.pathname === "/boutique-en-ligne/vue/costumes.php" ||
-        window.location.pathname === "/boutique-en-ligne/vue/promo.php"
+        window.location.pathname === "./vue/costumes.php" ||
+        window.location.pathname === "./vue/promo.php"
       ) {
         allSubCat.forEach((element) => {
           createCheckbox(
@@ -222,9 +218,7 @@ if (
         });
       }
 
-      if (
-        window.location.pathname === "/boutique-en-ligne/vue/accessories.php"
-      ) {
+      if (window.location.pathname === "./vue/accessories.php") {
         // checkbox tags
         allTags.forEach((element) => {
           createCheckbox(
@@ -245,8 +239,8 @@ if (
       }
       // filtre sous categorie
       if (
-        window.location.pathname === "/boutique-en-ligne/vue/costumes.php" ||
-        window.location.pathname === "/boutique-en-ligne/vue/promo.php"
+        window.location.pathname === "./vue/costumes.php" ||
+        window.location.pathname === "./vue/promo.php"
       ) {
         if (activeSubCategory) {
           const checkboxToSelect = filterSubCatBox.querySelector(
@@ -256,9 +250,7 @@ if (
         }
       }
 
-      if (
-        window.location.pathname === "/boutique-en-ligne/vue/accessories.php"
-      ) {
+      if (window.location.pathname === "./vue/accessories.php") {
         // filtre tag
         if (activeTag) {
           const checkboxToSelect = filterTagBox.querySelector(
@@ -392,8 +384,8 @@ const updateUrlAndFilter = (filterType, activeFilter) => {
     }
 
     if (
-      window.location.pathname === "/boutique-en-ligne/vue/costumes.php" ||
-      window.location.pathname === "/boutique-en-ligne/vue/promo.php"
+      window.location.pathname === "./vue/costumes.php" ||
+      window.location.pathname === "./vue/promo.php"
     ) {
       if (subCategoryFilter) {
         products = products.filter(
@@ -404,7 +396,7 @@ const updateUrlAndFilter = (filterType, activeFilter) => {
       }
     }
 
-    if (window.location.pathname === "/boutique-en-ligne/vue/accessories.php") {
+    if (window.location.pathname === "./vue/accessories.php") {
       if (tagFilter) {
         products = products.filter((product) =>
           product.tag.some(

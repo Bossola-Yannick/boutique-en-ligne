@@ -1,7 +1,6 @@
 const searchInput = document.getElementById("search");
 const displayDiv = document.getElementById("display-result");
 
-
 if (searchInput) {
   searchInput.addEventListener("input", function () {
     const name = searchInput.value.trim();
@@ -35,7 +34,6 @@ if (searchInput) {
               let detailId = element.getAttribute("value");
               window.location.href = `../vue/detail.php?product=${detailId}`;
             });
-
           });
         })
         .catch((error) => {
@@ -44,7 +42,6 @@ if (searchInput) {
     }
   });
 
-
   const searchResult = (id_product, name_product, image_link, category) => {
     const result = document.createElement("li");
     result.classList.add("search-result");
@@ -52,7 +49,7 @@ if (searchInput) {
 
     const resultImg = document.createElement("img");
     resultImg.classList.add("img-product");
-    if (category === "déguisement") {
+    if (category === "deguisement") {
       resultImg.setAttribute("src", `../assets/images/cosplay/${image_link}`);
     } else {
       resultImg.setAttribute(

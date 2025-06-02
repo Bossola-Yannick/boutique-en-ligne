@@ -54,7 +54,7 @@ if (window.location.pathname === "/boutique-en-ligne/vue/detail.php") {
 
       //------------------------------- //
       // gestion du titre du document (balise title)
-      if (product.category === "déguisement") {
+      if (product.category === "deguisement") {
         documentName.innerText = `Déguisement: ${product.name_product}`;
       } else {
         documentName.innerText = product.name_product;
@@ -196,14 +196,14 @@ const createDetail = (
   const leftBox = document.createElement("section");
   leftBox.classList.add("detail-left-box");
   const detailImage = document.createElement("img");
-  if (category === "déguisement") {
+  if (category === "deguisement") {
     detailImage.setAttribute("src", `../assets/images/cosplay/${image}`);
   } else {
     detailImage.setAttribute("src", `../assets/images/accessories/${image}`);
   }
   const notInclude = document.createElement("p");
   notInclude.classList.add("not-included");
-  if (category === "déguisement") {
+  if (category === "deguisement") {
     notInclude.innerHTML = `*Poule et accessoires <span class="bold">non-inclus</span>.`;
   } else {
     notInclude.innerHTML = `*Poule et déguisement <span class="bold">non-inclus</span>.`;
